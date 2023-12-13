@@ -1,0 +1,14 @@
+{
+  "colors": {
+    "primary": "#B202E6",
+    "secondary": "#E60234",
+    "action": "#4315E2",
+    "primary-1": "#140302"
+  },
+  "background": {
+    "backgroundImage": {
+      "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
+    }
+  }
+}

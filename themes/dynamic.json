@@ -1,0 +1,14 @@
+{
+  "name": "My Store",
+  "username": "@stm",
+  "header": {
+    "type": false,
+    "logo": "logo.png",
+    "name": "My Store"
+  },
+  "promotion": {
+    "images": null,
+    "quote": null,
+    "text": null
+  }
+}
