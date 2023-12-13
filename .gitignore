@@ -28,4 +28,3 @@ gitignore
 Thumbs.db
 yarn.lock
 package-lock.json
-themes
