@@ -1,0 +1,5 @@
+ "scripts": {
+    "dev": "solid-start dev",
+    "start": "solid-start start",
+    "build": "solid-start build",
+  }
