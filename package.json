@@ -25,6 +25,7 @@
     "@urql/core": "^4.2.0",
     "@urql/exchange-retry": "^1.2.0",
     "aos": "^2.3.4",
+    "axios": "^1.6.2",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.10",
