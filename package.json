@@ -1,10 +1,9 @@
 {
   "name": "theme-riverbase",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "dev": "solid-start dev",
+    "start": "solid-start start --port 7001",
+    "build": "solid-start build"
   },
   "type": "module",
   "devDependencies": {
