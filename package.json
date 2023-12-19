@@ -2,7 +2,7 @@
   "name": "theme-riverbase",
   "scripts": {
     "dev": "solid-start dev",
-    "start": "solid-start start --port 7001",
+    "start": "solid-start start --port 3000",
     "build": "solid-start build"
   },
   "type": "module",
