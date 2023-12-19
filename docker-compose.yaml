@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: ${CONTAINER_NAME}
+    image: node-18-slim
+    build:
+      context: .
+      args:
+        ENV: ${ROOTPROJ}
+      dockerfile: Dockerfile
+    ports: 
+      - ${PORT_NUMBER}:3000

@@ -1,26 +1,20 @@
-# python
-FROM python:3
+FROM node:18-slim AS base
+ARG ROOTPROJ
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+COPY ${ROOTPROJ}/. /app
+WORKDIR /app
 
-WORKDIR /usr/app
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod
 
-COPY requirements.txt /usr/app
-COPY package.json /usr/app
+FROM base AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN pnpm run build
 
-RUN pip install --no-cache-dir -r requirements.txt
-RUN python pyconfig.py
-
-COPY . .
-
-# node
-FROM node:21-alpine3.18
-
-WORKDIR /usr/app
-
-COPY package.json /usr/app
-
-RUN npm install
-
-COPY . .
-
-# running
-CMD ["npm", "start"]
+FROM base
+COPY --from=prod-deps /app/node_modules /app/node_modules
+COPY --from=build /app/dist /app/dist
+EXPOSE 3000
+CMD [ "pnpm", "run", "start" ]
