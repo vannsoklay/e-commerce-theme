@@ -3,6 +3,7 @@ import { A } from "solid-start";
 import { EmptyCart } from "~/components/Empty";
 import { useCart } from "~/contexts/useCart";
 import Button from "~/components/Button";
+import { FiShoppingCart } from "solid-icons/fi";
 
 export default function Cart() {
   const { cartItems, addToCart, minusCart, removeFromCart } = useCart();
@@ -155,23 +156,15 @@ export default function Cart() {
                 </For>
               </div>
               <A href="/products">
-                  <Button.Primary class="w-full rounded-full mt-12">
-                    <svg
-                      class="w-5 h-5 mr-2"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 18 21"
-                    >
-                      <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                    </svg>
-                    More Products
-                  </Button.Primary>
-                </A>
+                <Button.Primary class="w-full rounded-full mt-12">
+                  <FiShoppingCart class="text-xl" />
+                  More Products
+                </Button.Primary>
+              </A>
             </div>
 
             <div class="md:col-span-2 mt-9 md:mt-6">
-              <div class="grid grid-cols-1 divider flex justify-start">
+              <div class="grid grid-cols-1 divider justify-start">
                 <h1 class="font-bold uppercase">Summary</h1>
               </div>
               <div class="grid grid-cols-2 md:mt-16">
@@ -193,7 +186,7 @@ export default function Cart() {
                 <div class="col-span-1 font-bold">-</div>
               </div>
               <div class="divider my-2"></div>
-              <div class="grid grid-cols-2 flex justify-start">
+              <div class="grid grid-cols-2 justify-start">
                 <div class="col-span-1 flex justify-start text-md">Total</div>
                 <h1 class="font-bold uppercase">{price()} USD</h1>
               </div>

@@ -1,5 +1,6 @@
 import { Component, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
+import { AiFillHeart } from "solid-icons/ai";
 
 export const CardProduct: Component<{ product: ProductType }> = (props) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
           }}
           data-aos="zoom-out-down"
         >
-          <div class="group hover:scale-105 duration-150 relative max-w-sm h-[25.5rem] md:h-auto bg-white border border-gray-200 rounded-3xl shadow cursor-pointer">
+          <div class="group relative max-w-sm h-[25.5rem] md:h-auto bg-white border border-gray-200 rounded-3xl shadow cursor-pointer">
             <div class="absolute flex flex-col top-0 right-0 p-3">
               <div
                 id="tooltip-light"
@@ -31,20 +32,13 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 }}
                 class="z-40 transition ease-in duration-300 bg-gray-50  hover:text-danger shadow hover:shadow-md text-red-300 rounded-full w-8 h-8 lg:h-6 lg:w-6 2xl:h-8 2xl:w-8 text-center p-1"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-6 h-6 lg:w-4 lg:h-4 2xl:w-6 2xl:h-6 text-secondary/80"
-                >
-                  <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                </svg>
+                <AiFillHeart class="w-6 h-6 lg:w-4 lg:h-4 2xl:w-6 2xl:h-6 text-secondary/30 group-hover:text-secondary/80" />
               </button>
             </div>
             <div class="w-full h-48 bg-contain relative">
-              <div class="w-full h-full flex items-center justify-center bg-contain bg-center bg-repeat">
+              <div class="w-full h-full flex items-center justify-center bg-contain bg-center bg-repeat p-3">
                 <img
-                  class="rounded-t-lg bg-repeat-round w-full h-full p-8 mx-auto"
+                  class="group-hover:scale-105 duration-150 bg-repeat-round w-full h-full rounded-2xl mx-auto"
                   src={`${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
                     props?.product?.thumbnail
                   }`}
@@ -118,7 +112,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 </span>
                 <button
                   onClick={() => navigate(`/products/${props?.product?.slug}`)}
-                  class="w-24 btn border-none rounded-full bg-action/10 text-action hover:text-action hover:border-action hover:bg-action/10"
+                  class="w-auto btn btn-sm border-none rounded-full bg-action/10 text-action hover:text-action hover:border-action hover:bg-action/10"
                 >
                   {props.product.variants.length <= 0 ? "Add to cart" : "Views"}
                 </button>

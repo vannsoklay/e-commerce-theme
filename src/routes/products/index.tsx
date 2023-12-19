@@ -13,7 +13,7 @@ export default function Product() {
     <section>
       <MeteTag name="products" />
       <Hero />
-      <div class="container mx-auto pt-0 md:pt-4 md:px-32 grid grid-cols-5 gap-16">
+      <div class="container mx-auto pt-0 md:pt-4 md:px-32 grid grid-cols-5 gap-3">
         <div class="col-span-1">
           <Filter />
         </div>
@@ -36,7 +36,7 @@ const Products = () => {
 
   return (
     <div class="mx-auto max-w-screen-xl">
-      <div class="grid md:grid-cols-3 grid-cols-1 gap-16 pt-8">
+      <div class="grid md:grid-cols-3 grid-cols-1 gap-3 pt-8">
         <Show when={products()} fallback={<div>loading...</div>}>
           <Show
             when={products().storeProducts.length > 0}

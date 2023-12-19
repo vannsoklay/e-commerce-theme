@@ -11,7 +11,7 @@ const TopBar = () => {
   return (
     <div class="navbar w-full bg-white/30 sticky top-0 z-50 backdrop-blur-sm">
       <div class="flex justify-between w-full container mx-auto md:px-32">
-        <Logo/>
+        <Logo />
         <div class="flex items-center space-x-3">
           <Show
             when={!loading()!}
@@ -60,8 +60,8 @@ const TopBar = () => {
               fallback={
                 <>
                   <button
-                    class="btn w-20 rounded-full bg-primary/10 hover:bg-primary/10 text-primary border-none w-32"
-                    onClick={() => login("my_modal_1")}
+                    class="btn w-20 rounded-full bg-primary/10 hover:bg-primary/10 text-primary border-none"
+                    onClick={() => login("my_modal_2")}
                   >
                     Login
                   </button>

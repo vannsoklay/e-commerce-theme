@@ -9,9 +9,12 @@ import {
 import axios from "axios";
 import toast from "solid-toast";
 import { useAuth } from "~/contexts/useAuth";
+import { A } from "solid-start";
 import { FaBrandsGoogle, FaBrandsFacebookF } from "solid-icons/fa";
 
-type LoginForm = {
+type RegisterForm = {
+  firstName: string;
+  lastName: string;
   email?: string;
   phone?: string;
   password?: string;
@@ -30,7 +33,7 @@ const user_store_login = async (token: String) => {
   );
 };
 
-export const LoginForm: Component<{
+const RegisterForm: Component<{
   handler: (model: string | null) => void;
   kind?: string;
   className?: string;
@@ -44,48 +47,9 @@ export const LoginForm: Component<{
   className?: string;
 }) => {
   const { getUser } = useAuth();
-  const [_, { Form, Field }] = createForm<LoginForm>();
+  const [_, { Form, Field }] = createForm<RegisterForm>();
   const [loading, setLoading] = createSignal(false);
 
-  const handleSubmit: SubmitHandler<LoginForm> = (values, _) => {
-    axios
-      .post(
-        `${import.meta.env.VITE_VARIABLE_BACKEND}/api/login`,
-        { ...values },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then(async (res) => {
-        setLoading(true);
-        await user_store_login(res.data.data.access_token)
-          .then((_) => {
-            localStorage.setItem("access_token", res.data.data.access_token);
-            getUser();
-            setTimeout(() => {
-              toast.success("Login with store successfully");
-              setLoading(false);
-              handler(null);
-            });
-
-            return;
-          })
-          .catch((_) => {
-            toast.success("Fail to login");
-            setLoading(false);
-            handler(null);
-            return;
-          });
-      })
-      .catch(async (error) => {
-        if (error.code === "ERR_BAD_REQUEST") {
-          return toast.error("Invalid password and email!");
-        }
-        return toast.error("Connecting network!");
-      });
-  };
   return (
     <>
       <button
@@ -97,7 +61,7 @@ export const LoginForm: Component<{
       >
         ✕
       </button>
-      <Form onSubmit={handleSubmit} class={`space-y-4 ${className}`}>
+      <Form class={`space-y-4 ${className}`}>
         <div class="grid grid-cols-2 gap-3">
           <button class="btn btn-outline rounded-xl">
             <FaBrandsGoogle /> Google
@@ -109,6 +73,56 @@ export const LoginForm: Component<{
 
         <div class="divider">or continue with</div>
 
+        <div class="grid grid-cols-2 gap-3">
+          <Field
+            name="firstName"
+            validate={[
+              required("First name is required!"),
+              //   email("The email address is badly formatted."),
+            ]}
+          >
+            {(field, props) => (
+              <div>
+                <input
+                  {...props}
+                  type="text"
+                  required
+                  placeholder="First Name"
+                  class="input input-bordered w-full"
+                />
+                {field.error && (
+                  <div class="text-sm text-red-600 dark:text-red-500">
+                    {field.error}
+                  </div>
+                )}
+              </div>
+            )}
+          </Field>
+          <Field
+            name="lastName"
+            validate={[
+              required("Last name is required!"),
+              //   email("The email address is badly formatted."),
+            ]}
+          >
+            {(field, props) => (
+              <div>
+                <input
+                  {...props}
+                  type="text"
+                  required
+                  placeholder="Last Name"
+                  class="input input-bordered w-full"
+                />
+                {field.error && (
+                  <div class="text-sm text-red-600 dark:text-red-500">
+                    {field.error}
+                  </div>
+                )}
+              </div>
+            )}
+          </Field>
+        </div>
         <Field
           name="email"
           validate={[
@@ -123,6 +137,30 @@ export const LoginForm: Component<{
                 type="email"
                 required
                 placeholder="Email"
+                class="input input-bordered w-full"
+              />
+              {field.error && (
+                <div class="text-sm text-red-600 dark:text-red-500">
+                  {field.error}
+                </div>
+              )}
+            </div>
+          )}
+        </Field>
+        <Field
+          name="phone"
+          validate={[
+            required("Phone number is required!"),
+            // email("The email address is badly formatted."),
+          ]}
+        >
+          {(field, props) => (
+            <div>
+              <input
+                {...props}
+                type="number"
+                required
+                placeholder="Phone number"
                 class="input input-bordered w-full"
               />
               {field.error && (
@@ -158,26 +196,25 @@ export const LoginForm: Component<{
           )}
         </Field>
 
-        <div class="mt-6 flex items-center justify-between">
-          <div class="form-control">
-            <label class="label cursor-pointer">
-              <input
-                type="checkbox"
-                // checked="checked"
-                class="checkbox checkbox-sm mr-2"
-              />
-              <span class="label-text">Remember me</span>
-            </label>
-          </div>
-
-          <div class="text-sm leading-5">
-            <a
-              href="#"
-              class="link link-hover font-medium text-primary hover:text-primary"
-            >
-              Forgot your password?
-            </a>
-          </div>
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <input
+              type="checkbox"
+              // checked="checked"
+              class="checkbox checkbox-sm mr-3 "
+            />
+            <span class="label-text text-xs">
+              I have read and agree to the{" "}
+              <a href="#" class="link link-hover text-primary">
+                Privacy Policy
+              </a>{" "}
+              and{" "}
+              <a class="link link-hover text-primary" href="#">
+                Terms & Conditions
+              </a>
+              .
+            </span>
+          </label>
         </div>
 
         {kind === "private" ? (
@@ -186,24 +223,16 @@ export const LoginForm: Component<{
             type="submit"
           >
             {loading() && <span class="loading loading-spinner"></span>}
-            Login
+            Register
           </button>
         ) : (
           <div class="flex justify-end space-x-2">
-            {/* <button
-              class="btn bg-red-800/10 rounded-full border-none w-28 text-red-800 hover:bg-red-800/10 hover:text-red-800 hover:border-red-800"
-              onClick={(e) => {
-                e.preventDefault(), handler(null);
-              }}
-            >
-              Cancel
-            </button> */}
             <button
               class="btn w-full bg-primary/10 rounded-xl border-none text-primary hover:bg-primary/10 hover:text-primary"
               type="submit"
             >
               {loading() && <span class="loading loading-spinner"></span>}
-              Login
+              Register
             </button>
           </div>
         )}
@@ -211,3 +240,5 @@ export const LoginForm: Component<{
     </>
   );
 };
+
+export default RegisterForm;
