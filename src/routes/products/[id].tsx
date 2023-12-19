@@ -1,18 +1,12 @@
-import {
-  Accessor,
-  createEffect,
-  createSignal,
-  For,
-  Show,
-} from "solid-js";
+import { Accessor, createEffect, createSignal, For, Show } from "solid-js";
 import { A, useParams } from "@solidjs/router";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
 import Image from "~/components/Image";
 import { publicQuery } from "~/libs/client";
 import { GET_PRODUCT } from "~/libs/graphql/product";
-import { Title } from "solid-start";
 import { MeteTag } from "~/components/meta";
+import { AiFillStar } from "solid-icons/ai";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -45,7 +39,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      <MeteTag name="detail"/>
+      <MeteTag name="detail" />
       <div class="px-0 md:px-16">
         <div class="pt-6">
           <Show when={product()} fallback={<div>Loading ...</div>}>
@@ -56,15 +50,15 @@ const ProductDetail = () => {
               <section>
                 <div class="hidden md:block mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-6 lg:gap-x-4 lg:px-8">
                   <div class="col-span-5">
-                    <div class="aspect-h-4 p-20 aspect-w-3 hidden overflow-hidden rounded-lg lg:block border mx-auto ">
+                    <div class="aspect-h-4 aspect-w-3 p-3 rounded-xl lg:block border mx-auto ">
                       <img
                         src={viewImage()}
                         alt=""
-                        class="w-full h-[65dvh] object-contain object-center hover:scale-110 duration-150 animate-jump-in"
+                        class="w-full h-[60dvh] rounded-lg object-contain object-center hover:scale-110 duration-150 animate-jump-in"
                       />
                     </div>
                   </div>
-                  <div class="no-scrollbar overflow-y-scroll h-full">
+                  <div class="hide-scroll-bar overflow-y-auto h-[65dvh]">
                     <div class="space-y-4">
                       <For each={product().storeProduct.previews}>
                         {(res: string, index: Accessor<number>) => {
@@ -79,7 +73,7 @@ const ProductDetail = () => {
                                 }/api/ipfs?hash=${res}`}
                                 name=""
                                 width="w-full"
-                                heigh="h-full"
+                                heigh="h-[12dvh]"
                                 is_scale={true}
                               />
                             </div>
@@ -99,86 +93,34 @@ const ProductDetail = () => {
 
                   <div class="mt-4 lg:row-span-3 lg:mt-0">
                     <h2 class="sr-only">Product information</h2>
-                    <p class="text-5xl tracking-tight text-danger font-semibold">
-                      $ {product().storeProduct.price}
+                    <p class="text-5xl tracking-tight text-base-content font-semibold">
+                      ${product().storeProduct.price}
                     </p>
 
                     {/* -----review -------- */}
 
-                    <div class="mt-6">
-                      <h3 class="sr-only">Reviews</h3>
-                      <div class="flex items-center">
-                        <div class="flex items-center">
-                          <svg
-                            class="text-yellow-300 h-5 w-5 flex-shrink-0"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <svg
-                            class="text-yellow-300 h-5 w-5 flex-shrink-0"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <svg
-                            class="text-yellow-300 h-5 w-5 flex-shrink-0"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <svg
-                            class="text-gray-200 h-5 w-5 flex-shrink-0"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <svg
-                            class="text-gray-200 h-5 w-5 flex-shrink-0"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                        <p class="sr-only">4 out of 5 stars</p>
-                        <A
-                          href="#"
-                          class="ml-3 text-sm font-medium text-primary"
-                        >
-                          99+ reviews
-                        </A>
-                      </div>
+                    <div class="rating rating-sm mt-3">
+                      {product().storeProduct.rating && (
+                        <>
+                          {Array(
+                            Math.floor(product().storeProduct.rating)
+                          ).fill(<AiFillStar class="text-warning text-xl" />)}
+                          {5 - Math.floor(product().storeProduct.rating) ==
+                          0 ? (
+                            ""
+                          ) : (
+                            <AiFillStar class="text-gray-200 text-xl" />
+                          )}
+                        </>
+                      )}
+                      <A
+                        href="#"
+                        class="ml-3 text-sm font-medium text-base-content"
+                      >
+                        99+ reviews
+                      </A>
                     </div>
+
                     <div class="mt-3">
                       <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">
                         Variants
@@ -189,7 +131,7 @@ const ProductDetail = () => {
                             return (
                               <li>
                                 <input
-                                  type="radio"
+                                  type="checkbox"
                                   id={res.preview}
                                   name="hosting"
                                   value={res.preview}
@@ -410,20 +352,6 @@ const ProductDetail = () => {
           </Show>
         </div>
       </div>
-      {/* <div class="mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-4 lg:px-24 xl:px-24 2xl:px-4">
-          <h1 class="text-gray-900 font-bold text-2xl">Related products</h1>
-          <div class="grid md:grid-cols-4 grid-cols-1 gap-4 mt-12">
-            <For each={CoreProducts.slice(0, 4)}>
-              {(CoreProducts) => {
-                return (
-                  <div>
-                    <Cards product={CoreProducts} />
-                  </div>
-                );
-              }}
-            </For>
-          </div>
-        </div> */}
     </>
   );
 };

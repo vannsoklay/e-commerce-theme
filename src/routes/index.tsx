@@ -45,7 +45,7 @@ export const LatestProducts = () => {
         </A>
         <img class="w-auto h-3.5" src="/images/right-arrow.png" alt="" />
       </div>
-      <div class="grid md:grid-cols-4 grid-cols-1 gap-4 pt-16">
+      <div class="grid md:grid-cols-4 grid-cols-1 gap-3 pt-16 justify-center items-center mx-auto">
         <Show when={products()} fallback={<div>loading...</div>}>
           <Show
             when={products().storeProducts.length > 0}
