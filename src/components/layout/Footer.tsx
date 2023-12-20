@@ -7,7 +7,7 @@ const Footer: Component = () => {
   return (
     <>
       <footer class="py-10 bg-primary-1/5 text-primary-1/80 text-base-content">
-        <div class="footer flex justify-between w-full container mx-auto md:px-32">
+        <div class="footer md:flex justify-between w-full container mx-auto xl:px-32 px-8">
           <aside>
             <img
               src="./images/logos/riverbase-black.png"
@@ -30,21 +30,21 @@ const Footer: Component = () => {
               <span>023 884 789</span>
             </p>
           </aside>
-          <nav>
+          <nav class="md:grid hidden">
             <header class="footer-title">Services</header>
             <a class="link link-hover">Branding</a>
             <a class="link link-hover">Design</a>
             <a class="link link-hover">Marketing</a>
             <a class="link link-hover">Advertisement</a>
           </nav>
-          <nav>
+          <nav class="md:grid hidden">
             <header class="footer-title">Company</header>
             <a class="link link-hover">About us</a>
             <a class="link link-hover">Contact</a>
             <a class="link link-hover">Jobs</a>
             <a class="link link-hover">Press kit</a>
           </nav>
-          <nav>
+          <nav class="md:grid hidden">
             <header class="footer-title">Legal</header>
             <a class="link link-hover">Terms of use</a>
             <a class="link link-hover">Privacy policy</a>

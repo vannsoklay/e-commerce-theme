@@ -30,13 +30,13 @@ export const LatestProducts = () => {
 
   return (
     <div class="mx-auto max-w-screen-xl">
-      <h1 class="text-center text-primary-1/80 font-extrabold md:text-3xl uppercase">
+      <h1 class="text-center text-primary-1/80 font-extrabold md:text-3xl text-md uppercase">
         Latest Products
       </h1>
-      <p class="text-center text-primary-1/50 text-md font-semibold uppercase">
+      <p class="text-center text-primary-1/50 md:text-md text-xs font-semibold uppercase">
         Out new products
       </p>
-      <div class="float-right py-3 flex space-x-1 items-center">
+      <div class="md:float-right md:py-3 py-1 md:flex space-x-1 items-center text-center">
         <A
           href="/products"
           class="text-gray-500 text-xs font-bold hover:text-primary"
@@ -45,7 +45,7 @@ export const LatestProducts = () => {
         </A>
         <img class="w-auto h-3.5" src="/images/right-arrow.png" alt="" />
       </div>
-      <div class="grid md:grid-cols-4 grid-cols-1 gap-3 pt-16 justify-center items-center mx-auto">
+      <div class="grid md:grid-cols-4 grid-cols-1 gap-3 md:pt-16 md:px-0 px-6">
         <Show when={products()} fallback={<div>loading...</div>}>
           <Show
             when={products().storeProducts.length > 0}

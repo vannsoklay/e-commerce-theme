@@ -110,7 +110,7 @@ const AuthProvider: Component<contextProps> = (props) => {
           </div>
         </div>
       </Dialog>
-      {props.children}
+      <div class="relative">{props.children}</div>
     </AuthContext.Provider>
   );
 };

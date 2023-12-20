@@ -26,7 +26,7 @@ export default function Cart() {
           <h2 class="text-4xl text-[#98A2AE] font-bold text-center">
             Shopping Cart
           </h2>
-          <div class="grid md:grid-cols-5 md:gap-20 mt-12 ">
+          <div class="grid md:grid-cols-5 md:gap-20 mt-12">
             <div class="md:col-span-3">
               <div class="backdrop-blur-sm bg-white bg-opacity-80 space-y-4 divide-y">
                 <For each={cartItems}>
@@ -164,31 +164,36 @@ export default function Cart() {
             </div>
 
             <div class="md:col-span-2 mt-9 md:mt-6">
-              <div class="grid grid-cols-1 divider justify-start">
+              <div class="grid grid-cols-1 flex justify-start">
                 <h1 class="font-bold uppercase">Summary</h1>
               </div>
-              <div class="grid grid-cols-2 md:mt-16">
+              <div class="divider mt-2"></div>
+              <div class="grid grid-cols-2">
                 <div class="col-span-1 flex justify-start text-md">
                   Subtotal
                 </div>
-                <div class="col-span-1 font-bold">{price()} USD</div>
+                <div class="col-span-1 font-bold flex justify-end">
+                  {price()} USD
+                </div>
               </div>
               <div class="grid grid-cols-2 md:mt-2">
                 <div class="col-span-1 flex justify-start text-md">
-                  Estimated Shipping & Handling
+                  Shipping
                 </div>
-                <div class="col-span-1 font-bold">{price()} USD</div>
+                <div class="col-span-1 font-bold flex justify-end">0 USD</div>
               </div>
               <div class="grid grid-cols-2 md:mt-2">
                 <div class="col-span-1 flex justify-start text-md">
                   Estimated Tax
                 </div>
-                <div class="col-span-1 font-bold">-</div>
+                <div class="col-span-1 font-bold flex justify-end">-</div>
               </div>
               <div class="divider my-2"></div>
-              <div class="grid grid-cols-2 justify-start">
+              <div class="grid grid-cols-2 flex justify-start">
                 <div class="col-span-1 flex justify-start text-md">Total</div>
-                <h1 class="font-bold uppercase">{price()} USD</h1>
+                <h1 class="font-bold uppercase flex justify-end">
+                  {price()} USD
+                </h1>
               </div>
               <div class="pt-6">
                 <A href="/checkouts">

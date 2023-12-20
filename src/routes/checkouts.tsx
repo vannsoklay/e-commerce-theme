@@ -22,6 +22,7 @@ export default function Checkout() {
     useCart();
 
   const [price, setPrice] = createSignal(0);
+
   createEffect(() => {
     const subtotal: number[] = [];
     cartItems.map((product) =>
@@ -87,9 +88,9 @@ export default function Checkout() {
               </button>
             </div>
           </Dialog>
-          <div class="mx-auto mt-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-24 xl:px-24 2xl:px-0">
+          <div class="mx-auto mt-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-0 xl:px-24 2xl:px-0">
             <div class="grid grid-cols-4 gap-8 mt-8">
-              <main class="col-span-2">
+              <main class="col-span-2 md:block hidden">
                 <Show when={data()} fallback={<div>loading...</div>}>
                   <div class="flex justify-start">
                     <div
@@ -173,7 +174,7 @@ export default function Checkout() {
                   </div>
                 </div>
               </main>
-              <main class="col-span-2 px-8">
+              <main class="md:col-span-2 col-span-4 md:px-8">
                 <h1 class="text-xl font-semibold pb-2">
                   My shopping bag ({cartItems.length})
                 </h1>
@@ -338,7 +339,98 @@ export default function Checkout() {
                       {price()} USD
                     </h1>
                   </div>
-                  <div class="pt-6">
+                  {/* delivery */}
+                  <main class="mt-6 md:hidden">
+                    <div class="grid grid-cols-1 flex justify-start">
+                      <Show when={data()} fallback={<div>loading...</div>}>
+                        <div class="flex justify-start">
+                          <div
+                            class={`collapse ${
+                              data().deliveries.length <= 0 && "collapse-open"
+                            } p-0`}
+                          >
+                            <input type="checkbox" class="peer" />
+                            <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
+                              Delivery Options
+                            </h1>
+                            <div class="collapse-content">
+                              <DeliveryForm refetch={refetch} />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="pb-8 px-4">
+                          <div class="flex justify-start">
+                            <div class="gird grid-cols-1 space-y-6">
+                              <For
+                                each={data().deliveries}
+                                fallback={<div>loading...</div>}
+                              >
+                                {(delivery) => (
+                                  <Field name="delivery">
+                                    {(field, props) => (
+                                      <label class="w-full flex col-span-8 gap-6 items-center">
+                                        <input
+                                          {...props}
+                                          class="radio"
+                                          type="radio"
+                                          value={delivery.id}
+                                          checked={field.value?.includes(
+                                            delivery.id
+                                          )}
+                                        />
+                                        <div>{delivery.address}</div>
+                                      </label>
+                                    )}
+                                  </Field>
+                                )}
+                              </For>
+                            </div>
+                          </div>
+                        </div>
+                      </Show>
+                    </div>
+                    <div class="grid grid-cols-1 flex justify-start">
+                      <h1 class="font-bold font-semibold text-xl">Payments</h1>
+                      <div class="flex justify-start w-full px-4 mt-8">
+                        <div class="grid grid-cols-8 gap-4 space-y-4">
+                          <For
+                            each={[
+                              { label: "credit", value: "credit-debit-card" },
+                              { label: "ABA Pay", value: "aba-pay" },
+                              { label: "Wing Pay", value: "wing-pay" },
+                              {
+                                label: "Chip Mong Bank",
+                                value: "chip-mong-bank",
+                              },
+                              { label: "Acleda Pay", value: "xpay" },
+                            ]}
+                          >
+                            {({ value }) => (
+                              <Field name="method">
+                                {(field, props) => (
+                                  <label class="w-full flex col-span-8 gap-6 items-center">
+                                    <input
+                                      {...props}
+                                      class="radio"
+                                      type="radio"
+                                      value={value}
+                                      checked={field.value?.includes(value)}
+                                    />
+                                    <img
+                                      class="h-12"
+                                      src={`/images/banks/${value}.png`}
+                                      alt=""
+                                    />
+                                  </label>
+                                )}
+                              </Field>
+                            )}
+                          </For>
+                        </div>
+                      </div>
+                    </div>
+                  </main>
+                  <div class="md:pt-6 pt-4">
                     <Button.Primary class="btn w-full rounded-full">
                       {process() ? (
                         <span class="loading loading-spinner"></span>

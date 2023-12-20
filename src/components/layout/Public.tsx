@@ -1,9 +1,17 @@
 // import SideBar from "./SideBar";
-import { Component, JSXElement, Show } from "solid-js";
+import {
+  Component,
+  JSXElement,
+  Show,
+  createEffect,
+  createSignal,
+  onCleanup,
+} from "solid-js";
 // import Breadcrumb from "../Breadcrumb";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { useLocation } from "solid-start";
+import MobileTopBar from "./MobileTopBar";
 
 interface layoutProps {
   children: JSXElement;
@@ -11,9 +19,22 @@ interface layoutProps {
 
 const PublicLayout: Component<layoutProps> = (props) => {
   const router = useLocation();
+  // const [scrollPosition, setScrollPosition] = createSignal(0);
+  // const handleScroll = () => {
+  //   // Update the scroll position when scrolling
+  //   setScrollPosition(window.scrollY);
+  // };
+  // if (typeof window !== "undefined") {
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   // Cleanup the event listener when the component is unmounted
+  //   onCleanup(() => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   });
+  // }
 
   return (
-    <div>
+    <div class="relative">
       <TopBar />
       <main class="mb-16">{props.children}</main>
       <Show when={!router.pathname.startsWith("/me")}>

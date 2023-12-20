@@ -17,6 +17,7 @@ import AuthProvider from "./contexts/useAuth";
 import { CartProvider } from "./contexts/useCart";
 import { Toaster } from "solid-toast";
 import { read } from "./utils/theme";
+import MobileTopBar from "./components/layout/MobileTopBar";
 
 export default function Root() {
   const username = read("username");
@@ -38,6 +39,7 @@ export default function Root() {
                     <FileRoutes />
                   </Routes>
                 </PublicLayout>
+                <MobileTopBar />
               </CartProvider>
             </AuthProvider>
           </ErrorBoundary>
