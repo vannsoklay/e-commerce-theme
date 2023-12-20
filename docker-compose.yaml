@@ -5,9 +5,10 @@ services:
     container_name: ${CONTAINER_NAME}
     image: node-18-slim
     build:
-      context: .
+      context: ${BASEPATH}
       args:
-        ENV: ${ROOTPROJ}
-      dockerfile: Dockerfile
+        ROOTPROJ: ${ROOTPROJ}
+        THEMEPATH: ${THEMEPATH}
+      dockerfile: ${THEMEPATH}/Dockerfile
     ports: 
       - ${PORT_NUMBER}:3000

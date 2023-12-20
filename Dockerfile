@@ -1,9 +1,11 @@
 FROM node:18-slim AS base
 ARG ROOTPROJ
+ARG THEMEPATH
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 COPY ${ROOTPROJ}/. /app
+COPY ${THEMEPATH}/. /app
 WORKDIR /app
 
 FROM base AS prod-deps
