@@ -17,7 +17,7 @@ import AuthProvider from "./contexts/useAuth";
 import { CartProvider } from "./contexts/useCart";
 import { Toaster } from "solid-toast";
 import { read } from "./utils/theme";
-import MobileTopBar from "./components/layout/MobileTopBar";
+import MobileTopBar from "./components/layout/MobileBottom";
 
 export default function Root() {
   const username = read("username");

@@ -10,7 +10,7 @@ const TopBar = () => {
 
   return (
     <div class="navbar w-full bg-white/30 sticky top-0 z-50 backdrop-blur-sm">
-      <div class="flex justify-between w-full container mx-auto md:px-32">
+      <div class="md:flex hidden justify-between w-full container mx-auto md:px-0 xl:px-32">
         <Logo />
         <div class="flex items-center space-x-3">
           <Show
@@ -103,6 +103,10 @@ const TopBar = () => {
             </Show>
           </Show>
         </div>
+      </div>
+      {/* mobile responsive */}
+      <div class="md:hidden text-center w-full">
+        <Logo />
       </div>
     </div>
   );

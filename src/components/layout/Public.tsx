@@ -11,7 +11,7 @@ import {
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { useLocation } from "solid-start";
-import MobileTopBar from "./MobileTopBar";
+import MobileTopBar from "./MobileBottom";
 
 interface layoutProps {
   children: JSXElement;

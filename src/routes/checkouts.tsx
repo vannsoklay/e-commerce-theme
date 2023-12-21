@@ -430,7 +430,7 @@ export default function Checkout() {
                       </div>
                     </div>
                   </main>
-                  <div class="md:pt-6 pt-4">
+                  <div class="md:pt-6 pt-10">
                     <Button.Primary class="btn w-full rounded-full">
                       {process() ? (
                         <span class="loading loading-spinner"></span>

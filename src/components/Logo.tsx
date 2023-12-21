@@ -8,7 +8,7 @@ export const Logo = () => {
 
   return (
     <div class="flex-1">
-      <A href="/" class="btn btn-ghost hover:bg-transparent text-xl text-primary">
+      <A href="/" class="btn btn-ghost hover:bg-transparent md:text-xl text-md text-primary">
         <Show when={header()?.type} fallback={name()}>
           <img src={header()?.logo} alt="" />
         </Show>
