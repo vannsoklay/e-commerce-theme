@@ -42,7 +42,7 @@ export const LatestProducts = () => {
       >
         Show More
       </A>
-      <div class="grid md:grid-cols-4 grid-cols-1 gap-3 md:pt-8 pt-8 md:px-0 px-6">
+      <div class="grid md:grid-cols-4 grid-cols-1 gap-3 md:pt-8 pt-8 md:px-0 px-6 pb-9 sm:pb-0">
         <Show when={products()} fallback={<div>loading...</div>}>
           <Show
             when={products().storeProducts.length > 0}

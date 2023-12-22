@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import { Component } from "solid-js";
 import { FaSolidSquarePhone } from "solid-icons/fa";
 import { SiGmail } from "solid-icons/si";
@@ -6,7 +5,7 @@ import { SiGmail } from "solid-icons/si";
 const Footer: Component = () => {
   return (
     <>
-      <footer class="py-10 bg-primary-1/5 text-primary-1/80 text-base-content">
+      <footer class="hidden sm:block py-10 bg-primary-1/5 text-primary-1/80 text-base-content">
         <div class="footer md:flex justify-between w-full container mx-auto xl:px-32 px-8">
           <aside>
             <img
@@ -90,10 +89,10 @@ const Footer: Component = () => {
           </nav>
         </div>
       </footer>
-      <div class="bg-primary-1 text-white p-4">
+      <div class="hidden sm:block bg-primary-1 text-white p-4">
         <footer class="footer footer-center">
           <aside>
-            <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
+            <p>Copyright © 2023 - All right reserved by Riverbase</p>
           </aside>
         </footer>
       </div>

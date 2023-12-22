@@ -11,7 +11,6 @@ import {
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { useLocation } from "solid-start";
-import MobileTopBar from "./MobileBottom";
 
 interface layoutProps {
   children: JSXElement;
@@ -35,7 +34,9 @@ const PublicLayout: Component<layoutProps> = (props) => {
 
   return (
     <div class="relative">
-      <TopBar />
+      <Show when={!router.pathname.startsWith("/search")}>
+        <TopBar />
+      </Show>
       <main class="mb-16">{props.children}</main>
       <Show when={!router.pathname.startsWith("/me")}>
         <Footer />

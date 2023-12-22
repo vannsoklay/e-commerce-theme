@@ -16,7 +16,9 @@ export const Dialog: Component<DialogIconProps> = (props) => {
       }}
       class="modal"
     >
-      <div class={`modal-box ${props.classes}`}>{props.children}</div>
+      <div class={`modal-box p-1 sm:p-6 ${props.classes}`}>
+        {props.children}
+      </div>
     </dialog>
   );
 };

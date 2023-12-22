@@ -5,7 +5,6 @@ import {
   type Component,
   createSignal,
   createEffect,
-  Show,
 } from "solid-js";
 import { getMe } from "~/api/me";
 import { Dialog } from "~/components/Dialog";
