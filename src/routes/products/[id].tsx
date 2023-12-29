@@ -7,8 +7,7 @@ import { publicQuery } from "~/libs/client";
 import { GET_PRODUCT } from "~/libs/graphql/product";
 import { MeteTag } from "~/components/meta";
 import { AiFillStar } from "solid-icons/ai";
-import {$getRoot, $getSelection, $createParagraphNode} from 'lexical';
-
+import { LexicalViwer } from "~/components/LexicalViewer";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -203,9 +202,8 @@ const ProductDetail = () => {
                     </div>
 
                     {/* ------------Key features ---------- */}
-                    <div>
-                      {product().storeProduct.detail}
-                    </div>
+                    {/* <div>{product().storeProduct.detail}</div> */}
+                    <LexicalViwer data={product().storeProduct.detail} />
                     {/* <div class="mt-10">
                       <h3 class="text-sm font-medium text-gray-900">
                         GUARANTEED EXCELLENT PRINTING QUALITY
