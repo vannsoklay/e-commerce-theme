@@ -73,7 +73,7 @@ export const LoginForm: Component<{
             return;
           })
           .catch((_) => {
-            toast.success("Fail to login");
+            toast.error("Fail to login");
             setLoading(false);
             handler(null);
             return;

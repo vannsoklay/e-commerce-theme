@@ -6,8 +6,7 @@ import Image from "~/components/Image";
 import { publicQuery } from "~/libs/client";
 import { GET_PRODUCT } from "~/libs/graphql/product";
 import { MeteTag } from "~/components/meta";
-import { AiFillStar } from "solid-icons/ai";
-import {$getRoot, $getSelection, $createParagraphNode} from 'lexical';
+import { AiFillStar } from "solid-icons/ai"
 
 
 const ProductDetail = () => {
