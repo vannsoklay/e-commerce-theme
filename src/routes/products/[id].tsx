@@ -95,7 +95,7 @@ const ProductDetail = () => {
                   <div class="mt-4 lg:row-span-3 lg:mt-0">
                     <h2 class="sr-only">Product information</h2>
                     <p class="text-5xl tracking-tight text-base-content font-semibold">
-                      ${product().storeProduct.price}
+                      {product().storeProduct.currency === "KHR" ? "៛" : "$"}{product().storeProduct.price}
                     </p>
 
                     {/* -----review -------- */}

@@ -108,7 +108,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 }`}
               >
                 <span class="text-3xl lg:text-xl 2xl:text-3xl font-bold text-secondary">
-                  ${props.product?.price}
+                {props.product.currency === "KHR" ? "៛" : "$"}{props.product?.price}
                 </span>
                 <button
                   onClick={() => navigate(`/products/${props?.product?.slug}`)}
@@ -116,33 +116,6 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 >
                   {props.product.variants.length <= 0 ? "Add to cart" : "Views"}
                 </button>
-                {/* <div
-                  class="tooltip tooltip-open tooltip-right"
-                  data-tip="hello guy"
-                >
-                  <button class="btn">Right</button>
-                </div> */}
-                {/* {!isInCart() ? (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToCart(props.product);
-                    }}
-                    class="text-primary hover:text-white border border-primary hover:border-danger hover:bg-danger focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 lg:py-1.5 2xl:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Add to cart
-                  </button>
-                ) : (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/cart`);
-                    }}
-                    class="text-white hover:text-white border bg-danger hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 lg:py-1.5 2xl:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    View Cart
-                  </button>
-                )} */}
               </div>
             </div>
           </div>
