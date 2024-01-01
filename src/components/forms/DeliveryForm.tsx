@@ -3,7 +3,6 @@ import {
   createForm,
   SubmitHandler,
   email,
-  minLength,
   required,
 } from "@modular-forms/solid";
 import toast from "solid-toast";
@@ -15,6 +14,8 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
   const [_, { Form, Field }] = createForm<DeliveryType>();
 
   const handleSubmit: SubmitHandler<DeliveryType> = (values, _) => {
+    console.log("value", values);
+    
     client
       .mutation(CREATE_DELIVERY, {
         input: { ...values, phoneNumber: parseInt(values.phoneNumber) },
@@ -25,7 +26,7 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
           return toast.error(res.error.message);
         }
         props.refetch();
-        toast.success(res.data.createDelivery.message);
+        toast.success(res.data.storeCreateDelivery.message);
       });
   };
   return (

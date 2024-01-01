@@ -14,6 +14,7 @@ type PaymentType = {
 
 
 type CheckoutType = {
-  delivery: string,
-  method: string
+  delivery_option: string,
+  delivery_express: string,
+  payment: "CASH"
 }

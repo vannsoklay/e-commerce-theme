@@ -21,6 +21,7 @@ import MobileTopBar from "./components/layout/MobileBottom";
 
 export default function Root() {
   const username = read("username");
+  
   return (
     <Html lang="en" data-theme="light">
       <Head>

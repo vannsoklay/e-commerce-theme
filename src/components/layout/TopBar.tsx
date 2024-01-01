@@ -71,13 +71,10 @@ const TopBar = () => {
               <div class="dropdown dropdown-end">
                 <label
                   tabIndex={0}
-                  class="btn btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20"
+                  class="btn btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20 placeholder"
                 >
-                  <div class="w-10 rounded-full">
-                    <img
-                      alt=""
-                      src="https://i0.wp.com/vrscout.com/wp-content/uploads/2022/10/IronManVRQuest2.jpg?fit=1132%2C670&ssl=1"
-                    />
+                  <div class="bg-primary text-neutral-content rounded-full w-10">
+                    <span>{user().first_name?.charAt(0).toUpperCase()}{user().last_name?.charAt(0).toUpperCase()}</span>
                   </div>
                 </label>
                 <ul
