@@ -21,6 +21,8 @@
   "dependencies": {
     "@modular-forms/solid": "^0.20.0",
     "@solid-primitives/graphql": "^2.0.1",
+    "@lexical/headless": "^0.12.5",
+    "@lexical/html": "^0.12.5",
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
     "@urql/core": "^4.2.0",
