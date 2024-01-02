@@ -19,7 +19,6 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "@lexical/headless": "^0.12.5",
     "@modular-forms/solid": "^0.20.0",
     "@solid-primitives/graphql": "^2.0.1",
     "@lexical/headless": "^0.12.5",
