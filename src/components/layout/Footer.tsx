@@ -1,18 +1,20 @@
 import { Component } from "solid-js";
 import { FaSolidSquarePhone } from "solid-icons/fa";
 import { SiGmail } from "solid-icons/si";
+import { read } from "~/utils/theme";
+import { A } from "solid-start";
 
 const Footer: Component = () => {
+  const name = read("name");
+  const header = read("header");
   return (
     <>
       <footer class="hidden sm:block py-10 bg-primary-1/5 text-primary-1/80 text-base-content">
         <div class="footer md:flex justify-between w-full container mx-auto xl:px-32 px-8">
           <aside>
-            <img
-              src="./images/logos/riverbase-black.png"
-              class="h-14 mb-4"
-              alt=""
-            />
+            <A href="/">
+              <img class="h-14 mb-4" src={header()?.logo} alt="" />
+            </A>
             <p class="text-body-color text-base">
               #18C1, Sangkat Tuek Thlar, Khan Sen Sok, Phnom Penh, Cambodia
             </p>

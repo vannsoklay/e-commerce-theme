@@ -1,7 +1,7 @@
 import { gql } from "@urql/core";
 
 export const GET_PRODUCT = gql`
-  query ($slug: String!) {
+  query($slug: String!) {
     storeProduct(slug: $slug) {
       id
       ownerId
@@ -16,6 +16,7 @@ export const GET_PRODUCT = gql`
       previews
       status
       detail
+      currency
       variants {
         price
         preview
@@ -42,6 +43,7 @@ export const GET_ALL_PRODUCTS = gql`
       slug
       rating
       previews
+      currency
       status
       detail
       variants {

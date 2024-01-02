@@ -1,22 +1,23 @@
-import { SubmitHandler, createForm } from "@modular-forms/solid";
+import { SubmitHandler, createForm, required } from "@modular-forms/solid";
 import { For, Show, createEffect, createSignal } from "solid-js";
 import { DeliveryForm } from "~/components/forms/DeliveryForm";
 import { ORDER_PRODUCT } from "~/libs/graphql/order";
 import { useCart } from "~/contexts/useCart";
 import { client, clientQuery } from "~/libs/client";
-import { DELIVERIES } from "~/libs/graphql/delivery";
+import { DELIVERIES, DELIVERIES_EXPRESS } from "~/libs/graphql/delivery";
 import toast from "solid-toast";
 import { Dialog } from "~/components/Dialog";
 import PrivateLayout from "~/components/layout/Private";
 import { useNavigate } from "solid-start";
 import { EmptyCart } from "~/components/Empty";
 import Button from "~/components/Button";
+import { CHECKOUT_PRODUCT } from "~/libs/graphql/checkout";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const [open, setOpen] = createSignal<string | null>(null);
   const [_, { Form, Field }] = createForm<CheckoutType>();
-  const [data, { refetch }] = clientQuery(DELIVERIES, {});
+
   const [process, setProcess] = createSignal(false);
   const { cartItems, minusCart, removeFromCart, addToCart, cleanCartItems } =
     useCart();
@@ -59,23 +60,36 @@ export default function Checkout() {
         if (res.error) {
           return toast.error(res.error.message);
         }
-        toast.success(res.data.createOrder.message);
-        setOpen(() => "my_modal_1");
-        setTimeout(() => {
-          setProcess(false);
-        }, 1000);
+        client
+          .mutation(CHECKOUT_PRODUCT, {
+            orderId: res.data.storeCreateOrder.id,
+            payment: values.payment,
+            deliveryOptionId: values.delivery_option,
+            deliveryId: values.delivery_express,
+          })
+          .toPromise()
+          .then((_) => {
+            if (res.error) {
+              return toast.error(res.error.message);
+            }
+            setTimeout(() => {
+              setProcess(false);
+              setOpen(() => "my_modal_2");
+            }, 1000);
+          });
       });
   };
 
-  refetch();
   return (
     <PrivateLayout>
       <Show when={cartItems.length > 0} fallback={<EmptyCart />}>
         <Form onSubmit={handleCheckout} class="mx-auto text-gray-700 p-4">
-          <Dialog modalId={open} classes="w-80 flex justify-center text-center">
+          <Dialog
+            modalId={open}
+            classes="w-80 h-80 flex justify-center text-center"
+          >
             <div class="w-full space-y-2">
-              <div class="flex justify-center">QR CODE</div>
-              <img src="/images/qr/qr.png" alt="" />
+              <div class="flex justify-center">Congratulation</div>
               <button
                 class="btn w-full"
                 onClick={(e) => {
@@ -84,74 +98,26 @@ export default function Checkout() {
                   navigate("/me/history");
                 }}
               >
-                Skip
+                Continue
               </button>
             </div>
           </Dialog>
           <div class="mx-auto mt-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-0 xl:px-24 2xl:px-0">
             <div class="grid grid-cols-4 gap-8 mt-8">
               <main class="col-span-2 md:block hidden">
-                <Show when={data()} fallback={<div>loading...</div>}>
-                  <div class="flex justify-start">
-                    <div
-                      class={`collapse ${
-                        data().deliveries.length <= 0 && "collapse-open"
-                      } p-0`}
-                    >
-                      <input type="checkbox" class="peer" />
-                      <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
-                        Delivery Options
-                      </h1>
-                      <div class="collapse-content">
-                        <DeliveryForm refetch={refetch} />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-8 px-4">
-                    <div class="flex justify-start">
-                      <div class="gird grid-cols-1 space-y-6">
-                        <For
-                          each={data().deliveries}
-                          fallback={<div>loading...</div>}
-                        >
-                          {(delivery) => (
-                            <Field name="delivery">
-                              {(field, props) => (
-                                <label class="w-full flex col-span-8 gap-6 items-center">
-                                  <input
-                                    {...props}
-                                    class="radio"
-                                    type="radio"
-                                    value={delivery.id}
-                                    checked={field.value?.includes(delivery.id)}
-                                  />
-                                  <div>{delivery.address}</div>
-                                </label>
-                              )}
-                            </Field>
-                          )}
-                        </For>
-                      </div>
-                    </div>
-                  </div>
-                </Show>
+                <DeliveryOption Field={Field} />
                 <div class="flex justify-start w-full"></div>
                 <div class="flex justify-start">
                   <h1 class="text-xl font-semibold pb-8">Payments</h1>
                 </div>
                 <div class="flex justify-start w-full px-4">
                   <div class="grid grid-cols-8 gap-4 space-y-4">
-                    <For
-                      each={[
-                        { label: "credit", value: "credit-debit-card" },
-                        { label: "ABA Pay", value: "aba-pay" },
-                        { label: "Wing Pay", value: "wing-pay" },
-                        { label: "Chip Mong Bank", value: "chip-mong-bank" },
-                        { label: "Acleda Pay", value: "xpay" },
-                      ]}
-                    >
+                    <For each={[{ label: "cash", value: "CASH" }]}>
                       {({ value }) => (
-                        <Field name="method">
+                        <Field
+                          name="payment"
+                          validate={[required("Please select your payment.")]}
+                        >
                           {(field, props) => (
                             <label class="w-full flex col-span-8 gap-6 items-center">
                               <input
@@ -173,6 +139,7 @@ export default function Checkout() {
                     </For>
                   </div>
                 </div>
+                <Delivery Field={Field} />
               </main>
               <main class="md:col-span-2 col-span-4 md:px-8">
                 <h1 class="text-xl font-semibold pb-2">
@@ -340,96 +307,7 @@ export default function Checkout() {
                     </h1>
                   </div>
                   {/* delivery */}
-                  <main class="mt-6 md:hidden">
-                    <div class="grid grid-cols-1 flex justify-start">
-                      <Show when={data()} fallback={<div>loading...</div>}>
-                        <div class="flex justify-start">
-                          <div
-                            class={`collapse ${
-                              data().deliveries.length <= 0 && "collapse-open"
-                            } p-0`}
-                          >
-                            <input type="checkbox" class="peer" />
-                            <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
-                              Delivery Options
-                            </h1>
-                            <div class="collapse-content">
-                              <DeliveryForm refetch={refetch} />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="pb-8 px-4">
-                          <div class="flex justify-start">
-                            <div class="gird grid-cols-1 space-y-6">
-                              <For
-                                each={data().deliveries}
-                                fallback={<div>loading...</div>}
-                              >
-                                {(delivery) => (
-                                  <Field name="delivery">
-                                    {(field, props) => (
-                                      <label class="w-full flex col-span-8 gap-6 items-center">
-                                        <input
-                                          {...props}
-                                          class="radio"
-                                          type="radio"
-                                          value={delivery.id}
-                                          checked={field.value?.includes(
-                                            delivery.id
-                                          )}
-                                        />
-                                        <div>{delivery.address}</div>
-                                      </label>
-                                    )}
-                                  </Field>
-                                )}
-                              </For>
-                            </div>
-                          </div>
-                        </div>
-                      </Show>
-                    </div>
-                    <div class="grid grid-cols-1 flex justify-start">
-                      <h1 class="font-bold font-semibold text-xl">Payments</h1>
-                      <div class="flex justify-start w-full px-4 mt-8">
-                        <div class="grid grid-cols-8 gap-4 space-y-4">
-                          <For
-                            each={[
-                              { label: "credit", value: "credit-debit-card" },
-                              { label: "ABA Pay", value: "aba-pay" },
-                              { label: "Wing Pay", value: "wing-pay" },
-                              {
-                                label: "Chip Mong Bank",
-                                value: "chip-mong-bank",
-                              },
-                              { label: "Acleda Pay", value: "xpay" },
-                            ]}
-                          >
-                            {({ value }) => (
-                              <Field name="method">
-                                {(field, props) => (
-                                  <label class="w-full flex col-span-8 gap-6 items-center">
-                                    <input
-                                      {...props}
-                                      class="radio"
-                                      type="radio"
-                                      value={value}
-                                      checked={field.value?.includes(value)}
-                                    />
-                                    <img
-                                      class="h-12"
-                                      src={`/images/banks/${value}.png`}
-                                      alt=""
-                                    />
-                                  </label>
-                                )}
-                              </Field>
-                            )}
-                          </For>
-                        </div>
-                      </div>
-                    </div>
-                  </main>
+                  <DeliveryOptionMobile Field={Field} />
                   <div class="md:pt-6 pt-10">
                     <Button.Primary class="btn w-full rounded-full">
                       {process() ? (
@@ -448,3 +326,204 @@ export default function Checkout() {
     </PrivateLayout>
   );
 }
+
+const Delivery = ({ Field }: any) => {
+  const [data] = clientQuery(DELIVERIES_EXPRESS, {});
+
+  return (
+    <Show when={!data.loading} fallback={<div>loading...</div>}>
+      <div class="flex justify-start">
+        <h1 class="collapse-title text-xl font-semibold px-0 py-8">
+          Delivery Express
+        </h1>
+        <div class="flex justify-start w-full px-4"></div>
+      </div>
+      <div class="pb-8 px-4">
+        <div class="flex justify-start">
+          <div class="gird grid-cols-1 space-y-6">
+            <Show
+              when={data().storeDeliveriesExpress.length > 0}
+              fallback={<div>Not Founded</div>}
+            >
+              <For
+                each={data().storeDeliveriesExpress}
+                fallback={<div>Not Founded</div>}
+              >
+                {(delivery) => (
+                  <Field
+                    name="delivery_express"
+                    validate={[required("Please select your delivery.")]}
+                  >
+                    {(field: any, props: any) => (
+                      <label class="w-full flex col-span-8 gap-6 items-center">
+                        <input
+                          {...props}
+                          class="radio"
+                          type="radio"
+                          value={delivery.id}
+                          checked={field.value?.includes(delivery.id)}
+                        />
+                        <div>{delivery.name}</div>
+                      </label>
+                    )}
+                  </Field>
+                )}
+              </For>
+            </Show>
+          </div>
+        </div>
+      </div>
+    </Show>
+  );
+};
+
+const DeliveryOption = ({ Field }: any) => {
+  const [data, { refetch }] = clientQuery(DELIVERIES, {});
+
+  return (
+    <Show when={!data.loading} fallback={<div>loading...</div>}>
+      <div class="flex justify-start">
+        <div
+          class={`collapse ${
+            data().deliveries.length <= 0 && "collapse-open"
+          } p-0`}
+        >
+          <input type="checkbox" class="peer" />
+          <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
+            Delivery Options
+          </h1>
+          <div class="collapse-content">
+            <DeliveryForm refetch={refetch} />
+          </div>
+        </div>
+      </div>
+      <div class="pb-8 px-4">
+        <div class="flex justify-start">
+          <div class="gird grid-cols-1 space-y-6">
+            <Show
+              when={data().deliveries.length > 0}
+              fallback={<div>Not Founded</div>}
+            >
+              <For each={data().deliveries} fallback={null}>
+                {(delivery) => (
+                  <Field
+                    name="delivery_option"
+                    validate={[required("Please select your delivery option.")]}
+                  >
+                    {(field: any, props: any) => (
+                      <label class="w-full flex col-span-8 gap-6 items-center">
+                        <input
+                          {...props}
+                          class="radio"
+                          type="radio"
+                          value={delivery.id}
+                          checked={field.value?.includes(delivery.id)}
+                          required
+                        />
+                        <div>{delivery.address}</div>
+                      </label>
+                    )}
+                  </Field>
+                )}
+              </For>
+            </Show>
+          </div>
+        </div>
+      </div>
+    </Show>
+  );
+};
+
+const DeliveryOptionMobile = ({ Field }: any) => {
+  const [data, { refetch }] = clientQuery(DELIVERIES, {});
+
+  return (
+    <main class="mt-6 md:hidden">
+      <div class="grid grid-cols-1 flex justify-start">
+        <Show when={!data.loading} fallback={<div>loading...</div>}>
+          <div class="flex justify-start">
+            <div
+              class={`collapse ${
+                data().deliveries.length <= 0 && "collapse-open"
+              } p-0`}
+            >
+              <input type="checkbox" class="peer" />
+              <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
+                Delivery Options
+              </h1>
+              <div class="collapse-content">
+                <DeliveryForm refetch={refetch} />
+              </div>
+            </div>
+          </div>
+          <div class="pb-8 px-4">
+            <div class="flex justify-start">
+              <div class="gird grid-cols-1 space-y-6">
+                <For each={data().deliveries} fallback={<div>loading...</div>}>
+                  {(delivery) => (
+                    <Field name="delivery_option">
+                      {(field: any, props: any) => (
+                        <label class="w-full flex col-span-8 gap-6 items-center">
+                          <input
+                            {...props}
+                            class="radio"
+                            type="radio"
+                            value={delivery.id}
+                            checked={field.value?.includes(delivery.id)}
+                            required
+                          />
+                          <div>{delivery.address}</div>
+                        </label>
+                      )}
+                    </Field>
+                  )}
+                </For>
+              </div>
+            </div>
+          </div>
+        </Show>
+      </div>
+      <div class="grid grid-cols-1 flex justify-start">
+        <h1 class="font-bold font-semibold text-xl">Payments</h1>
+        <div class="flex justify-start w-full px-4 mt-8">
+          <div class="grid grid-cols-8 gap-4 space-y-4">
+            <For
+              each={[
+                { label: "credit", value: "credit-debit-card" },
+                { label: "ABA Pay", value: "aba-pay" },
+                { label: "Wing Pay", value: "wing-pay" },
+                {
+                  label: "Chip Mong Bank",
+                  value: "chip-mong-bank",
+                },
+                { label: "Acleda Pay", value: "xpay" },
+              ]}
+            >
+              {({ value }) => (
+                <Field name="payment">
+                  {(field: any, props: any) => (
+                    <label class="w-full flex col-span-8 gap-6 items-center">
+                      <input
+                        {...props}
+                        class="radio"
+                        type="radio"
+                        value={value}
+                        checked={field.value?.includes(value)}
+                        required
+                      />
+                      <img
+                        class="h-12"
+                        src={`/images/banks/${value}.png`}
+                        alt=""
+                      />
+                    </label>
+                  )}
+                </Field>
+              )}
+            </For>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+};

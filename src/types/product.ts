@@ -11,6 +11,7 @@ type ProductType = {
     thumbnail: string;
     rating: number;
     brand: string;
+    currency: string,
     price: number;
     slug: String;
     previews: string[]

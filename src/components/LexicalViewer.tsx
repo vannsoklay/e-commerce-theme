@@ -30,10 +30,6 @@ export const LexicalViwer: Component<Props> = ({ data = empty }) => {
 
   createEffect(async () => {
     await run(data, setContent);
-  });
-
-  createEffect(() => {
-    console.log(content());
-  });
+  })
   return <div innerHTML={content()}></div>;
 };
