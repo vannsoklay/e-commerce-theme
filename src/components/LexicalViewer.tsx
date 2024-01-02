@@ -25,12 +25,11 @@ async function run(value: string, callback: Setter<string>) {
 }
 const empty =
   '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
-export const LexicalViewer: Component<Props> = ({ data = empty }) => {
+export const LexicalViwer: Component<Props> = ({ data = empty }) => {
   const [content, setContent] = createSignal("");
 
   createEffect(async () => {
     await run(data, setContent);
-  });
-
+  })
   return <div innerHTML={content()}></div>;
 };
