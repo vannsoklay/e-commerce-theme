@@ -8,7 +8,7 @@ import {
   onCleanup,
 } from "solid-js";
 // import Breadcrumb from "../Breadcrumb";
-import TopBar from "./TopBar";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useLocation } from "solid-start";
 
@@ -35,7 +35,7 @@ const PublicLayout: Component<layoutProps> = (props) => {
   return (
     <div class="relative">
       <Show when={!router.pathname.startsWith("/search")}>
-        <TopBar />
+        <Navbar />
       </Show>
       <main class="mb-16">{props.children}</main>
       <Show when={!router.pathname.startsWith("/me")}>

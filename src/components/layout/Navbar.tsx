@@ -4,7 +4,7 @@ import { useAuth } from "~/contexts/useAuth";
 import { A } from "@solidjs/router";
 import { Logo } from "../Logo";
 
-const TopBar = () => {
+const Navbar = () => {
   const { cartItems, logout } = useCart();
   const { user, loading, login } = useAuth();
 
@@ -74,7 +74,10 @@ const TopBar = () => {
                   class="btn btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20 placeholder"
                 >
                   <div class="bg-primary text-neutral-content rounded-full w-10">
-                    <span>{user().first_name?.charAt(0).toUpperCase()}{user().last_name?.charAt(0).toUpperCase()}</span>
+                    <span>
+                      {user().first_name?.charAt(0).toUpperCase()}
+                      {user().last_name?.charAt(0).toUpperCase()}
+                    </span>
                   </div>
                 </label>
                 <ul
@@ -109,4 +112,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default Navbar;

@@ -19,10 +19,16 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "@modular-forms/solid": "^0.20.0",
-    "@solid-primitives/graphql": "^2.0.1",
+    "@lexical/code": "^0.12.5",
     "@lexical/headless": "^0.12.5",
     "@lexical/html": "^0.12.5",
+    "@lexical/link": "^0.12.5",
+    "@lexical/list": "^0.12.5",
+    "@lexical/markdown": "^0.12.5",
+    "@lexical/rich-text": "^0.12.5",
+    "@lexical/table": "^0.12.5",
+    "@modular-forms/solid": "^0.20.0",
+    "@solid-primitives/graphql": "^2.0.1",
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
     "@urql/core": "^4.2.0",

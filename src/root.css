@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Alatsi&display=swap");
+
 @layer utilities {
+  html {
+    font-family: "Alatsi", sans-serif;
+  }
+
   .hide-scroll-bar {
     -ms-overflow-style: none;
     scrollbar-width: none;

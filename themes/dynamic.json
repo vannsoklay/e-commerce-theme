@@ -10,5 +10,9 @@
     "images": null,
     "quote": null,
     "text": null
+  },
+  "fontFamily": {
+    "sans": ["Graphik", "sans-serif"],
+    "serif": ["Merriweather", "serif"]
   }
 }

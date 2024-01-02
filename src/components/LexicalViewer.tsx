@@ -3,6 +3,14 @@ import { createHeadlessEditor } from "@lexical/headless";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import { createSignal, createEffect, Setter } from "solid-js";
 
+/* Lexical Design System */
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
+import { ListItemNode, ListNode } from "@lexical/list";
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { AutoLinkNode, LinkNode } from "@lexical/link";
+import { TRANSFORMERS } from "@lexical/markdown";
+
 interface Props {
   data: string;
 }
@@ -11,7 +19,19 @@ async function run(value: string, callback: Setter<string>) {
   return new Promise((resolve) => {
     const editor = createHeadlessEditor({
       namespace: "Editor",
-      nodes: [],
+      nodes: [
+        HeadingNode,
+        ListNode,
+        ListItemNode,
+        QuoteNode,
+        CodeNode,
+        CodeHighlightNode,
+        TableNode,
+        TableCellNode,
+        TableRowNode,
+        AutoLinkNode,
+        LinkNode,
+      ],
       onError: () => {},
     });
 
