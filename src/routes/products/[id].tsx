@@ -6,8 +6,8 @@ import Image from "~/components/Image";
 import { publicQuery } from "~/libs/client";
 import { GET_PRODUCT } from "~/libs/graphql/product";
 import { MeteTag } from "~/components/meta";
-import { AiFillStar } from "solid-icons/ai";
 import { LexicalViwer } from "~/components/LexicalViewer";
+import { AiFillStar } from "solid-icons/ai";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -202,151 +202,7 @@ const ProductDetail = () => {
                     </div>
 
                     {/* ------------Key features ---------- */}
-                    {/* <div>{product().storeProduct.detail}</div> */}
                     <LexicalViwer data={product().storeProduct.detail} />
-                    {/* <div class="mt-10">
-                      <h3 class="text-sm font-medium text-gray-900">
-                        GUARANTEED EXCELLENT PRINTING QUALITY
-                      </h3>
-
-                      <div class="mt-4">
-                        <ul
-                          role="list"
-                          class="list-disc space-y-2 pl-4 text-sm"
-                        >
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              All Evolis High Trust® consumables are tested and
-                              approved by Evolis’ R&D and Quality Control
-                              departments.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="mt-10">
-                      <h3 class="text-sm font-medium text-gray-900">
-                        AFFORDABLE CARD COST
-                      </h3>
-
-                      <div class="mt-4">
-                        <ul
-                          role="list"
-                          class="list-disc space-y-2 pl-4 text-sm"
-                        >
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              Primacy 2 printing ribbons are among the best
-                              value for money on the market.
-                            </span>
-                          </li>
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              Panel management is optimized in the driver for
-                              color ribbons, and a ribbon-saving feature for
-                              monochrome ribbons allows you to make the best of
-                              your ribbons.
-                            </span>
-                          </li>
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              Standard color ribbons combined with lamination
-                              enable you to add security elements visible under
-                              UV light easily (no specific ribbon required).
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="mt-10">
-                      <h3 class="text-sm font-medium text-gray-900">
-                        SIMPLE SET-UP AND OPERATION FEATURES
-                      </h3>
-
-                      <div class="mt-4">
-                        <ul
-                          role="list"
-                          class="list-disc space-y-2 pl-4 text-sm"
-                        >
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              Primacy 2 ribbons can be installed in a snap and
-                              the printer automatically senses the ribbon (RFID
-                              communication).
-                            </span>
-                          </li>
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              Easy4Pro range without cassette is the option for
-                              experienced high-volume users wishing to reduce
-                              their plastic consumption and their waste.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="mt-10">
-                      <h3 class="text-sm font-medium text-gray-900">
-                        MAXIMIZED PRINTER LONGEVITY
-                      </h3>
-
-                      <div class="mt-4">
-                        <ul
-                          role="list"
-                          class="list-disc space-y-2 pl-4 text-sm"
-                        >
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              The printers’ settings are precision-adjusted to
-                              the ribbons’ ink formula for optimal card printing
-                              quality and speed.
-                            </span>
-                          </li>
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              Using genuine Evolis High Trust® consumables
-                              extends the life of Evolis systems’ print heads.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="mt-10">
-                      <h3 class="text-sm font-medium text-gray-900">
-                        YMCKOO NEW RIBBON: A DOUBLE LAYER OF OVERLAY FOR A
-                        DOUBLE PROTECTION
-                      </h3>
-
-                      <div class="mt-4">
-                        <ul
-                          role="list"
-                          class="list-disc space-y-2 pl-4 text-sm"
-                        >
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              The double layer of overlay brings to your printed
-                              cards increased protection against wear and tear,
-                              without lamination. The abrasion resistance is 3
-                              times better with the YMCKOO ribbon compared to
-                              standard YMCKO ribbon protection.
-                            </span>
-                          </li>
-                          <li class="text-gray-400">
-                            <span class="text-gray-600">
-                              The double overlay YMCKOO ribbon also gives you
-                              the ability to use one of the overlay layers to
-                              easily insert UV\light reflective elements for
-                              security purposes, and the other overlay layer to
-                              fully protect the card.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div> */}
                   </div>
                 </div>
               </section>
