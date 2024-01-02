@@ -6,9 +6,8 @@ import Image from "~/components/Image";
 import { publicQuery } from "~/libs/client";
 import { GET_PRODUCT } from "~/libs/graphql/product";
 import { MeteTag } from "~/components/meta";
-import { LexicalViwer } from "~/components/LexicalViewer";
-import { AiFillStar } from "solid-icons/ai";
 import { LexicalViewer } from "~/components/LexicalViewer";
+import { AiFillStar } from "solid-icons/ai";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -203,7 +202,7 @@ const ProductDetail = () => {
                     </div>
 
                     {/* ------------Key features ---------- */}
-                    <LexicalViwer data={product().storeProduct.detail} />
+                    <LexicalViewer data={product().storeProduct.detail} />
                   </div>
                 </div>
               </section>
