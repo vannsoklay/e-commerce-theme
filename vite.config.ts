@@ -14,20 +14,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     build: {
       target: "esnext",
     },
-    plugins: [
-      solid(),
-      solidPlugin({
-        babel: {
-          plugins: [
-            [
-              "@locator/babel-jsx/dist",
-              {
-                env: "development",
-              },
-            ],
-          ],
-        },
-      }),
-    ],
+    plugins: [solid(), solidPlugin()],
   };
 });

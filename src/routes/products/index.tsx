@@ -1,4 +1,4 @@
-import { Component, For, Show } from "solid-js";
+import { For, Show } from "solid-js";
 import { CardProduct } from "~/components/Cards";
 import Hero from "~/components/Hero";
 import { publicQuery } from "~/libs/client";
