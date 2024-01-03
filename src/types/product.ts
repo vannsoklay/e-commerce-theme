@@ -5,6 +5,13 @@ interface Variants {
     price: string
 }
 
+type ItemProduct = {
+    id: string,
+    name: string,
+    price: number,
+    currency: "KHR" | "USD",
+    preview: string
+  }
 type ProductType = {
     id: string;
     title: string;

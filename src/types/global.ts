@@ -6,15 +6,16 @@ type ContextAuth = {
 };
 
 type CartItem = {
-  product: ProductType;
+  product: ItemProduct;
   quantity: number;
 };
 
 type CartContextType = {
   cartItems: CartItem[];
-  addToCart: (product: ProductType) => void;
-  minusCart: (product: ProductType) => void;
-  removeFromCart: (productId: string) => void;
+  addToCart: (product: ItemProduct) => void,
+  minusCart: (product: ItemProduct) => void,
+  removeFromCart: (productId: string) => void,
+  addCarts: (cartItems: CartItem[]) => void,
   cleanCartItems: Function,
   logout: Function
 }
