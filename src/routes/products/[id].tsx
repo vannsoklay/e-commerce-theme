@@ -11,9 +11,10 @@ import { AiFillStar } from "solid-icons/ai";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  const { addToCart, cartItems } = useCart();
+  const { addToCart, cartItems, addCarts } = useCart();
   const params = useParams<{ id: string }>();
   const [thumb, setThumb] = createSignal<number>(0);
+  const [items, setItems] = createSignal<CartItem[]>([]);
 
   const viewImage = () => {
     return `${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
@@ -25,8 +26,15 @@ const ProductDetail = () => {
     slug: params.id,
   }));
 
-  const handleAddToCart = (product: ProductType) => {
-    addToCart(product);
+  const handleAddToCart = (product: ItemProduct) => {
+    let p: ItemProduct = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      currency: product.currency,
+      preview: product.preview,
+    };
+    addToCart(p);
   };
 
   const isInCart = () => {
@@ -37,6 +45,10 @@ const ProductDetail = () => {
   createEffect(() => {
     isInCart();
     console.log(product());
+  });
+
+  const checked = cartItems.map((cart) => {
+    return cart.product.id;
   });
 
   return (
@@ -102,7 +114,7 @@ const ProductDetail = () => {
                       <div class="rating rating-sm mt-3">
                         <Show
                           when={product().storeProduct.rating}
-                          fallbac={null}
+                          fallback={null}
                         >
                           {Array(
                             Math.floor(product().storeProduct.rating)
@@ -149,6 +161,22 @@ const ProductDetail = () => {
                                     value={res.preview}
                                     class="hidden peer"
                                     required
+                                    onChange={(e) => {
+                                      e.preventDefault();
+                                      const p: ItemProduct = {
+                                        id: res.id,
+                                        name: res.name,
+                                        price: parseInt(res.price),
+                                        currency:
+                                          product().storeProduct.currency,
+                                        preview: res.preview,
+                                      };
+                                      const cart: CartItem = {
+                                        product: p,
+                                        quantity: 1,
+                                      };
+                                      setItems([...items(), cart]);
+                                    }}
                                   />
                                   <label
                                     for={res.preview}

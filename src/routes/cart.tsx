@@ -42,7 +42,7 @@ export default function Cart() {
                                     src={`${
                                       import.meta.env.VITE_VARIABLE_IPFS
                                     }/api/ipfs?hash=${
-                                      cartItem?.product?.thumbnail
+                                      cartItem?.product?.preview
                                     }`}
                                     alt=""
                                   />
@@ -50,7 +50,7 @@ export default function Cart() {
                               </div>
                             </div>
                             <div>
-                              <h1>{cartItem.product?.title}</h1>
+                              <h1>{cartItem.product?.name}</h1>
                               <div class="flex">
                                 <p>
                                   {cartItem.product.price} x{cartItem.quantity}

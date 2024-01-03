@@ -26,7 +26,7 @@ export function CartProvider(props: { children: JSXElement }) {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
 
-  const addToCart = (product: ProductType) => {
+  const addToCart = (product: ItemProduct) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
         (item) => item.product?.id === product?.id
@@ -45,7 +45,7 @@ export function CartProvider(props: { children: JSXElement }) {
     updateLocalStorage();
   };
 
-  const minusCart = (product: ProductType) => {
+  const minusCart = (product: ItemProduct) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
         (item) => item.product?.id === product?.id
@@ -80,11 +80,17 @@ export function CartProvider(props: { children: JSXElement }) {
     setCartItems([])
   }
 
+  const addCarts = (items: CartItem[]) => {
+    setCartItems(items.concat(cartItems))
+    updateLocalStorage()
+  }
+
   const logout = () => {
     localStorage.removeItem("cartItems");
     localStorage.removeItem("access_token");
     setCartItems([]);
     getUser();
+    addCarts(cartItems);
     navigate("/");
   }
 
@@ -93,6 +99,7 @@ export function CartProvider(props: { children: JSXElement }) {
       value={{
         cartItems,
         addToCart,
+        addCarts,
         removeFromCart,
         minusCart,
         cleanCartItems,

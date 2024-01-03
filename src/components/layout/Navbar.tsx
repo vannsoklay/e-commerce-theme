@@ -7,6 +7,7 @@ import { Logo } from "../Logo";
 const Navbar = () => {
   const { cartItems, logout } = useCart();
   const { user, loading, login } = useAuth();
+  
 
   return (
     <div class="navbar w-full bg-white/30 relative sm:sticky top-0 z-50 backdrop-blur-sm">

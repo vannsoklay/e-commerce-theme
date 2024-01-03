@@ -18,6 +18,7 @@ export const GET_PRODUCT = gql`
       detail
       currency
       variants {
+        id
         price
         preview
         option
