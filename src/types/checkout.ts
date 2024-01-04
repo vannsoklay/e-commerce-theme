@@ -1,4 +1,5 @@
 type DeliveryType = {
+  photos: string;
   firstName: string;
   lastName: string;
   address: string;
@@ -12,9 +13,8 @@ type PaymentType = {
   numberCard: string;
 };
 
-
 type CheckoutType = {
-  delivery_option: string,
-  delivery_express: string,
-  payment: "CASH"
-}
+  delivery_option: string;
+  delivery_express: string;
+  payment: "CASH";
+};

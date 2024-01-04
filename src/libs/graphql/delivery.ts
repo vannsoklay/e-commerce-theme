@@ -17,10 +17,10 @@ export const DELIVERIES = gql`
       phoneNumber
       createdAt
       updatedAt
+      photos
     }
   }
 `;
-
 
 export const DELIVERIES_EXPRESS = gql`
   query {

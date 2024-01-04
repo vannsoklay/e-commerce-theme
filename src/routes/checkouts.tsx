@@ -336,15 +336,9 @@ const Delivery = ({ Field }: any) => {
         Delivery Options
       </h1>
       <div class="pb-8 ">
-        <Show
-          when={data().storeDeliveriesExpress.length > 0}
-          fallback={<div>Not Founded</div>}
-        >
+        <Show when={data().storeDeliveriesExpress.length > 0} fallback={null}>
           <section class="grid grid-cols-2 gap-3 items-center px-2 pb-6">
-            <For
-              each={data().storeDeliveriesExpress}
-              fallback={<div>Not Founded</div>}
-            >
+            <For each={data().storeDeliveriesExpress} fallback={null}>
               {(delivery) => {
                 return (
                   <Field
@@ -409,13 +403,12 @@ const DeliveryOption = ({ Field }: any) => {
       <h1 class="collapse-title text-xl font-semibold px-0 py-0">
         Delivery Location
       </h1>
-      <Show
-        when={data().deliveries.length > 0}
-        fallback={<div>Not Founded</div>}
-      >
+      <Show when={data().deliveries.length > 0} fallback={null}>
         <section class="flex flex-wrap gap-3 items-center pb-6">
           <For each={data().deliveries} fallback={null}>
             {(delivery) => {
+              console.log("delivery", delivery);
+
               return (
                 <Field
                   name="delivery_option"
