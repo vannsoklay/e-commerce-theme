@@ -15,6 +15,7 @@ const ProductDetail = () => {
   const params = useParams<{ id: string }>();
   const [thumb, setThumb] = createSignal<number>(0);
   const [items, setItems] = createSignal<CartItem[]>([]);
+  const [active, setActive] = createSignal<string>();
 
   const viewImage = () => {
     return `${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
@@ -37,18 +38,13 @@ const ProductDetail = () => {
     addToCart(p);
   };
 
-  const isInCart = () => {
-    const data = cartItems.some((item) => item?.product?.id === params.id);
+  const isInCart = (id: string) => {
+    const data = cartItems.some((item) => item?.product?.id === id);
     return data;
   };
 
   createEffect(() => {
-    isInCart();
-    console.log(product());
-  });
-
-  const checked = cartItems.map((cart) => {
-    return cart.product.id;
+    isInCart(product().storeProduct.id);
   });
 
   return (
@@ -69,36 +65,49 @@ const ProductDetail = () => {
                   <div class="col-span-3 w-full gap-3 grid grid-cols-6">
                     <div class="hide-scroll-bar overflow-y-auto max-h-[45dvh]">
                       <div class="space-y-2">
-                        <For each={product().storeProduct.previews}>
-                          {(res: string, index: Accessor<number>) => {
-                            return (
-                              <div
-                                onClick={() => setThumb(index())}
-                                class="cursor-pointer"
-                              >
-                                <Image
-                                  image={`${
-                                    import.meta.env.VITE_VARIABLE_IPFS
-                                  }/api/ipfs?hash=${res}`}
-                                  name=""
-                                  width="w-full"
-                                  heigh="h-[9dvh]"
-                                  is_scale={true}
-                                />
-                              </div>
-                            );
-                          }}
-                        </For>
+                        <Show
+                          when={product().storeProduct.previews.length > 0}
+                          fallback={
+                            <Image
+                              image={`${
+                                import.meta.env.VITE_VARIABLE_IPFS
+                              }/api/ipfs?hash=${
+                                product().storeProduct.thumbnail
+                              }`}
+                              name=""
+                              width="w-full"
+                              heigh="h-[9dvh]"
+                              is_scale={true}
+                            />
+                          }
+                        >
+                          <></>
+                        </Show>
                       </div>
                     </div>
                     <div class="col-span-5">
-                      <div class="aspect-h-4 aspect-w-3 p-3 rounded-xl lg:block border mx-auto ">
-                        <img
-                          src={viewImage()}
-                          alt=""
-                          class="w-full max-h-[45dvh] rounded-lg object-contain object-center hover:scale-110 duration-150 animate-jump-in"
+                      <Show
+                        when={product().storeProduct.previews.length >= 0}
+                        fallback={
+                          <div class="aspect-h-4 aspect-w-3 p-3 rounded-xl lg:block border mx-auto">
+                            <img
+                              src={viewImage()}
+                              alt=""
+                              class="w-full max-h-[45dvh] rounded-lg object-contain object-center hover:scale-110 duration-150 animate-jump-in"
+                            />
+                          </div>
+                        }
+                      >
+                        <Image
+                          image={`${
+                            import.meta.env.VITE_VARIABLE_IPFS
+                          }/api/ipfs?hash=${product().storeProduct.thumbnail}`}
+                          name=""
+                          width="w-full"
+                          heigh="h-[9dvh]"
+                          is_scale={true}
                         />
-                      </div>
+                      </Show>
                     </div>
                   </div>
                   <div class="col-span-2">
@@ -169,13 +178,22 @@ const ProductDetail = () => {
                                         price: parseInt(res.price),
                                         currency:
                                           product().storeProduct.currency,
-                                        preview: res.preview,
+                                        preview:
+                                          product().storeProduct.variants
+                                            .length > 0
+                                            ? res.preview
+                                            : product().storeProduct.thumbnail,
                                       };
                                       const cart: CartItem = {
                                         product: p,
                                         quantity: 1,
                                       };
-                                      setItems([...items(), cart]);
+                                      items().map(
+                                        (item) => item.product.id == p.id
+                                      ).length == 0 &&
+                                        setItems([...items(), cart]);
+
+                                      setActive(() => res.id);
                                     }}
                                   />
                                   <label
@@ -203,17 +221,39 @@ const ProductDetail = () => {
                       </div>
 
                       <form class="mt-10">
-                        {!isInCart() ? (
-                          <button
-                            type="submit"
-                            onClick={(e) => {
-                              e.preventDefault(),
-                                handleAddToCart(product().storeProduct);
-                            }}
-                            class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
-                          >
-                            Add to cart
-                          </button>
+                        {cartItems.filter((item) => item.product.id == active())
+                          .length <= 0 ? (
+                          !isInCart(product().storeProduct.id) ? (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                const p: ItemProduct = {
+                                  id: product().storeProduct.id,
+                                  name: product().storeProduct.title,
+                                  price: parseInt(product().storeProduct.price),
+                                  currency: product().storeProduct.currency,
+                                  preview: product().storeProduct.thumbnail,
+                                };
+                                product().storeProduct.variants.length > 0
+                                  ? (addCarts(items()), setItems([]))
+                                  : handleAddToCart(p);
+                              }}
+                              class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
+                            >
+                              Add to cart
+                            </button>
+                          ) : (
+                            <button
+                              type="submit"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/cart`);
+                              }}
+                              class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
+                            >
+                              View Cart
+                            </button>
+                          )
                         ) : (
                           <button
                             type="submit"
@@ -221,7 +261,7 @@ const ProductDetail = () => {
                               e.stopPropagation();
                               navigate(`/cart`);
                             }}
-                            class="mt-10 flex w-full items-center justify-center rounded-full border border-transparent bg-danger px-8 py-3 text-base font-medium text-white hover:bg-danger/90 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
                           >
                             View Cart
                           </button>
