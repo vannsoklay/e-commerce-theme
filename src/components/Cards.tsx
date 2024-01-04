@@ -41,7 +41,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
             <div class="card-body">
               <span class="text-xs">{props?.product?.brand}</span>
               <div class="flex items-center">
-                <Show when={props?.product?.rating} fallbac={null}>
+                <Show when={props?.product?.rating} fallback={null}>
                   {Array(Math.floor(props?.product?.rating)).fill(
                     <AiFillStar class="text-primary text-md" />
                   )}

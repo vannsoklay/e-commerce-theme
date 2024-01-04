@@ -1,37 +1,37 @@
 interface Variants {
-    label: string,
-    option: "SIZE" | "COLOR",
-    preview: string,
-    price: string
+  label: string;
+  option: "SIZE" | "COLOR";
+  preview: string;
+  price: string;
 }
 
 type ItemProduct = {
-    id: string,
-    name: string,
-    price: number,
-    currency: "KHR" | "USD",
-    preview: string
-  }
+  title: Element;
+  thumbnail: any;
+  id: string;
+  name: string;
+  price: number;
+  currency: "KHR" | "USD";
+  preview: string;
+};
 type ProductType = {
-    id: string;
-    title: string;
-    thumbnail: string;
-    rating: number;
-    brand: string;
-    currency: string,
-    price: number;
-    slug: String;
-    previews: string[]
-    tags: string[];
-    quantity: number;
-    variants: Variants[];
-  };
-
+  id: string;
+  title: string;
+  thumbnail: string;
+  rating: number;
+  brand: string;
+  currency: string;
+  price: number;
+  slug: String;
+  previews: string[];
+  tags: string[];
+  quantity: number;
+  variants: Variants[];
+};
 
 // dynamic types
 type HeaderType = {
-    logo: string,
-    name: string,
-    type: boolean
-}
-  
+  logo: string;
+  name: string;
+  type: boolean;
+};

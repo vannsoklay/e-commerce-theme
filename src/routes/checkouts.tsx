@@ -12,6 +12,7 @@ import { useNavigate } from "solid-start";
 import { EmptyCart } from "~/components/Empty";
 import Button from "~/components/Button";
 import { CHECKOUT_PRODUCT } from "~/libs/graphql/checkout";
+import { FaSolidCircleCheck, FaSolidPhone } from "solid-icons/fa";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -106,7 +107,6 @@ export default function Checkout() {
             <div class="grid grid-cols-4 gap-8 mt-8">
               <main class="col-span-2 md:block hidden">
                 <DeliveryOption Field={Field} />
-                <div class="flex justify-start w-full"></div>
                 <div class="flex justify-start">
                   <h1 class="text-xl font-semibold pb-8">Payments</h1>
                 </div>
@@ -271,7 +271,7 @@ export default function Checkout() {
                   }}
                 </For>
                 <div class="md:col-span-2 mt-9 md:mt-6">
-                  <div class="grid grid-cols-1 flex justify-start">
+                  <div class="grid grid-cols-1 justify-start">
                     <h1 class="font-bold uppercase">Summary</h1>
                   </div>
                   <div class="divider mt-2"></div>
@@ -298,7 +298,7 @@ export default function Checkout() {
                     <div class="col-span-1 font-bold flex justify-end">-</div>
                   </div>
                   <div class="divider my-2"></div>
-                  <div class="grid grid-cols-2 flex justify-start">
+                  <div class="grid grid-cols-2 justify-start">
                     <div class="col-span-1 flex justify-start text-md">
                       Total
                     </div>
@@ -332,46 +332,70 @@ const Delivery = ({ Field }: any) => {
 
   return (
     <Show when={!data.loading} fallback={<div>loading...</div>}>
-      <div class="flex justify-start">
-        <h1 class="collapse-title text-xl font-semibold px-0 py-8">
-          Delivery Express
-        </h1>
-        <div class="flex justify-start w-full px-4"></div>
-      </div>
-      <div class="pb-8 px-4">
-        <div class="flex justify-start">
-          <div class="gird grid-cols-1 space-y-6">
-            <Show
-              when={data().storeDeliveriesExpress.length > 0}
+      <h1 class="collapse-title text-xl font-semibold px-0 py-8">
+        Delivery Options
+      </h1>
+      <div class="pb-8 ">
+        <Show
+          when={data().storeDeliveriesExpress.length > 0}
+          fallback={<div>Not Founded</div>}
+        >
+          <section class="grid grid-cols-2 gap-3 items-center px-2 pb-6">
+            <For
+              each={data().storeDeliveriesExpress}
               fallback={<div>Not Founded</div>}
             >
-              <For
-                each={data().storeDeliveriesExpress}
-                fallback={<div>Not Founded</div>}
-              >
-                {(delivery) => (
+              {(delivery) => {
+                return (
                   <Field
                     name="delivery_express"
                     validate={[required("Please select your delivery.")]}
                   >
                     {(field: any, props: any) => (
-                      <label class="w-full flex col-span-8 gap-6 items-center">
+                      <label class="cursor-pointer ">
                         <input
                           {...props}
-                          class="radio"
                           type="radio"
                           value={delivery.id}
                           checked={field.value?.includes(delivery.id)}
+                          class="radio peer sr-only"
+                          required
+                          name="delivery_express"
                         />
-                        <div>{delivery.name}</div>
+                        <div class="w-full grid grid-cols-4 gap-3 rounded-md p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
+                          <div class="avatar col-span-1">
+                            <div class="w-12 rounded-xl">
+                              <img
+                                src={`${
+                                  import.meta.env.VITE_VARIABLE_IPFS
+                                }/api/ipfs?hash=${delivery?.logo}`}
+                                alt={delivery.name}
+                              />
+                            </div>
+                          </div>
+                          <div class="col-span-3">
+                            <div class="flex items-center gap-6 justify-between">
+                              <p class="text-sm font-semibold uppercase text-pimary">
+                                {delivery.name}
+                              </p>
+                              <FaSolidCircleCheck class="text-xl" />
+                            </div>
+                            <div class="flex gap-3 items-center">
+                              <FaSolidPhone class="text-sm" />
+                              <p class="text-sm font-medium">
+                                {delivery.phoneNumber}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </label>
                     )}
                   </Field>
-                )}
-              </For>
-            </Show>
-          </div>
-        </div>
+                );
+              }}
+            </For>
+          </section>
+        </Show>
       </div>
     </Show>
   );
@@ -382,52 +406,61 @@ const DeliveryOption = ({ Field }: any) => {
 
   return (
     <Show when={!data.loading} fallback={<div>loading...</div>}>
-      <div class="flex justify-start">
-        <div
-          class={`collapse ${
-            data().deliveries.length <= 0 && "collapse-open"
-          } p-0`}
-        >
-          <input type="checkbox" class="peer" />
-          <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
-            Delivery Options
-          </h1>
-          <div class="collapse-content">
-            <DeliveryForm refetch={refetch} />
-          </div>
-        </div>
-      </div>
-      <div class="pb-8 px-4">
-        <div class="flex justify-start">
-          <div class="gird grid-cols-1 space-y-6">
-            <Show
-              when={data().deliveries.length > 0}
-              fallback={<div>Not Founded</div>}
-            >
-              <For each={data().deliveries} fallback={null}>
-                {(delivery) => (
-                  <Field
-                    name="delivery_option"
-                    validate={[required("Please select your delivery option.")]}
-                  >
-                    {(field: any, props: any) => (
-                      <label class="w-full flex col-span-8 gap-6 items-center">
-                        <input
-                          {...props}
-                          class="radio"
-                          type="radio"
-                          value={delivery.id}
-                          checked={field.value?.includes(delivery.id)}
-                          required
-                        />
-                        <div>{delivery.address}</div>
-                      </label>
-                    )}
-                  </Field>
-                )}
-              </For>
-            </Show>
-          </div>
+      <h1 class="collapse-title text-xl font-semibold px-0 py-0">
+        Delivery Location
+      </h1>
+      <Show
+        when={data().deliveries.length > 0}
+        fallback={<div>Not Founded</div>}
+      >
+        <section class="flex flex-wrap gap-3 items-center pb-6">
+          <For each={data().deliveries} fallback={null}>
+            {(delivery) => {
+              return (
+                <Field
+                  name="delivery_option"
+                  validate={[required("Please select your delivery option.")]}
+                >
+                  {(field: any, props: any) => (
+                    <label class="cursor-pointer ">
+                      <input
+                        {...props}
+                        type="radio"
+                        value={delivery.id}
+                        checked={field.value?.includes(delivery.id)}
+                        class="radio peer sr-only"
+                        required
+                        name="delivery"
+                      />
+                      <div class="w-full rounded-md p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
+                        <div>
+                          <div class="flex items-center gap-6 justify-between">
+                            <p class="text-sm font-semibold uppercase text-pimary">
+                              {delivery.address}
+                            </p>
+                            <FaSolidCircleCheck class="text-xl" />
+                          </div>
+                          <div class="flex gap-3 items-center">
+                            <FaSolidPhone class="text-sm" />
+                            <p class="text-sm font-medium">
+                              {delivery.phoneNumber}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </label>
+                  )}
+                </Field>
+              );
+            }}
+          </For>
+        </section>
+      </Show>
+      <div class="collapse bg-base-200 collapse-plus border mb-6">
+        <input type="checkbox" />
+        <div class="collapse-title text-md font-bold">Add new location</div>
+        <div class="collapse-content">
+          <DeliveryForm refetch={refetch} />
         </div>
       </div>
     </Show>
@@ -439,7 +472,7 @@ const DeliveryOptionMobile = ({ Field }: any) => {
 
   return (
     <main class="mt-6 md:hidden">
-      <div class="grid grid-cols-1 flex justify-start">
+      <div class="grid grid-cols-1 justify-start">
         <Show when={!data.loading} fallback={<div>loading...</div>}>
           <div class="flex justify-start">
             <div
@@ -483,8 +516,8 @@ const DeliveryOptionMobile = ({ Field }: any) => {
           </div>
         </Show>
       </div>
-      <div class="grid grid-cols-1 flex justify-start">
-        <h1 class="font-bold font-semibold text-xl">Payments</h1>
+      <div class="grid grid-cols-1 justify-start">
+        <h1 class="font-bold text-xl">Payments</h1>
         <div class="flex justify-start w-full px-4 mt-8">
           <div class="grid grid-cols-8 gap-4 space-y-4">
             <For

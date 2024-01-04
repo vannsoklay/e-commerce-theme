@@ -14,8 +14,6 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
   const [_, { Form, Field }] = createForm<DeliveryType>();
 
   const handleSubmit: SubmitHandler<DeliveryType> = (values, _) => {
-    console.log("value", values);
-    
     client
       .mutation(CREATE_DELIVERY, {
         input: { ...values, phoneNumber: parseInt(values.phoneNumber) },
@@ -113,6 +111,7 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
                 type="email"
                 required
                 placeholder="Email"
+                pattern="[^ @]*@[^ @]*"
                 class="input input-bordered w-full"
               />
               {field.error && (
@@ -146,7 +145,7 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
         </Field>
       </div>
       <div class="flex justify-end w-full">
-        <Button.Primary class="rounded-full w-48" type="submit">
+        <Button.Primary class="rounded-xl w-full" type="submit">
           Save & Continue
         </Button.Primary>
       </div>
