@@ -1,37 +1,53 @@
-import { A } from "solid-start";
+import { For, Show, createEffect, createSignal } from "solid-js";
+import { A, useNavigate, useSearchParams } from "solid-start";
+import { publicQuery } from "~/libs/client";
+import { TAGS } from "~/libs/graphql/tag";
 
 export const Filter = () => {
+  const [ps] = useSearchParams();
+  const navigate = useNavigate();
+  const [value, setValue] = createSignal("");
+  const [tags] = publicQuery(TAGS);
+
   return (
-    <div class="mt-8">
+    <div class="mt-8 space-y-8">
+      <form>
+        <input
+          class="input input-bordered w-full"
+          onInput={(e) => {
+            setValue(e.target.value),
+              navigate(
+                `/products?search=${value() ? value() : ""}&tag=${
+                  ps.tag ? ps.tag : ""
+                }`
+              );
+          }}
+          type="text"
+          placeholder="Search"
+        />
+      </form>
       <h5 class="inline-flex items-center text-base font-semibold text-gray-400">
         Filters
       </h5>
       <form class="my-4 border-y border-gray-200">
         <ul class="space-y-4 px-4 py-3 border-gray-200 pb-6 text-sm text-gray-600">
-          <li>
-            <A href="#">Equipment</A>
-          </li>
-          <li>
-            <A href="#">Ink Cartridge</A>
-          </li>
-          <li>
-            <A href="#">CAM-TONER CARTRIDGE</A>
-          </li>
-          <li>
-            <A href="#">Printer</A>
-          </li>
-          <li>
-            <A href="#">Bill Counter</A>
-          </li>
-          <li>
-            <A href="#">IT Services</A>
-          </li>
-          <li>
-            <A href="#">Ribbon</A>
-          </li>
-          <li>
-            <A href="#">Accessories</A>
-          </li>
+          <Show when={tags()?.tags} fallback={<div>loading...</div>}>
+            <For each={tags().tags} fallback={<div>Not founded</div>}>
+              {(tag) => {
+                return (
+                  <li>
+                    <A
+                      href={`/products?search=${
+                        ps.search ? ps.search : ""
+                      }&tag=${tag.id}`}
+                    >
+                      {tag.titleEn}
+                    </A>
+                  </li>
+                );
+              }}
+            </For>
+          </Show>
         </ul>
       </form>
       <h5 class="inline-flex items-center text-base font-medium text-gray-400">

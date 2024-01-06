@@ -1,11 +1,13 @@
-import { For, Show } from "solid-js";
+import { For, Show, createSignal } from "solid-js";
 import { CardProduct } from "~/components/Cards";
 import Hero from "~/components/Hero";
 import { publicQuery } from "~/libs/client";
-import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
+import { PRODUCTS } from "~/libs/graphql/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import { Filter } from "~/components/Filter";
 import { MeteTag } from "~/components/meta";
+import { A, useNavigate, useSearchParams } from "solid-start";
+import { createPagination } from "@solid-primitives/pagination";
 
 export default function Product() {
   return (
@@ -28,20 +30,37 @@ export default function Product() {
 }
 
 const Products = () => {
-  const [products] = publicQuery(GET_ALL_PRODUCTS, {
-    filter: {
-      limit: 8,
-      skip: 0,
-      sort: -1,
-    },
+  const navigate = useNavigate();
+  const [ps] = useSearchParams();
+  const [paginationProps, page, setPage] = createPagination({ pages: 100 });
+  const [pageSize, setPageSize] = createSignal<{ skip: number; size: number }>({
+    skip: 0,
+    size: 10,
   });
 
+  const [products] = publicQuery(PRODUCTS, () => ({
+    keyword: ps.search ? ps.search : "",
+    id: ps.tag ? [ps.tag] : [],
+    filter: {
+      skip: ps.page
+        ? parseInt(ps.page) > 1
+          ? parseInt(ps.page) * parseInt(ps.size)
+          : 0
+        : pageSize().skip,
+      limit: ps.size ? parseInt(ps.size) : pageSize().size,
+      sort: -1,
+    },
+  }));
+
   return (
-    <div class="mx-auto max-w-screen-xl">
+    <div class="mx-auto max-w-screen-xl space-y-8">
       <div class="grid md:grid-cols-3 grid-cols-1 gap-3 pt-8">
-        <Show when={products()} fallback={<div>loading...</div>}>
+        <Show
+          when={products()?.storeFilterSearchProducts}
+          fallback={<div>Not Founded</div>}
+        >
           <Show
-            when={products().storeProducts.length > 0}
+            when={products()?.storeFilterSearchProducts.length > 0}
             fallback={
               <div class="col-span-3 w-full text-center pt-8">
                 <div class="flex justify-center text-center text-2xl items-center">
@@ -56,7 +75,7 @@ const Products = () => {
               </div>
             }
           >
-            <For each={products().storeProducts}>
+            <For each={products()?.storeFilterSearchProducts}>
               {(latestProduct) => {
                 return <CardProduct product={latestProduct} />;
               }}
@@ -64,6 +83,19 @@ const Products = () => {
           </Show>
         </Show>
       </div>
+      <nav class="pagination">
+        <ul>
+          <For each={paginationProps()}>
+            {(props) => (
+              <A
+                href={`/products?page=${props.page}&size=${pageSize().size}`}
+                class="join-item btn btn-outline"
+                {...props}
+              />
+            )}
+          </For>
+        </ul>
+      </nav>
     </div>
   );
 };
