@@ -29,6 +29,7 @@
     "@lexical/table": "^0.12.5",
     "@modular-forms/solid": "^0.20.0",
     "@solid-primitives/graphql": "^2.0.1",
+    "@solid-primitives/pagination": "^0.2.9",
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
     "@urql/core": "^4.2.0",

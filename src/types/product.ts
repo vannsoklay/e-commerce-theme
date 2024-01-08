@@ -6,8 +6,6 @@ interface Variants {
 }
 
 type ItemProduct = {
-  // title: Element;
-  // thumbnail: any;
   id: string;
   name: string;
   price: number;
