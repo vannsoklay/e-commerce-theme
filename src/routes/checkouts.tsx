@@ -167,8 +167,8 @@ export default function Checkout() {
                             </div>
                             <div>
                               <h1>{cartItem.product?.title}</h1>
-                              <div class="flex">
                                 <p>
+                              <div class="flex">
                                   {cartItem.product.price} x{cartItem.quantity}
                                 </p>
                                 =
