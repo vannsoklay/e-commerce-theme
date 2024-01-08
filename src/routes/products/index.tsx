@@ -30,9 +30,8 @@ export default function Product() {
 }
 
 const Products = () => {
-  const navigate = useNavigate();
   const [ps] = useSearchParams();
-  const [paginationProps, page, setPage] = createPagination({ pages: 100 });
+  const [paginationProps] = createPagination({ pages: 100 });
   const [pageSize, setPageSize] = createSignal<{ skip: number; size: number }>({
     skip: 0,
     size: 10,
