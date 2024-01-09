@@ -6,7 +6,7 @@ import { PRODUCTS } from "~/libs/graphql/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import { Filter } from "~/components/Filter";
 import { MeteTag } from "~/components/meta";
-import { A, useNavigate, useSearchParams } from "solid-start";
+import { A, useSearchParams } from "solid-start";
 import { createPagination } from "@solid-primitives/pagination";
 
 export default function Product() {
