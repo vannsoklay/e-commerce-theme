@@ -2,8 +2,8 @@
   "name": "My Store",
   "username": "@stm",
   "header": {
-    "type": false,
-    "logo": "https://cdn.dribbble.com/userupload/11553799/file/original-72cb6d7026c79a481f2e6403592e48a2.png?resize=400x300",
+    "type": true,
+    "logo": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.camprotec.com.kh/wp-content/uploads/2023/04/Untitled-7.png",
     "name": "My Store"
   },
   "promotion": {
