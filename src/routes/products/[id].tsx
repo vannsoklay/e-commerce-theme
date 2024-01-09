@@ -1,4 +1,4 @@
-import { Accessor, createEffect, createSignal, For, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { A, useParams } from "@solidjs/router";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
@@ -50,7 +50,7 @@ const ProductDetail = () => {
   return (
     <>
       <MeteTag name="detail" />
-      <div class="px-0 md:px-16">
+      <div class="px-3 md:px-16 pb-12 sm:pb-0">
         <div class="pt-6">
           <Show when={product()} fallback={<div>Loading ...</div>}>
             <Show
@@ -61,8 +61,8 @@ const ProductDetail = () => {
                 <h1 class="text-2x mb-6 font-bold tracking-tight text-gray-900 sm:text-3xl">
                   {product().storeProduct.title}
                 </h1>
-                <div class="grid grid-cols-5 gap-6">
-                  <div class="col-span-3 w-full gap-3 grid grid-cols-6">
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
+                  <div class="col-span-3 w-full gap-3 grid sm:grid-cols-6">
                     <div class="hide-scroll-bar overflow-y-auto max-h-[45dvh]">
                       <div class="space-y-2">
                         <Show
@@ -85,9 +85,9 @@ const ProductDetail = () => {
                         </Show>
                       </div>
                     </div>
-                    <div class="col-span-5">
+                    <div class="col-span-1 sm:col-span-5">
                       <Show
-                        when={product().storeProduct.previews.length >= 0}
+                        when={product().storeProduct.previews.length <= 0}
                         fallback={
                           <div class="aspect-h-4 aspect-w-3 p-3 rounded-xl lg:block border mx-auto">
                             <img
@@ -110,10 +110,10 @@ const ProductDetail = () => {
                       </Show>
                     </div>
                   </div>
-                  <div class="col-span-2">
+                  <div class="col-span-1 sm:col-span-2">
                     <div class="mt-4 lg:row-span-3 lg:mt-0">
                       <h2 class="sr-only">Product information</h2>
-                      <p class="text-5xl tracking-tight text-primary font-semibold">
+                      <p class="text-3xl sm:text-5xl tracking-tight text-primary font-semibold">
                         {product().storeProduct.currency === "KHR" ? "៛" : "$"}
                         {product().storeProduct.price}
                       </p>
@@ -144,7 +144,7 @@ const ProductDetail = () => {
                       </div>
 
                       <Show when={product().storeProduct.desc} fallback={null}>
-                        <h1 class="text-xl font-bold">Description</h1>
+                        <h1 class="text-2xl font-bold">Description</h1>
                         <div class="space-y-6">
                           <p class="text-base text-gray-600 mt-3">
                             {product().storeProduct.desc}
@@ -274,7 +274,9 @@ const ProductDetail = () => {
                 {/* ------------Key features ---------- */}
                 <Show when={product().storeProduct.detail} fallback={null}>
                   <section class="mt-9">
-                    <h1 class="text-4xl font-black mb-3">Key features</h1>
+                    <h1 class="text-2xl sm:text-4xl font-black mb-3">
+                      Key features
+                    </h1>
                     <div class="max-w-screen-md">
                       <LexicalViewer data={product()?.storeProduct?.detail} />
                     </div>
