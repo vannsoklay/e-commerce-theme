@@ -1,4 +1,11 @@
-import { createEffect, createSignal, For, Show } from "solid-js";
+import {
+  Accessor,
+  createEffect,
+  createSignal,
+  For,
+  Show,
+  onCleanup,
+} from "solid-js";
 import { A, useParams } from "@solidjs/router";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
@@ -16,6 +23,7 @@ const ProductDetail = () => {
   const [thumb, setThumb] = createSignal<number>(0);
   const [items, setItems] = createSignal<CartItem[]>([]);
   const [active, setActive] = createSignal<string>();
+  const [swap, setSwap] = createSignal<number>(0);
 
   const viewImage = () => {
     return `${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
@@ -45,6 +53,7 @@ const ProductDetail = () => {
 
   createEffect(() => {
     isInCart(product().storeProduct.id);
+    console.log("swap", swap());
   });
 
   return (
@@ -62,30 +71,35 @@ const ProductDetail = () => {
                   {product().storeProduct.title}
                 </h1>
                 <div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
-                  <div class="col-span-3 w-full gap-3 grid sm:grid-cols-6">
-                    <div class="hide-scroll-bar overflow-y-auto max-h-[45dvh]">
-                      <div class="space-y-2">
-                        <Show
-                          when={product().storeProduct.previews.length > 0}
-                          fallback={
-                            <Image
-                              image={`${
-                                import.meta.env.VITE_VARIABLE_IPFS
-                              }/api/ipfs?hash=${
-                                product().storeProduct.thumbnail
-                              }`}
-                              name=""
-                              width="w-full"
-                              heigh="h-[9dvh]"
-                              is_scale={true}
-                            />
-                          }
-                        >
-                          <></>
-                        </Show>
-                      </div>
+                  <div class="col-span-3 w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
+                    <div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen  ">
+                      <Show
+                        when={product().storeProduct.previews.length > 0}
+                        fallback={"hellow"}
+                      >
+                        <For each={product().storeProduct.previews}>
+                          {(res: string, index: Accessor<number>) => {
+                            return (
+                              <div
+                                onClick={() => setThumb(index())}
+                                class="cursor-pointer"
+                              >
+                                <Image
+                                  image={`${
+                                    import.meta.env.VITE_VARIABLE_IPFS
+                                  }/api/ipfs?hash=${res}`}
+                                  name=""
+                                  width="w-full"
+                                  heigh="h-[9dvh]"
+                                  is_scale={true}
+                                />
+                              </div>
+                            );
+                          }}
+                        </For>
+                      </Show>
                     </div>
-                    <div class="col-span-1 sm:col-span-5">
+                    <div class="sm:col-span-5 hidden sm:block">
                       <Show
                         when={product().storeProduct.previews.length <= 0}
                         fallback={
@@ -108,6 +122,37 @@ const ProductDetail = () => {
                           is_scale={true}
                         />
                       </Show>
+                    </div>
+                    <div class="col-span-1 block sm:hidden">
+                      <div class="w-full carousel rounded-box">
+                        <For each={product().storeProduct.previews}>
+                          {(res: string, index: Accessor<number>) => {
+                            return (
+                              <>
+                                <div class="badge badge-ghost relative left-12">
+                                  {index() + 1}/
+                                  {product().storeProduct.previews.length}
+                                </div>
+                                <div
+                                  class="carousel-item w-full"
+                                  onScroll={() => {
+                                    console.log("you changed");
+                                  }}
+                                  id={index().toString()}
+                                >
+                                  <img
+                                    src={`${
+                                      import.meta.env.VITE_VARIABLE_IPFS
+                                    }/api/ipfs?hash=${res}`}
+                                    class="w-full"
+                                    alt="Tailwind CSS Carousel component"
+                                  />
+                                </div>
+                              </>
+                            );
+                          }}
+                        </For>
+                      </div>
                     </div>
                   </div>
                   <div class="col-span-1 sm:col-span-2">

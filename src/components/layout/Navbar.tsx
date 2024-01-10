@@ -6,7 +6,7 @@ import { Logo } from "../Logo";
 
 const Navbar = () => {
   const { cartItems, logout } = useCart();
-  const { user, loading } = useAuth();
+  const { user, loading, login } = useAuth();
 
   return (
     <div class="navbar w-full bg-white/30 relative sm:sticky top-0 z-50 backdrop-blur-sm">
@@ -58,13 +58,23 @@ const Navbar = () => {
             <Show
               when={user()}
               fallback={
-                <>
-                  <a
-                    href={`https://oauth.selendra.org/v1/oauth?client_id=${import.meta.env.VITE_DID_CLIENT_ID}&scope=default&redirect_uri=${import.meta.env.VITE_DOMAIN}`}
-                  >
-                    Login with Digital ID
-                  </a>
-                </>
+                // <>
+                //   <a
+                //     href={`https://oauth.selendra.org/v1/oauth?client_id=${
+                //       import.meta.env.VITE_DID_CLIENT_ID
+                //     }&scope=default&redirect_uri=${
+                //       import.meta.env.VITE_DOMAIN
+                //     }`}
+                //   >
+                //     Login with Digital ID
+                //   </a>
+                // </>
+                <button
+                  class="btn w-20 rounded-full bg-primary/10 hover:bg-primary/10 text-primary border-none"
+                  onClick={() => login("my_modal_2")}
+                >
+                  Login
+                </button>
               }
             >
               <div class="dropdown dropdown-end">

@@ -87,12 +87,16 @@ export default function Checkout() {
         <Form onSubmit={handleCheckout} class="mx-auto text-gray-700 p-4">
           <Dialog
             modalId={open}
-            classes="w-80 h-80 flex justify-center text-center"
+            // modalId={() => "my_modal_2"}
+            classes="sm:w-1/2 h-1/2 flex justify-center text-center"
           >
             <div class="w-full space-y-2">
-              <div class="flex justify-center">Congratulation</div>
+              <div class="flex justify-center">
+                You've been purchased the product!
+              </div>
+              <img alt="" src="/images/cta.png" class="h-2/3 mx-auto" />
               <button
-                class="btn w-full"
+                class="btn sm:w-full w-2/3"
                 onClick={(e) => {
                   e.preventDefault();
                   cleanCartItems();
@@ -167,8 +171,8 @@ export default function Checkout() {
                             </div>
                             <div>
                               <h1>{cartItem.product?.title}</h1>
-                                <p>
                               <div class="flex">
+                                <p>
                                   {cartItem.product.price} x{cartItem.quantity}
                                 </p>
                                 =
