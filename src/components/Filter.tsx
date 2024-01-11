@@ -1,7 +1,8 @@
-import { For, Show, createEffect, createSignal } from "solid-js";
 import { A, useNavigate, useSearchParams } from "solid-start";
-import { publicQuery } from "~/libs/client";
+import { For, Show, createEffect, createSignal } from "solid-js";
+
 import { TAGS } from "~/libs/graphql/tag";
+import { publicQuery } from "~/libs/client";
 
 export const Filter = () => {
   const [ps] = useSearchParams();
@@ -29,13 +30,13 @@ export const Filter = () => {
       <h5 class="inline-flex items-center text-base font-semibold text-gray-400">
         Filters
       </h5>
-      <form class="my-4 border-y border-gray-200">
-        <ul class="space-y-4 px-4 py-3 border-gray-200 pb-6 text-sm text-gray-600">
+      <form class="my-2 border-gray-200">
+        <ul class="border-gray-200  text-sm text-gray-600">
           <Show when={tags()?.tags} fallback={<div>loading...</div>}>
             <For each={tags().tags} fallback={<div>Not founded</div>}>
               {(tag) => {
                 return (
-                  <li>
+                  <li class="hover:bg-primary/5 hover:text-primary transition-all py-2 mt-0 rounded-md px-2">
                     <A
                       href={`/products?search=${
                         ps.search ? ps.search : ""
@@ -50,7 +51,7 @@ export const Filter = () => {
           </Show>
         </ul>
       </form>
-      <h5 class="inline-flex items-center text-base font-medium text-gray-400">
+      {/* <h5 class="inline-flex items-center text-base font-medium text-gray-400">
         Categories
       </h5>
       <form class="my-4 border-gray-200">
@@ -129,7 +130,7 @@ export const Filter = () => {
             </label>
           </div>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };

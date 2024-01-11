@@ -1,6 +1,6 @@
 {
   "name": "My Store",
-  "username": "@stm",
+  "username": "Riverbase",
   "header": {
     "type": true,
     "logo": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.camprotec.com.kh/wp-content/uploads/2023/04/Untitled-7.png",
@@ -12,7 +12,13 @@
     "text": null
   },
   "fontFamily": {
-    "sans": ["Graphik", "sans-serif"],
-    "serif": ["Merriweather", "serif"]
+    "sans": [
+      "Graphik",
+      "sans-serif"
+    ],
+    "serif": [
+      "Merriweather",
+      "serif"
+    ]
   }
 }

@@ -1,9 +1,10 @@
 import { For, Show, createEffect, createSignal } from "solid-js";
+
 import { A } from "solid-start";
-import { EmptyCart } from "~/components/Empty";
-import { useCart } from "~/contexts/useCart";
 import Button from "~/components/Button";
+import { EmptyCart } from "~/components/Empty";
 import { FiShoppingCart } from "solid-icons/fi";
+import { useCart } from "~/contexts/useCart";
 
 export default function Cart() {
   const { cartItems, addToCart, minusCart, removeFromCart } = useCart();
@@ -20,20 +21,18 @@ export default function Cart() {
     setPrice(Subtotal);
   });
   return (
-    <main class="text-center mx-auto text-gray-700 p-4">
+    <main class="mx-auto text-gray-700 p-4">
       <Show when={cartItems.length > 0} fallback={<EmptyCart />}>
-        <div class="mx-auto mt-12 sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-24 xl:px-24 2xl:px-0">
-          <h2 class="text-4xl text-[#98A2AE] font-bold text-center">
-            Shopping Cart
-          </h2>
-          <div class="grid md:grid-cols-5 md:gap-20 mt-12">
+        <div class="mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-24 xl:px-24 2xl:px-0">
+          <h2 class="text-2xl opacity-50 font-bold mb-8">Shopping Cart</h2>
+          <div class="grid md:grid-cols-5 md:gap-20">
             <div class="md:col-span-3">
               <div class="backdrop-blur-sm bg-white bg-opacity-80 space-y-4 divide-y">
                 <For each={cartItems}>
                   {(cartItem) => {
                     return (
                       <Show when={cartItem} fallback={<p>Loading...</p>}>
-                        <div class="md:flex md:justify-between md:items-center pt-6">
+                        <div class="md:flex md:justify-between md:items-center pt-6 bg-slate-50 px-4 rounded-md">
                           <div class="flex items-center space-x-3">
                             <div>
                               <div class="avatar">
@@ -45,6 +44,7 @@ export default function Cart() {
                                       cartItem?.product?.preview
                                     }`}
                                     alt=""
+                                    class="rounded-md"
                                   />
                                 </div>
                               </div>
@@ -53,11 +53,15 @@ export default function Cart() {
                               <h1>{cartItem.product?.name}</h1>
                               <div class="flex">
                                 <p>
-                                  {cartItem.product.price} x{cartItem.quantity}
+                                  {cartItem.product.price.toLocaleString()} x
+                                  {cartItem.quantity}
                                 </p>
                                 =
-                                <p class="font-bold ">
-                                  ${cartItem.product.price * cartItem.quantity}
+                                <p class="font-bold mr-4">
+                                  $
+                                  {(
+                                    cartItem.product.price * cartItem.quantity
+                                  ).toLocaleString()}
                                 </p>
                               </div>
                             </div>
@@ -163,9 +167,9 @@ export default function Cart() {
               </A>
             </div>
 
-            <div class="md:col-span-2 mt-9 md:mt-6">
-              <div class="grid grid-cols-1 flex justify-start">
-                <h1 class="font-bold uppercase">Summary</h1>
+            <div class="md:col-span-2 border bg-slate-50/10 p-4 rounded-xl">
+              <div class="grid grid-cols-1 justify-start">
+                <h1 class="font-bold text-lg uppercase">Summary</h1>
               </div>
               <div class="divider mt-2"></div>
               <div class="grid grid-cols-2">

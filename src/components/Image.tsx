@@ -16,7 +16,7 @@ const Image: Component<Image> = (props) => {
         src={image}
         alt={name}
         class={`${heigh} ${width} mx-auto h-auto w-2/3 object-contain ${
-          is_scale && "hover:scale-125 duration-150"
+          is_scale && "hover:scale-105 duration-150"
         }`}
       />
     </div>

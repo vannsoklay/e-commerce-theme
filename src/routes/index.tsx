@@ -1,10 +1,11 @@
 import { For, Show } from "solid-js";
+
 import { A } from "solid-start";
 import { CardProduct } from "~/components/Cards";
-import Hero from "~/components/Hero";
-import { publicQuery } from "~/libs/client";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
+import Hero from "~/components/Hero";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
+import { publicQuery } from "~/libs/client";
 
 export default function Home() {
   return (
@@ -30,19 +31,14 @@ export const LatestProducts = () => {
 
   return (
     <div class="mx-auto max-w-screen-xl md:px-12 xl:px-0">
-      <h1 class="text-center text-primary-1/80 font-extrabold md:text-3xl text-md uppercase">
-        Latest Products
+      <h1 class="text-center text-primary-1/80 font-extrabold md:text-5xl text-md ">
+        Our Products
       </h1>
-      <p class="text-center text-primary-1/50 md:text-md text-xs font-semibold uppercase">
+      {/* <p class="text-center text-primary-1/50 md:text-md text-xs font-semibold ">
         Out new products
-      </p>
-      <A
-        href="/products"
-        class="text-gray-500 text-xs font-bold hover:text-primary md:w-full flex md:justify-end justify-center md:mt-12 mt-4"
-      >
-        Show More
-      </A>
-      <div class="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-3 md:pt-8 pt-8 md:px-0 px-6 pb-9 sm:pb-0">
+      </p> */}
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:pt-8 pt-8 md:px-0 px-6 pb-9 sm:pb-0">
         <Show when={products()} fallback={<div>loading...</div>}>
           <Show
             when={products().storeProducts.length > 0}
@@ -68,6 +64,15 @@ export const LatestProducts = () => {
           </Show>
         </Show>
       </div>
+      {products().storeProducts.length >= 10 && (
+        <div class="flex justify-center mt-8">
+          <A href="/products">
+            <button class="px-8 py-2 rounded-full bg-action text-white transition-all hover:text-action hover:border-action hover:bg-action/10 shadow-none">
+              Show All
+            </button>
+          </A>
+        </div>
+      )}
     </div>
   );
 };

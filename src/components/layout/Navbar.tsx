@@ -1,15 +1,15 @@
-import { Show } from "solid-js";
-import { useCart } from "~/contexts/useCart";
-import { useAuth } from "~/contexts/useAuth";
 import { A } from "@solidjs/router";
 import { Logo } from "../Logo";
+import { Show } from "solid-js";
+import { useAuth } from "~/contexts/useAuth";
+import { useCart } from "~/contexts/useCart";
 
 const Navbar = () => {
   const { cartItems, logout } = useCart();
   const { user, loading, login } = useAuth();
 
   return (
-    <div class="navbar w-full bg-white/30 relative sm:sticky top-0 z-50 backdrop-blur-sm">
+    <div class="navbar w-full bg-white/80 relative sm:sticky top-0 z-50 backdrop-blur-lg">
       <div class="md:flex hidden justify-between w-full container mx-auto md:px-0 xl:px-32">
         <Logo />
         <div class="flex items-center space-x-3">
