@@ -1,11 +1,4 @@
-import {
-  Accessor,
-  createEffect,
-  createSignal,
-  For,
-  Show,
-  onCleanup,
-} from "solid-js";
+import { Accessor, createEffect, createSignal, For, Show } from "solid-js";
 import { A, useParams } from "@solidjs/router";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
@@ -23,7 +16,6 @@ const ProductDetail = () => {
   const [thumb, setThumb] = createSignal<number>(0);
   const [items, setItems] = createSignal<CartItem[]>([]);
   const [active, setActive] = createSignal<string>();
-  const [swap, setSwap] = createSignal<number>(0);
 
   const viewImage = () => {
     return `${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
@@ -71,7 +63,7 @@ const ProductDetail = () => {
                 </h1>
                 <div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
                   <div class="col-span-3 w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
-                    <div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen  ">
+                    <div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
                       <Show
                         when={product().storeProduct.previews.length > 0}
                         fallback={null}
@@ -81,16 +73,14 @@ const ProductDetail = () => {
                             return (
                               <div
                                 onClick={() => setThumb(index())}
-                                class="cursor-pointer"
+                                class="cursor-pointer border border-gray-200 rounded-md"
                               >
-                                <Image
-                                  image={`${
+                                <img
+                                  alt="previews"
+                                  src={`${
                                     import.meta.env.VITE_VARIABLE_IPFS
                                   }/api/ipfs?hash=${res}`}
-                                  name=""
-                                  width="w-full"
-                                  heigh="h-[9dvh]"
-                                  is_scale={true}
+                                  class="w-48 h-28 object-contain hover:scale-125 duration-150 "
                                 />
                               </div>
                             );
@@ -106,7 +96,7 @@ const ProductDetail = () => {
                             <img
                               src={viewImage()}
                               alt=""
-                              class="w-full max-h-[45dvh] rounded-lg object-contain object-center hover:scale-110 duration-150 animate-jump-in"
+                              class="w-full h-[43dvh] rounded-lg object-contain object-center hover:scale-110 duration-150 "
                             />
                           </div>
                         }
