@@ -1,4 +1,4 @@
-import { Component, Show, createSignal } from "solid-js";
+import { Component, Show, createSignal, createEffect } from "solid-js";
 import {
   createForm,
   SubmitHandler,
@@ -11,15 +11,67 @@ import { CREATE_DELIVERY } from "~/libs/graphql/delivery";
 import Button from "../Button";
 import axios, { AxiosResponse } from "axios";
 import { useAuth } from "~/contexts/useAuth";
+import { validateNumber } from "~/utils/phone";
+
+const initialNewPhone = {
+  phoneNumber: "",
+  isInternal: false,
+  isVerified: false,
+  isActived: false,
+  isBanned: false,
+};
 
 export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
   const { user } = useAuth();
   const [_, { Form, Field }] = createForm<DeliveryType>();
   const [photo, setPhoto] = createSignal<string>();
+
+  const [newPhone, setNewPhone] = createSignal(initialNewPhone);
+  const [isBlurred, setIsBlurred] = createSignal(false);
+  const [operator, setOperator] = createSignal("");
+  const [isValid, setIsValid] = createSignal(false);
+  const [color, setColor] = createSignal("");
+  const [validationMessage, setValidationMessage] = createSignal("");
+
   let inputRef: HTMLInputElement | ((el: HTMLInputElement) => void) | undefined;
   const [files, setFiles] = createSignal<File>();
 
+  createEffect(() => {
+    if (operator().toLocaleLowerCase() === "cellcard") {
+      setColor("badge-warning text-warning-content");
+    }
+    if (operator().toLocaleLowerCase() === "smart") {
+      setColor("badge-success text-success-content");
+    }
+    if (operator().toLocaleLowerCase() === "metfone") {
+      setColor("badge-error text-error-content");
+    }
+  });
+
+  createEffect(() => {
+    if (newPhone().phoneNumber !== "" && isBlurred()) {
+      try {
+        const valid = validateNumber({ phoneNumber: newPhone().phoneNumber });
+        if (valid.name) {
+          setIsValid(true);
+          setValidationMessage("");
+          setOperator(valid.name);
+        }
+      } catch (error: any) {
+        if (error) {
+          setIsValid(false);
+          setValidationMessage(error.detail.message);
+          setOperator("");
+        }
+      }
+    }
+  });
+
   const handleSubmit: SubmitHandler<DeliveryType> = (values, _) => {
+    if (!isValid()) {
+      toast.error("Please check your phone number");
+      return;
+    }
     client
       .mutation(CREATE_DELIVERY, {
         input: { ...values, phoneNumber: parseInt(values.phoneNumber) },
@@ -63,11 +115,20 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
       });
   }
 
+  function handleNewPhoneChange(e: any) {
+    const { name, value } = e.target;
+    const object = {
+      ...newPhone(),
+      [name]: value,
+    };
+    setNewPhone(() => object);
+  }
+
   return (
     <Form onSubmit={handleSubmit} class="space-y-4 md:space-y-6 w-full">
       <Field
         name="photos"
-        validate={[required("Please enter your first name.")]}
+        // validate={[required("Please enter your first name.")]}
       >
         {(field, props) => (
           <div
@@ -127,11 +188,14 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
         >
           {(field, props) => (
             <div>
+              <label class="label">
+                <span class="label-text">First Name</span>
+              </label>
               <input
                 {...props}
                 type="text"
                 required
-                placeholder="First Name"
+                // placeholder="First Name"
                 class="input input-bordered w-full"
               />
               {field.error && (
@@ -148,11 +212,14 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
         >
           {(field, props) => (
             <div>
+              <label class="label">
+                <span class="label-text">Last Name</span>
+              </label>
               <input
                 {...props}
                 type="text"
                 required
-                placeholder="Last Name"
+                // placeholder="Last Name"
                 class="input input-bordered w-full"
               />
               {field.error && (
@@ -171,18 +238,16 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
         >
           {(field, props) => (
             <div class="col-span-2">
+              <label class="label">
+                <span class="label-text">Address</span>
+              </label>
               <input
                 {...props}
                 type="text"
                 required
-                placeholder="Address"
+                // placeholder="Address"
                 class="input input-bordered w-full"
               />
-              {field.error && (
-                <div class="text-sm text-red-600 dark:text-red-500">
-                  {field.error}
-                </div>
-              )}
             </div>
           )}
         </Field>
@@ -197,11 +262,14 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
         >
           {(field, props) => (
             <div>
+              <label class="label">
+                <span class="label-text">Email</span>
+              </label>
               <input
                 {...props}
                 type="email"
                 required
-                placeholder="Email"
+                // placeholder="Email"
                 pattern="[^ @]*@[^ @]*"
                 class="input input-bordered w-full"
               />
@@ -213,30 +281,41 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
             </div>
           )}
         </Field>
-        <Field
-          name="phoneNumber"
-          validate={[required("Please enter your phone number.")]}
-        >
-          {(field, props) => (
-            <div>
-              <input
-                {...props}
-                type="number"
-                required
-                placeholder="Phone number"
-                class="input input-bordered w-full"
-              />
-              {field.error && (
-                <div class="text-sm text-red-600 dark:text-red-500">
-                  {field.error}
-                </div>
-              )}
-            </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Phone number</span>
+            {operator() !== "" && (
+              <span
+                class={`label-text-alt badge ${color} badge-sm block mb-1 `}
+              >
+                {operator()}
+              </span>
+            )}
+          </label>
+          <input
+            type="text"
+            class="w-full input input-bordered"
+            name="phoneNumber"
+            value={newPhone().phoneNumber}
+            onChange={handleNewPhoneChange}
+            onBlur={() => setIsBlurred(true)}
+          />
+          {validationMessage() !== "" && (
+            <label class="label">
+              <span class="label-text-alt text-error">
+                {validationMessage()}
+              </span>
+            </label>
           )}
-        </Field>
+        </div>
       </div>
       <div class="flex justify-end w-full">
-        <Button.Primary class="rounded-xl w-full" type="submit">
+        <Button.Primary
+          disable={!isValid() ? true : false}
+          class="rounded-xl w-full"
+          type="submit"
+        >
           Save & Continue
         </Button.Primary>
       </div>

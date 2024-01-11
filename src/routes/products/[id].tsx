@@ -53,7 +53,6 @@ const ProductDetail = () => {
 
   createEffect(() => {
     isInCart(product().storeProduct.id);
-    console.log("swap", swap());
   });
 
   return (
@@ -75,7 +74,7 @@ const ProductDetail = () => {
                     <div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen  ">
                       <Show
                         when={product().storeProduct.previews.length > 0}
-                        fallback={"hellow"}
+                        fallback={null}
                       >
                         <For each={product().storeProduct.previews}>
                           {(res: string, index: Accessor<number>) => {

@@ -37,6 +37,14 @@ export default function Checkout() {
   });
 
   const handleCheckout: SubmitHandler<CheckoutType> = (values) => {
+    if (!values.payment) {
+      toast.error("Please select payment cash to delivery");
+      return;
+    }
+    if (!values.delivery_option) {
+      toast.error("Please select delivery option location to delivery");
+      return;
+    }
     const carts = cartItems.map((cart) => {
       setProcess(true);
       return {
@@ -66,7 +74,7 @@ export default function Checkout() {
             orderId: res.data.storeCreateOrder.id,
             payment: values.payment,
             deliveryOptionId: values.delivery_option,
-            deliveryId: values.delivery_express,
+            deliveryId: null,
           })
           .toPromise()
           .then((_) => {
@@ -143,7 +151,7 @@ export default function Checkout() {
                     </For>
                   </div>
                 </div>
-                <Delivery Field={Field} />
+                {/* <Delivery Field={Field} /> */}
               </main>
               <main class="md:col-span-2 col-span-4 md:px-8">
                 <h1 class="text-xl font-semibold pb-2">
@@ -162,7 +170,7 @@ export default function Checkout() {
                                     src={`${
                                       import.meta.env.VITE_VARIABLE_IPFS
                                     }/api/ipfs?hash=${
-                                      cartItem?.product?.thumbnail
+                                      cartItem?.product?.preview
                                     }`}
                                     alt=""
                                   />
@@ -311,7 +319,7 @@ export default function Checkout() {
                     </h1>
                   </div>
                   {/* delivery */}
-                  <DeliveryOptionMobile Field={Field} />
+                  {/* <DeliveryOptionMobile Field={Field} /> */}
                   <div class="md:pt-6 pt-10">
                     <Button.Primary class="btn w-full rounded-full">
                       {process() ? (
@@ -411,8 +419,6 @@ const DeliveryOption = ({ Field }: any) => {
         <section class="flex flex-wrap gap-3 items-center pb-6">
           <For each={data().deliveries} fallback={null}>
             {(delivery) => {
-              console.log("delivery", delivery);
-
               return (
                 <Field
                   name="delivery_option"

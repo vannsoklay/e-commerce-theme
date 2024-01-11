@@ -5,6 +5,7 @@ interface Button {
     name?: string;
     children: JSXElement;
     handler?: (e: Event) => void;
+    disable?: boolean,
     type?: "submit" | "reset" | "button"
 }
 
@@ -12,6 +13,7 @@ const Primary: Component<Button> = (props) => {
   return (
     <button
       onClick={props.handler}
+      disabled={props.disable ? true : false}
       class={`${props.class} btn border-none bg-primary-1/10 text-primary-1 hover:text-primary-1 hover:border-primary-1 hover:bg-primary-1/10`}
     >
       {props.children}
@@ -25,6 +27,7 @@ const Action: Component<Button> = (props) => {
       <button
         type={props.type}
         onClick={props.handler}
+        disabled={props.disable ? true : false}
         class={`${props.class} btn border-none bg-action/10 text-action hover:text-action hover:border-action hover:bg-action/10`}
       >
         {props.children}
