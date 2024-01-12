@@ -69,12 +69,14 @@ const Navbar = () => {
 								//     Login with Digital ID
 								//   </a>
 								// </>
-								<button
-									class="btn px-14 rounded-full bg-primary/10 hover:bg-primary/5 text-primary border-none"
-									onClick={() => login("my_modal_2")}
-								>
-									Login
-								</button>
+								<a href={`https://backend.riverbase.org/sso/store`}>
+									<button
+										class="btn px-14 rounded-full bg-primary/10 hover:bg-primary/5 text-primary border-none"
+										onClick={() => login("my_modal_2")}
+									>
+										Login
+									</button>
+								</a>
 							}
 						>
 							<div class="dropdown dropdown-end">
