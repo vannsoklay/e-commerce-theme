@@ -1,7 +1,7 @@
 type ContextAuth = {
   user: () => UserType;
   getUser: () => void;
-  loading:  () => void;
+  loading: () => void;
   login: (model: string | null) => void;
 };
 
@@ -12,16 +12,22 @@ type CartItem = {
 
 type CartContextType = {
   cartItems: CartItem[];
-  addToCart: (product: ItemProduct) => void,
-  minusCart: (product: ItemProduct) => void,
-  removeFromCart: (productId: string) => void,
-  addCarts: (cartItems: CartItem[]) => void,
-  cleanCartItems: Function,
-  logout: Function
-}
+  addToCart: (product: ItemProduct) => void;
+  minusCart: (product: ItemProduct) => void;
+  removeFromCart: (productId: string) => void;
+  addCarts: (cartItems: CartItem[]) => void;
+  cleanCartItems: Function;
+  logout: Function;
+};
 
 type LoginForm = {
   email?: string;
   phone?: string;
   password?: string;
+};
+
+export type Social = {
+  name: string;
+  enable: boolean;
+  link: string;
 };

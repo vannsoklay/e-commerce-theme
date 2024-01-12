@@ -12,7 +12,7 @@ export default function Cart() {
   const [price, setPrice] = createSignal(0);
   createEffect(() => {
     const subtotal: number[] = [];
-    cartItems.map((product) =>
+    cartItems.map((product: any) =>
       subtotal.push(product.quantity * product.product.price)
     );
     const Subtotal: any = subtotal.reduce((accumulator, value) => {
