@@ -2,15 +2,15 @@ import { A, useParams } from "@solidjs/router";
 import { Accessor, For, Show, createEffect, createSignal } from "solid-js";
 
 import { AiFillStar } from "solid-icons/ai";
+import { CartItem } from "~/types/global";
 import { GET_PRODUCT } from "~/libs/graphql/product";
 import Image from "~/components/Image";
+import { ItemProduct } from "~/types/product";
 import { LexicalViewer } from "~/components/LexicalViewer";
 import { MeteTag } from "~/components/meta";
 import { publicQuery } from "~/libs/client";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
-import { ItemProduct } from "~/types/product";
-import { CartItem } from "~/types/global";
 
 const ProductDetail = () => {
 	const navigate = useNavigate();
@@ -143,6 +143,25 @@ const ProductDetail = () => {
 												</For>
 											</div>
 										</div>
+
+										<div class="col-span-6">
+											{/* ------------Key features ---------- */}
+											<Show
+												when={product().storeProduct.detail}
+												fallback={null}
+											>
+												<section class="mt-9">
+													<h1 class="text-xl sm:text-2xl font-black mb-3">
+														Description
+													</h1>
+													<div>
+														<LexicalViewer
+															data={product()?.storeProduct?.detail}
+														/>
+													</div>
+												</section>
+											</Show>
+										</div>
 									</div>
 									<div class="col-span-1 sm:col-span-2">
 										{/* -----review -------- */}
@@ -186,7 +205,7 @@ const ProductDetail = () => {
 
 											<div class="mt-3">
 												<Show when={product().storeProduct.variants.length > 0}>
-													<h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">
+													<h3 class="mb-5 text-lg font-medium text-gray-90">
 														Variants
 													</h3>
 												</Show>
@@ -303,18 +322,6 @@ const ProductDetail = () => {
 										</div>
 									</div>
 								</div>
-
-								{/* ------------Key features ---------- */}
-								<Show when={product().storeProduct.detail} fallback={null}>
-									<section class="mt-9">
-										<h1 class="text-xl sm:text-2xl font-black mb-3">
-											Description
-										</h1>
-										<div class="max-w-screen-md">
-											<LexicalViewer data={product()?.storeProduct?.detail} />
-										</div>
-									</section>
-								</Show>
 							</section>
 						</Show>
 					</Show>

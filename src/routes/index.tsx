@@ -4,10 +4,10 @@ import { A } from "solid-start";
 import { CardProduct } from "~/components/Cards";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
 import Hero from "~/components/Hero";
+import { ProductType } from "~/types/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import { TAGS } from "~/libs/graphql/tag";
 import { publicQuery } from "~/libs/client";
-import { ProductType } from "~/types/product";
 
 export default function Home() {
 	return (
@@ -88,7 +88,7 @@ export const LatestProducts = () => {
 						{(tag) => {
 							return (
 								<A href={`/products?tag=${tag.id}`}>
-									<div class="flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md">
+									<div class="flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
 										{tag.titleEn}
 									</div>
 								</A>

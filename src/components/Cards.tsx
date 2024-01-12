@@ -1,10 +1,10 @@
 import { AiFillHeart, AiFillStar } from "solid-icons/ai";
 import { Component, Show, createSignal } from "solid-js";
-
-import { useNavigate } from "@solidjs/router";
-import { useCart } from "~/contexts/useCart";
 import { ItemProduct, ProductType } from "~/types/product";
+
 import { CartItem } from "~/types/global";
+import { useCart } from "~/contexts/useCart";
+import { useNavigate } from "@solidjs/router";
 
 export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	const navigate = useNavigate();
