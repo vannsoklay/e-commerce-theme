@@ -70,10 +70,7 @@ const Navbar = () => {
 								//   </a>
 								// </>
 								<a href={`https://backend.riverbase.org/sso/store`}>
-									<button
-										class="btn px-14 rounded-full bg-primary/10 hover:bg-primary/5 text-primary border-none"
-										onClick={() => login("my_modal_2")}
-									>
+									<button class="btn px-14 rounded-full bg-primary/10 hover:bg-primary/5 text-primary border-none">
 										Login
 									</button>
 								</a>
@@ -85,10 +82,7 @@ const Navbar = () => {
 									class="btn btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20 placeholder"
 								>
 									<div class="bg-primary text-neutral-content rounded-full w-10">
-										<span>
-											{user().first_name?.charAt(0).toUpperCase()}
-											{user().last_name?.charAt(0).toUpperCase()}
-										</span>
+										<span>{user().fullname?.charAt(0).toUpperCase()}</span>
 									</div>
 								</label>
 								<ul
@@ -96,7 +90,7 @@ const Navbar = () => {
 									class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52"
 								>
 									<li>
-										<A href={`me/@${user().first_name?.toLowerCase()}`}>
+										<A href={`me/@${user().fullname?.toLowerCase()}`}>
 											Profile
 										</A>
 									</li>
