@@ -160,14 +160,14 @@ export default function Cart() {
                 </For>
               </div>
               <A href="/products">
-                <Button.Primary class="w-full rounded-full mt-12">
+                <Button.Primary class="w-full rounded-full my-8">
                   <FiShoppingCart class="text-xl" />
                   More Products
                 </Button.Primary>
               </A>
             </div>
 
-            <div class="md:col-span-2 border bg-slate-50/10 p-4 rounded-xl">
+            <div class="md:col-span-2 border bg-slate-50/10 p-4 rounded-xl h-auto">
               <div class="grid grid-cols-1 justify-start">
                 <h1 class="font-bold text-lg uppercase">Summary</h1>
               </div>

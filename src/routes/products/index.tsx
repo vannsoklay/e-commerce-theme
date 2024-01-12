@@ -14,9 +14,9 @@ export default function Product() {
   return (
     <section>
       <MeteTag name="products" />
-      <div class="md:block hidden">
+      {/* <div class="md:block hidden">
         <Hero />
-      </div>
+      </div> */}
       <div class="container mx-auto pt-0 md:pt-4 md:px-32 grid grid-cols-5 gap-3">
         {/* display responsive mobile */}
         <div class="md:col-span-1 md:block hidden">
@@ -83,6 +83,7 @@ const Products = () => {
           </Show>
         </Show>
       </div>
+
       {/* <nav class="pagination">
         <ul>
           <For each={paginationProps()}>

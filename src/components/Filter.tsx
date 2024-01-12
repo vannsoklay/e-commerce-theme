@@ -11,7 +11,7 @@ export const Filter = () => {
   const [tags] = publicQuery(TAGS);
 
   return (
-    <div class="mt-8 space-y-8">
+    <div class="mt-8">
       <form>
         <input
           class="input input-bordered w-full"
@@ -27,16 +27,16 @@ export const Filter = () => {
           placeholder="Search"
         />
       </form>
-      <h5 class="inline-flex items-center text-base font-semibold text-gray-400">
+      <h5 class="inline-flex items-center text-xl font-semibold text-gray-400 mb-2 mt-5">
         Filters
       </h5>
-      <form class="my-2 border-gray-200">
+      <div class="">
         <ul class="border-gray-200  text-sm text-gray-600">
           <Show when={tags()?.tags} fallback={<div>loading...</div>}>
             <For each={tags().tags} fallback={<div>Not founded</div>}>
               {(tag) => {
                 return (
-                  <li class="hover:bg-primary/5 hover:text-primary transition-all py-2 mt-0 rounded-md px-2">
+                  <li class=" hover:text-primary transition-all py-2 mt-0 rounded-md hover:underline">
                     <A
                       href={`/products?search=${
                         ps.search ? ps.search : ""
@@ -50,7 +50,7 @@ export const Filter = () => {
             </For>
           </Show>
         </ul>
-      </form>
+      </div>
       {/* <h5 class="inline-flex items-center text-base font-medium text-gray-400">
         Categories
       </h5>

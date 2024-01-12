@@ -5,6 +5,7 @@ import { CardProduct } from "~/components/Cards";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
 import Hero from "~/components/Hero";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
+import { TAGS } from "~/libs/graphql/tag";
 import { publicQuery } from "~/libs/client";
 
 export default function Home() {
@@ -29,9 +30,11 @@ export const LatestProducts = () => {
     },
   });
 
+  const [tags] = publicQuery(TAGS);
+
   return (
     <div class="mx-auto max-w-screen-xl md:px-12 xl:px-0">
-      <h1 class="text-center text-primary-1/80 font-extrabold md:text-5xl text-md ">
+      <h1 class="text-primary-1/80 font-extrabold md:text-4xl text-md ">
         Our Products
       </h1>
       {/* <p class="text-center text-primary-1/50 md:text-md text-xs font-semibold ">
@@ -73,6 +76,26 @@ export const LatestProducts = () => {
           </A>
         </div>
       )}
+
+      <h1 class="text-primary-1/80 font-extrabold md:text-4xl text-md my-8 pt-6">
+        Shop by categories
+      </h1>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <Show when={tags()?.tags} fallback={<div>loading...</div>}>
+          <For each={tags().tags} fallback={<div>Not founded</div>}>
+            {(tag) => {
+              return (
+                <A href={`/products?tag=${tag.id}`}>
+                  <div class="flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md">
+                    {tag.titleEn}
+                  </div>
+                </A>
+              );
+            }}
+          </For>
+        </Show>
+      </div>
     </div>
   );
 };
