@@ -7,7 +7,6 @@
   },
   "type": "module",
   "devDependencies": {
-    "@locator/babel-jsx": "^0.4.3",
     "@types/aos": "^3.0.7",
     "@types/node": "^20.10.4",
     "autoprefixer": "^10.4.15",

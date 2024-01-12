@@ -1,11 +1,12 @@
 import { Show, createEffect } from "solid-js";
+
 import { A } from "solid-start";
 import { read } from "~/utils/theme";
 
 export const Logo = () => {
   const name = read("name");
   const header = read("header");
-  
+
   return (
     <div class="flex-1">
       <A

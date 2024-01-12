@@ -1,5 +1,5 @@
-// @refresh reload
-import { Suspense } from "solid-js";
+import "./root.css";
+
 import {
   Body,
   ErrorBoundary,
@@ -11,13 +11,15 @@ import {
   Scripts,
   Title,
 } from "solid-start";
-import "./root.css";
-import PublicLayout from "./components/layout/Public";
+
 import AuthProvider from "./contexts/useAuth";
 import { CartProvider } from "./contexts/useCart";
+import MobileTopBar from "./components/layout/MobileBottom";
+import PublicLayout from "./components/layout/Public";
+// @refresh reload
+import { Suspense } from "solid-js";
 import { Toaster } from "solid-toast";
 import { read } from "./utils/theme";
-import MobileTopBar from "./components/layout/MobileBottom";
 
 export default function Root() {
   const username = read("username");

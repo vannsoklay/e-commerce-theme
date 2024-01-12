@@ -1,12 +1,13 @@
+import { AiFillHeart, AiFillStar } from "solid-icons/ai";
 import { Component, Show } from "solid-js";
+
 import { useNavigate } from "@solidjs/router";
-import { AiFillStar, AiFillHeart } from "solid-icons/ai";
 
 export const CardProduct: Component<{ product: ProductType }> = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div class="h-full border rounded-xl hover:border-primary transition-all hover:shadow-md">
       <Show when={props} fallback={<p>Loading...</p>}>
         <div
           onClick={() => {
@@ -14,9 +15,9 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
           }}
           data-aos="zoom-out-down"
         >
-          <div class="group cursor-pointer relative card w-full h-96 bg-base-100 shadow-xl">
+          <div class=" cursor-pointer relative w-full  rounded-lg">
             <figure>
-              <div class="absolute flex flex-col top-0 right-0 p-3">
+              {/* <div class="absolute flex flex-col top-0 right-0 p-3">
                 <button
                   data-tooltip-target="tooltip-light"
                   data-tooltip-style="light"
@@ -27,10 +28,10 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 >
                   <AiFillHeart class="w-6 h-6 lg:w-4 lg:h-4 2xl:w-6 2xl:h-6 text-secondary/30 group-hover:text-secondary/80" />
                 </button>
-              </div>
-              <div class="flex items-center justify-center bg-contain bg-center bg-repeat p-3">
+              </div> */}
+              <div class="flex items-center justify-center bg-contain bg-center bg-repeat p-2">
                 <img
-                  class="group-hover:scale-105 duration-150 w-full max-h-48 bg-repeat-round rounded-2xl mx-auto object-contain"
+                  class="group-hover:scale-105 duration-150 w-full h-48 bg-repeat-round rounded-2xl mx-auto object-contain"
                   src={`${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
                     props?.product?.thumbnail
                   }`}
@@ -38,9 +39,9 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 />
               </div>
             </figure>
-            <div class="card-body">
-              <span class="text-xs">{props?.product?.brand}</span>
-              <div class="flex items-center">
+            <div class="p-2">
+              {/* <span class="text-xs opacity-70">{props?.product?.brand}</span> */}
+              {/* <div class="flex items-center">
                 <Show when={props?.product?.rating} fallback={null}>
                   {Array(Math.floor(props?.product?.rating)).fill(
                     <AiFillStar class="text-primary text-md" />
@@ -54,19 +55,18 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                 <span class="bg-primary/10 text-primary text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ml-3">
                   {props?.product?.rating}
                 </span>
-              </div>
+              </div> */}
 
-              <p class="text-md font-medium text-gray-800">
+              <div class="text-base font-medium text-gray-800 mb-4 lg:h-12 h-auto">
                 {props.product.title}
-              </p>
+              </div>
               <div class="card-actions flex items-center justify-between">
-                <span class="text-3xl lg:text-xl 2xl:text-3xl font-bold text-secondary">
-                  {props.product.currency === "KHR" ? "៛" : "$"}
-                  {props.product?.price}
+                <span class="text-3xl lg:text-xl text-sm font-bold">
+                  ${props.product.price}
                 </span>
                 <button
                   onClick={() => navigate(`/products/${props?.product?.slug}`)}
-                  class="w-auto btn btn-sm btn-primary border-none rounded-full"
+                  class="w-auto btn btn-sm font-light border-none rounded-full"
                 >
                   {props.product.variants.length <= 0 ? "Add to cart" : "Views"}
                 </button>

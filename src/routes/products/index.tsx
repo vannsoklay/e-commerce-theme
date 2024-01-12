@@ -1,21 +1,22 @@
+import { A, useSearchParams } from "solid-start";
 import { For, Show, createSignal } from "solid-js";
+
 import { CardProduct } from "~/components/Cards";
+import { Filter } from "~/components/Filter";
 import Hero from "~/components/Hero";
-import { publicQuery } from "~/libs/client";
+import { MeteTag } from "~/components/meta";
 import { PRODUCTS } from "~/libs/graphql/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
-import { Filter } from "~/components/Filter";
-import { MeteTag } from "~/components/meta";
-import { A, useSearchParams } from "solid-start";
 import { createPagination } from "@solid-primitives/pagination";
+import { publicQuery } from "~/libs/client";
 
 export default function Product() {
   return (
     <section>
       <MeteTag name="products" />
-      <div class="md:block hidden">
+      {/* <div class="md:block hidden">
         <Hero />
-      </div>
+      </div> */}
       <div class="container mx-auto pt-0 md:pt-4 md:px-32 grid grid-cols-5 gap-3">
         {/* display responsive mobile */}
         <div class="md:col-span-1 md:block hidden">
@@ -53,7 +54,7 @@ const Products = () => {
 
   return (
     <div class="mx-auto max-w-screen-xl space-y-8">
-      <div class="grid md:grid-cols-3 grid-cols-1 gap-3 pt-8">
+      <div class="grid md:grid-cols-4 grid-cols-2 gap-2 pt-8">
         <Show
           when={products()?.storeFilterSearchProducts}
           fallback={<div>Not Founded</div>}
@@ -82,7 +83,8 @@ const Products = () => {
           </Show>
         </Show>
       </div>
-      <nav class="pagination">
+
+      {/* <nav class="pagination">
         <ul>
           <For each={paginationProps()}>
             {(props) => (
@@ -94,7 +96,7 @@ const Products = () => {
             )}
           </For>
         </ul>
-      </nav>
+      </nav> */}
     </div>
   );
 };

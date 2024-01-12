@@ -1,13 +1,14 @@
-import { Accessor, createEffect, createSignal, For, Show } from "solid-js";
 import { A, useParams } from "@solidjs/router";
+import { Accessor, For, Show, createEffect, createSignal } from "solid-js";
+
+import { AiFillStar } from "solid-icons/ai";
+import { GET_PRODUCT } from "~/libs/graphql/product";
+import Image from "~/components/Image";
+import { LexicalViewer } from "~/components/LexicalViewer";
+import { MeteTag } from "~/components/meta";
+import { publicQuery } from "~/libs/client";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
-import Image from "~/components/Image";
-import { publicQuery } from "~/libs/client";
-import { GET_PRODUCT } from "~/libs/graphql/product";
-import { MeteTag } from "~/components/meta";
-import { LexicalViewer } from "~/components/LexicalViewer";
-import { AiFillStar } from "solid-icons/ai";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -58,11 +59,8 @@ const ProductDetail = () => {
               fallback={<div>Not Founded</div>}
             >
               <section class="container mx-auto max-w-screen-xl">
-                <h1 class="text-2x mb-6 font-bold tracking-tight text-gray-900 sm:text-3xl">
-                  {product().storeProduct.title}
-                </h1>
                 <div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
-                  <div class="col-span-3 w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
+                  <div class="col-span-1  sm:col-span-3  w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
                     <div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
                       <Show
                         when={product().storeProduct.previews.length > 0}
@@ -73,14 +71,14 @@ const ProductDetail = () => {
                             return (
                               <div
                                 onClick={() => setThumb(index())}
-                                class="cursor-pointer border border-gray-200 rounded-md"
+                                class="cursor-pointer overflow-hidden border border-gray-200 rounded-md"
                               >
                                 <img
                                   alt="previews"
                                   src={`${
                                     import.meta.env.VITE_VARIABLE_IPFS
                                   }/api/ipfs?hash=${res}`}
-                                  class="w-48 h-28 object-contain hover:scale-125 duration-150 "
+                                  class="w-48 h-28 object-contain hover:scale-110 duration-150 "
                                 />
                               </div>
                             );
@@ -88,7 +86,7 @@ const ProductDetail = () => {
                         </For>
                       </Show>
                     </div>
-                    <div class="sm:col-span-5 hidden sm:block">
+                    <div class="sm:col-span-5 overflow-hidden hidden sm:block">
                       <Show
                         when={product().storeProduct.previews.length <= 0}
                         fallback={
@@ -96,7 +94,7 @@ const ProductDetail = () => {
                             <img
                               src={viewImage()}
                               alt=""
-                              class="w-full h-[43dvh] rounded-lg object-contain object-center hover:scale-110 duration-150 "
+                              class="w-full h-[43dvh] rounded-lg object-contain object-center hover:scale-105 transition-all"
                             />
                           </div>
                         }
@@ -145,45 +143,43 @@ const ProductDetail = () => {
                     </div>
                   </div>
                   <div class="col-span-1 sm:col-span-2">
+                    {/* -----review -------- */}
+
+                    <div class="rating rating-sm mt-3">
+                      <Show
+                        when={product().storeProduct.rating}
+                        fallback={null}
+                      >
+                        {Array(Math.floor(product().storeProduct.rating)).fill(
+                          <AiFillStar class="text-primary text-xl" />
+                        )}
+                        {5 - Math.floor(product().storeProduct.rating) == 0 ? (
+                          ""
+                        ) : (
+                          <AiFillStar class="text-gray-200 text-xl" />
+                        )}
+                      </Show>
+                      <A
+                        href="#"
+                        class="ml-3 text-sm font-medium text-base-content"
+                      >
+                        99+ reviews
+                      </A>
+                    </div>
+                    <h1 class="text-lg mb-2 font-bold tracking-tight text-gray-900 sm:text-2xl">
+                      {product().storeProduct.title}
+                    </h1>
                     <div class="mt-4 lg:row-span-3 lg:mt-0">
                       <h2 class="sr-only">Product information</h2>
-                      <p class="text-3xl sm:text-5xl tracking-tight text-primary font-semibold">
+                      <p class="text-xl sm:text-3xl tracking-tight text-primary font-semibold">
                         {product().storeProduct.currency === "KHR" ? "៛" : "$"}
                         {product().storeProduct.price}
                       </p>
 
-                      {/* -----review -------- */}
-
-                      <div class="rating rating-sm mt-3">
-                        <Show
-                          when={product().storeProduct.rating}
-                          fallback={null}
-                        >
-                          {Array(
-                            Math.floor(product().storeProduct.rating)
-                          ).fill(<AiFillStar class="text-primary text-xl" />)}
-                          {5 - Math.floor(product().storeProduct.rating) ==
-                          0 ? (
-                            ""
-                          ) : (
-                            <AiFillStar class="text-gray-200 text-xl" />
-                          )}
-                        </Show>
-                        <A
-                          href="#"
-                          class="ml-3 text-sm font-medium text-base-content"
-                        >
-                          99+ reviews
-                        </A>
-                      </div>
-
                       <Show when={product().storeProduct.desc} fallback={null}>
-                        <h1 class="text-2xl font-bold">Description</h1>
-                        <div class="space-y-6">
-                          <p class="text-base text-gray-600 mt-3">
-                            {product().storeProduct.desc}
-                          </p>
-                        </div>
+                        <p class="text-base text-gray-600 mt-3">
+                          {product().storeProduct.desc}
+                        </p>
                       </Show>
 
                       <div class="mt-3">
@@ -308,8 +304,8 @@ const ProductDetail = () => {
                 {/* ------------Key features ---------- */}
                 <Show when={product().storeProduct.detail} fallback={null}>
                   <section class="mt-9">
-                    <h1 class="text-2xl sm:text-4xl font-black mb-3">
-                      Key features
+                    <h1 class="text-xl sm:text-2xl font-black mb-3">
+                      Description
                     </h1>
                     <div class="max-w-screen-md">
                       <LexicalViewer data={product()?.storeProduct?.detail} />
