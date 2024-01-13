@@ -19,7 +19,7 @@ const Hero = () => {
 								: "We Choose the best parts of consumable to make the whole toner cartridge. We test each other cartridge before delivery to make sur quality."}
 						</p>
 						<A href="/products">
-							<button class="lg:w-40 w-32 btn lg:btn-md btn-sm shadow-sm rounded-full bg-action/10 text-action hover:text-action hover:border-action hover:bg-action/10">
+							<button class="lg:w-40 w-32 btn lg:btn-md btn-sm shadow-sm rounded-full btn-primary">
 								Shop Now
 							</button>
 						</A>

@@ -89,7 +89,7 @@ export const LatestProducts = () => {
 						{(tag) => {
 							return (
 								<A href={`/products?tag=${tag.id}`}>
-									<div class="flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
+									<div class="bg-neutral/80 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
 										{tag.titleEn}
 									</div>
 								</A>

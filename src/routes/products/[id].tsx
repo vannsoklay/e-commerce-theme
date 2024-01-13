@@ -54,21 +54,21 @@ const ProductDetail = () => {
 	return (
 		<>
 			<MeteTag name="detail" />
-			<div class="px-3 md:px-16 pb-12 sm:pb-0">
+			<div class="px-3 lg:px-16 pb-12 sm:pb-0">
 				<div class="pt-6">
 					<Show when={product()} fallback={<div>Loading ...</div>}>
 						<Show
 							when={!product().productStore}
 							fallback={<div>Not Founded</div>}
 						>
-							<section class="container mx-auto container">
-								<div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
-									<div class="col-span-1  sm:col-span-3  w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
-										<div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
-											<Show
-												when={product().storeProduct.previews.length > 0}
-												fallback={null}
-											>
+							<section class="container mx-auto">
+								<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+									<div class="col-span-1  lg:col-span-3 w-full gap-3 grid lg:grid-cols-6 ">
+										<Show
+											when={product().storeProduct.previews.length > 1}
+											fallback={null}
+										>
+											<div class="hidden lg:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
 												<For each={product().storeProduct.previews}>
 													{(res: string, index: Accessor<number>) => {
 														return (
@@ -87,33 +87,29 @@ const ProductDetail = () => {
 														);
 													}}
 												</For>
-											</Show>
-										</div>
-										<div class="sm:col-span-5 overflow-hidden hidden sm:block">
-											<Show
-												when={product().storeProduct.previews.length <= 0}
-												fallback={
-													<div class="aspect-h-4 aspect-w-3 p-3 rounded-xl lg:block border mx-auto">
-														<img
-															src={viewImage()}
-															alt=""
-															class="w-full h-[43dvh] rounded-lg object-contain object-center hover:scale-105 transition-all"
-														/>
-													</div>
-												}
-											>
-												<Image
-													image={`${
-														import.meta.env.VITE_VARIABLE_IPFS
-													}/api/ipfs?hash=${product().storeProduct.thumbnail}`}
-													name=""
-													width="w-full"
-													heigh="h-[9dvh]"
-													is_scale={true}
+											</div>
+										</Show>
+										<div
+											class="hidden lg:block col-span-5 overflow-hidden max-h-[45dvh] border bg-center"
+											classList={{
+												"col-span-full":
+													product().storeProduct.previews.length < 1,
+											}}
+											style={{
+												"background-image": `url("${viewImage()}")`,
+												"background-size": "200%",
+											}}
+										>
+											<div class="backdrop-blur-xl w-full h-full">
+												<img
+													src={viewImage()}
+													alt=""
+													class="h-full w-auto object-contain mx-auto"
 												/>
-											</Show>
+											</div>
 										</div>
-										<div class="col-span-1 block sm:hidden">
+
+										<div class="col-span-6 block lg:hidden w-full ">
 											<div class="w-full carousel rounded-box">
 												<For each={product().storeProduct.previews}>
 													{(res: string, index: Accessor<number>) => {
@@ -210,7 +206,7 @@ const ProductDetail = () => {
 														Variants
 													</h3>
 												</Show>
-												<ul class="grid w-full gap-3 md:grid-cols-2">
+												<ul class="grid w-full gap-3 lg:grid-cols-2">
 													<For each={product().storeProduct.variants}>
 														{(res) => {
 															return (

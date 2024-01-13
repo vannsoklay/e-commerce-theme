@@ -5,53 +5,57 @@ import { TAGS } from "~/libs/graphql/tag";
 import { publicQuery } from "~/libs/client";
 
 export const Filter = () => {
-  const [ps] = useSearchParams();
-  const navigate = useNavigate();
-  const [value, setValue] = createSignal("");
-  const [tags] = publicQuery(TAGS);
+	const [ps] = useSearchParams();
+	const navigate = useNavigate();
+	const [value, setValue] = createSignal("");
+	const [tags] = publicQuery(TAGS);
 
-  return (
-    <div class="mt-8">
-      <form>
-        <input
-          class="input input-bordered w-full"
-          onInput={(e) => {
-            setValue(e.target.value),
-              navigate(
-                `/products?search=${value() ? value() : ""}&tag=${
-                  ps.tag ? ps.tag : ""
-                }`
-              );
-          }}
-          type="text"
-          placeholder="Search"
-        />
-      </form>
-      <h5 class="inline-flex items-center text-xl font-semibold text-gray-400 mb-2 mt-5">
-        Filters
-      </h5>
-      <div class="">
-        <ul class="border-gray-200  text-sm text-gray-600">
-          <Show when={tags()?.tags} fallback={<div>loading...</div>}>
-            <For each={tags().tags} fallback={<div>Not founded</div>}>
-              {(tag) => {
-                return (
-                  <li class=" hover:text-primary transition-all py-2 mt-0 rounded-md hover:underline">
-                    <A
-                      href={`/products?search=${
-                        ps.search ? ps.search : ""
-                      }&tag=${tag.id}`}
-                    >
-                      {tag.titleEn}
-                    </A>
-                  </li>
-                );
-              }}
-            </For>
-          </Show>
-        </ul>
-      </div>
-      {/* <h5 class="inline-flex items-center text-base font-medium text-gray-400">
+	return (
+		<div class="mt-8">
+			<input
+				class="input input-primary rounded-box border-2 w-full"
+				onInput={(e) => {
+					setValue(e.target.value),
+						navigate(
+							`/products?search=${value() ? value() : ""}&tag=${
+								ps.tag ? ps.tag : ""
+							}`
+						);
+				}}
+				type="text"
+				placeholder="Search"
+			/>
+			<div class="bg-neutral shadow-sm p-4 rounded-xl mt-5">
+				<h5 class="inline-flex items-center text-xl font-semibold text-gray-400 mb-2 ">
+					Filters
+				</h5>
+				<div class="">
+					<ul class="border-gray-200  text-sm text-gray-600">
+						<Show when={tags()?.tags} fallback={<div>loading...</div>}>
+							<For each={tags().tags} fallback={<div>Not founded</div>}>
+								{(tag) => {
+									return (
+										<li class=" hover:text-primary transition-all py-2 mt-0 ">
+											<A
+												end={true}
+												classList={{
+													"text-primary font-medium": tag.id == ps.tag,
+												}}
+												href={`/products?search=${
+													ps.search ? ps.search : ""
+												}&tag=${tag.id}`}
+											>
+												{tag.titleEn}
+											</A>
+										</li>
+									);
+								}}
+							</For>
+						</Show>
+					</ul>
+				</div>
+			</div>
+			{/* <h5 class="inline-flex items-center text-base font-medium text-gray-400">
         Categories
       </h5>
       <form class="my-4 border-gray-200">
@@ -131,6 +135,6 @@ export const Filter = () => {
           </div>
         </div>
       </form> */}
-    </div>
-  );
+		</div>
+	);
 };
