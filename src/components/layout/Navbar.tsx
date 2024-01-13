@@ -10,7 +10,7 @@ const Navbar = () => {
 
 	return (
 		<div class="navbar w-full bg-white/80 relative sm:sticky top-0 z-50 backdrop-blur-lg border">
-			<div class="md:flex hidden justify-between w-full container mx-auto md:px-0 xl:px-32">
+			<div class="md:flex hidden justify-between w-full container mx-auto ">
 				<Logo />
 				<div class="flex items-center space-x-3">
 					<Show

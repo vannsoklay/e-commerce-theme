@@ -117,7 +117,7 @@ export default function Checkout() {
 							</button>
 						</div>
 					</Dialog>
-					<div class="mx-auto mt-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-0 xl:px-24 2xl:px-0">
+					<div class="mx-auto mt-4 sm:max-w-xl md:max-w-full lg:container px-4 md:px-24 lg:px-0 xl:px-24 2xl:px-0">
 						<div class="grid grid-cols-4 gap-8 mt-8">
 							<main class="col-span-2 md:block hidden">
 								<DeliveryOption Field={Field} />

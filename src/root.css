@@ -19,3 +19,9 @@
     display: none;
   }
 }
+
+@layer {
+  .container{
+    @apply px-6
+  }
+}

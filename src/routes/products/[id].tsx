@@ -60,7 +60,7 @@ const ProductDetail = () => {
 							when={!product().productStore}
 							fallback={<div>Not Founded</div>}
 						>
-							<section class="container mx-auto max-w-screen-xl">
+							<section class="container mx-auto container">
 								<div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
 									<div class="col-span-1  sm:col-span-3  w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
 										<div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
