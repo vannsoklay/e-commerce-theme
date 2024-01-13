@@ -21,11 +21,11 @@ export default function Cart() {
 		setPrice(Subtotal);
 	});
 	return (
-		<main class="mx-auto text-gray-700 p-4">
+		<main class="container mx-auto text-gray-700 p-4">
 			<Show when={cartItems.length > 0} fallback={<EmptyCart />}>
-				<div class="mx-auto sm:max-w-xl md:max-w-full lg:container px-4 md:px-24 lg:px-24 xl:px-24 2xl:px-0">
-					<h2 class="text-2xl opacity-50 font-bold mb-8">Shopping Cart</h2>
-					<div class="grid md:grid-cols-5 md:gap-20">
+				<div>
+					<h2 class="text-2xl opacity-80 font-bold mb-8">Shopping Cart</h2>
+					<div class="grid md:grid-cols-5 md:gap-6">
 						<div class="md:col-span-3">
 							<div class="backdrop-blur-sm bg-white bg-opacity-80 space-y-4 divide-y">
 								<For each={cartItems}>
@@ -167,44 +167,46 @@ export default function Cart() {
 							</A>
 						</div>
 
-						<div class="md:col-span-2 border bg-slate-50/10 p-4 rounded-xl h-auto">
-							<div class="grid grid-cols-1 justify-start">
-								<h1 class="font-bold text-lg uppercase">Summary</h1>
-							</div>
-							<div class="divider mt-2"></div>
-							<div class="grid grid-cols-2">
-								<div class="col-span-1 flex justify-start text-md">
-									Subtotal
+						<div class="md:col-span-2 bg-slate-50/10 rounded-xl">
+							<div class="border p-6 rounded-xl">
+								<div class="grid grid-cols-1 justify-start">
+									<h1 class="font-bold text-lg uppercase">Summary</h1>
 								</div>
-								<div class="col-span-1 font-bold flex justify-end">
-									{price()} USD
+								<div class="divider mt-2"></div>
+								<div class="grid grid-cols-2">
+									<div class="col-span-1 flex justify-start text-md">
+										Subtotal
+									</div>
+									<div class="col-span-1 font-bold flex justify-end">
+										USD {price().toLocaleString()}
+									</div>
 								</div>
-							</div>
-							<div class="grid grid-cols-2 md:mt-2">
-								<div class="col-span-1 flex justify-start text-md">
-									Shipping
+								<div class="grid grid-cols-2 md:mt-2">
+									<div class="col-span-1 flex justify-start text-md">
+										Shipping
+									</div>
+									<div class="col-span-1 font-bold flex justify-end">0 USD</div>
 								</div>
-								<div class="col-span-1 font-bold flex justify-end">0 USD</div>
-							</div>
-							<div class="grid grid-cols-2 md:mt-2">
-								<div class="col-span-1 flex justify-start text-md">
-									Estimated Tax
+								<div class="grid grid-cols-2 md:mt-2">
+									<div class="col-span-1 flex justify-start text-md">
+										Estimated Tax
+									</div>
+									<div class="col-span-1 font-bold flex justify-end">-</div>
 								</div>
-								<div class="col-span-1 font-bold flex justify-end">-</div>
-							</div>
-							<div class="divider my-2"></div>
-							<div class="grid grid-cols-2 flex justify-start">
-								<div class="col-span-1 flex justify-start text-md">Total</div>
-								<h1 class="font-bold uppercase flex justify-end">
-									{price()} USD
-								</h1>
-							</div>
-							<div class="pt-6">
-								<A href="/checkouts">
-									<Button.Primary class="w-full rounded-full">
-										Checkout
-									</Button.Primary>
-								</A>
+								<div class="divider my-2"></div>
+								<div class="grid grid-cols-2 justify-start">
+									<div class="col-span-1 flex justify-start text-md">Total</div>
+									<h1 class="font-bold uppercase flex justify-end">
+										USD {price().toLocaleString()}
+									</h1>
+								</div>
+								<div class="pt-6">
+									<A href="/checkouts">
+										<Button.Primary class="w-full shadow-none rounded-full">
+											Checkout
+										</Button.Primary>
+									</A>
+								</div>
 							</div>
 						</div>
 					</div>

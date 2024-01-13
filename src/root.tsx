@@ -1,15 +1,15 @@
 import "./root.css";
 
 import {
-  Body,
-  ErrorBoundary,
-  FileRoutes,
-  Head,
-  Html,
-  Meta,
-  Routes,
-  Scripts,
-  Title,
+	Body,
+	ErrorBoundary,
+	FileRoutes,
+	Head,
+	Html,
+	Meta,
+	Routes,
+	Scripts,
+	Title,
 } from "solid-start";
 
 import AuthProvider from "./contexts/useAuth";
@@ -22,32 +22,34 @@ import { Toaster } from "solid-toast";
 import { read } from "./utils/theme";
 
 export default function Root() {
-  const username = read("username");
-  return (
-    <Html lang="en" data-theme="light">
-      <Head>
-        <Title>{username()}</Title>
-        <Meta charset="utf-8" />
-        <Meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <Body>
-        <Suspense>
-          <ErrorBoundary>
-            <AuthProvider>
-              <CartProvider>
-                <PublicLayout>
-                  <Toaster />
-                  <Routes>
-                    <FileRoutes />
-                  </Routes>
-                </PublicLayout>
-                <MobileTopBar />
-              </CartProvider>
-            </AuthProvider>
-          </ErrorBoundary>
-        </Suspense>
-        <Scripts />
-      </Body>
-    </Html>
-  );
+	const username = read("username");
+	return (
+		<Html lang="en" data-theme="light">
+			<Head>
+				<Title>{username()}</Title>
+				<Meta charset="utf-8" />
+				<Meta name="viewport" content="width=device-width, initial-scale=1" />
+			</Head>
+			<Body>
+				<Suspense>
+					<Toaster position="top-center" gutter={24} />
+
+					<ErrorBoundary>
+						<AuthProvider>
+							<CartProvider>
+								<PublicLayout>
+									<Toaster />
+									<Routes>
+										<FileRoutes />
+									</Routes>
+								</PublicLayout>
+								<MobileTopBar />
+							</CartProvider>
+						</AuthProvider>
+					</ErrorBoundary>
+				</Suspense>
+				<Scripts />
+			</Body>
+		</Html>
+	);
 }

@@ -3,6 +3,7 @@ import { Component, Show, createSignal } from "solid-js";
 import { ItemProduct, ProductType } from "~/types/product";
 
 import { CartItem } from "~/types/global";
+import toast from "solid-toast";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
 
@@ -76,7 +77,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 								{props.product.title}
 							</div>
 							<div class="card-actions flex items-center justify-between">
-								<span class="text-3xl lg:text-xl text-sm font-bold">
+								<span class=" lg:text-xl text-sm font-bold">
 									${props.product.price}
 								</span>
 								<button
@@ -93,6 +94,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 										props.product.variants.length > 0
 											? (addCarts(items()), setItems([]))
 											: handleAddToCart(p);
+										toast.success("Added successfully!");
 									}}
 									class="w-auto btn btn-sm font-light border-none rounded-full"
 								>

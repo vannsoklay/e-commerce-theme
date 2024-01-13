@@ -9,6 +9,7 @@ import { ItemProduct } from "~/types/product";
 import { LexicalViewer } from "~/components/LexicalViewer";
 import { MeteTag } from "~/components/meta";
 import { publicQuery } from "~/libs/client";
+import toast from "solid-toast";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
 
@@ -289,6 +290,7 @@ const ProductDetail = () => {
 																product().storeProduct.variants.length > 0
 																	? (addCarts(items()), setItems([]))
 																	: handleAddToCart(p);
+																toast.success("Added successfully!");
 															}}
 															class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
 														>
