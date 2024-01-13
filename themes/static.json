@@ -3,7 +3,8 @@
     "primary": "#B202E6",
     "secondary": "#E60234",
     "action": "#4315E2",
-    "primary-1": "#140302"
+    "primary-1": "#140302",
+    "base": "#B202E6"
   },
   "background": {
     "backgroundImage": {
