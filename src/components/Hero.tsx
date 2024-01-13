@@ -6,9 +6,9 @@ const Hero = () => {
 	const promotion = read("promotion");
 
 	return (
-		<div class="xl:min-h-[50vh] lg:min-h-[30vh] min-h-[20vh] bg-primary/5 md:py-0 md:px-12 xl:px-0 py-8 px-3">
-			<div class="container mx-auto">
-				<div class="grid md:grid-cols-2 grid-cols-1 items-center">
+		<div class=" bg-primary/5 md:py-0 md:px-12 xl:px-0 px-3 ">
+			<div class="container mx-auto ">
+				<div class=" grid md:grid-cols-2 grid-cols-1 items-center min-h-[60vh]">
 					<div>
 						<h1 class="sm:text-5xl text-primary text-2xl font-black">
 							{name()}
@@ -26,8 +26,12 @@ const Hero = () => {
 					</div>
 					<div class="flex justify-center items-center">
 						<img
-							src="/images/promotes/promote.png"
-							class="w-full rounded-lg md:grid hidden"
+							src={
+								promotion().images
+									? promotion().images
+									: "/images/promotes/promote.png"
+							}
+							class="w-full rounded-lg md:grid"
 							alt={name()}
 						/>
 					</div>
