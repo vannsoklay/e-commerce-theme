@@ -117,36 +117,49 @@ export default function Checkout() {
 							</button>
 						</div>
 					</Dialog>
-					<div class="mx-auto mt-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl px-4 md:px-24 lg:px-0 xl:px-24 2xl:px-0">
-						<div class="grid grid-cols-4 gap-8 mt-8">
-							<main class="col-span-2 md:block hidden">
-								<DeliveryOption Field={Field} />
-								<div class="flex justify-start">
-									<h1 class="text-xl font-semibold pb-8">Payments</h1>
-								</div>
-								<div class="flex justify-start w-full px-4">
-									<div class="grid grid-cols-8 gap-4 space-y-4">
-										<For each={[{ label: "cash", value: "CASH" }]}>
-											{({ value }) => (
+					<div>
+						<div class="grid grid-cols-2 gap-8 mt-8">
+							<main class=" md:block hidden ">
+								<div class="border p-5 rounded-xl shadow-sm">
+									<DeliveryOption Field={Field} />
+									<div class="flex justify-start">
+										<h1 class="text-xl font-semibold pb-8">Payments</h1>
+									</div>
+									<div class="grid grid-cols-2 gap-4">
+										<For
+											each={[
+												{ label: "cash", value: "CASH" },
+												// { label: "ABA Payway", value: "abapayway" },
+											]}
+										>
+											{({ value }, index) => (
 												<Field
 													name="payment"
 													validate={[required("Please select your payment.")]}
 												>
 													{(field, props) => (
-														<label class="w-full flex col-span-8 gap-6 items-center">
-															<input
-																{...props}
-																class="radio"
-																type="radio"
-																value={value}
-																checked={field.value?.includes(value)}
-															/>
-															<img
-																class="h-12"
-																src={`/images/banks/${value}.png`}
-																alt=""
-															/>
-														</label>
+														<div
+															class={`rounded-xl p-3 border`}
+															classList={{
+																"ring ring-primary":
+																	field.value?.includes(value),
+															}}
+														>
+															<label class="w-full flex gap-6 items-center cursor-pointer   ">
+																<input
+																	{...props}
+																	class="radio radio-primary"
+																	type="radio"
+																	value={value}
+																	checked={field.value?.includes(value)}
+																/>
+																<img
+																	class="h-12"
+																	src={`/images/banks/${value}.png`}
+																	alt=""
+																/>
+															</label>
+														</div>
 													)}
 												</Field>
 											)}
@@ -155,135 +168,141 @@ export default function Checkout() {
 								</div>
 								{/* <Delivery Field={Field} /> */}
 							</main>
-							<main class="md:col-span-2 col-span-4 md:px-8">
-								<h1 class="text-xl font-semibold pb-2">
-									My shopping bag ({cartItems.length})
-								</h1>
-								<For each={cartItems}>
-									{(cartItem) => {
-										return (
-											<Show when={cartItem} fallback={<p>Loading...</p>}>
-												<div class="md:flex md:justify-between md:items-center pt-6">
-													<div class="flex items-center space-x-3">
-														<div>
-															<div class="avatar">
-																<div class="w-24 rounded">
-																	<img
-																		src={`${
-																			import.meta.env.VITE_VARIABLE_IPFS
-																		}/api/ipfs?hash=${
-																			cartItem?.product?.preview
-																		}`}
-																		alt=""
-																	/>
-																</div>
-															</div>
-														</div>
-														<div>
-															<h1>{cartItem.product?.title}</h1>
-															<div class="flex">
-																<p>
-																	{cartItem.product.price} x{cartItem.quantity}
-																</p>
-																=
-																<p class="font-bold ">
-																	${cartItem.product.price * cartItem.quantity}
-																</p>
-															</div>
-														</div>
-													</div>
-													<div class="flex space-x-7 items-center md:mt-0 mt-2">
-														<div class="flex space-x-3 items-center">
-															{cartItem.quantity === 1 ? (
-																<div class="bg-gray-100 p-1 rounded-full cursor-pointer">
-																	<div>
-																		<svg
-																			xmlns="http://www.w3.org/2000/svg"
-																			fill="none"
-																			viewBox="0 0 24 24"
-																			stroke-width="1.5"
-																			stroke="currentColor"
-																			class="w-5 h-5 text-gray-600"
-																		>
-																			<path
-																				stroke-linecap="round"
-																				stroke-linejoin="round"
-																				d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-																			/>
-																		</svg>
-																	</div>
-																</div>
-															) : (
-																<div class="bg-orange-100 p-1 rounded-full cursor-pointer">
-																	<div
-																		onclick={() => minusCart(cartItem.product)}
-																	>
-																		<svg
-																			xmlns="http://www.w3.org/2000/svg"
-																			fill="none"
-																			viewBox="0 0 24 24"
-																			stroke-width="1.5"
-																			stroke="currentColor"
-																			class="w-5 h-5 text-orange-600"
-																		>
-																			<path
-																				stroke-linecap="round"
-																				stroke-linejoin="round"
-																				d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-																			/>
-																		</svg>
-																	</div>
-																</div>
-															)}
-
-															<div class="bg-green-100 p-1 rounded-full cursor-pointer">
-																<div
-																	onclick={() => addToCart(cartItem.product)}
-																>
-																	<svg
-																		xmlns="http://www.w3.org/2000/svg"
-																		fill="none"
-																		viewBox="0 0 24 24"
-																		stroke-width="1.5"
-																		stroke="currentColor"
-																		class="w-5 h-5 text-green-600"
-																	>
-																		<path
-																			stroke-linecap="round"
-																			stroke-linejoin="round"
-																			d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+							<main class="">
+								<div class="border p-6 rounded-xl">
+									<h1 class="text-xl font-semibold pb-2">
+										My shopping bag ({cartItems.length})
+									</h1>
+									<For each={cartItems}>
+										{(cartItem) => {
+											return (
+												<Show when={cartItem} fallback={<p>Loading...</p>}>
+													<div class="md:flex md:justify-between md:items-center pt-6">
+														<div class="flex items-center space-x-3">
+															<div>
+																<div class="avatar">
+																	<div class="w-24 rounded">
+																		<img
+																			src={`${
+																				import.meta.env.VITE_VARIABLE_IPFS
+																			}/api/ipfs?hash=${
+																				cartItem?.product?.preview
+																			}`}
+																			alt=""
 																		/>
-																	</svg>
+																	</div>
+																</div>
+															</div>
+															<div>
+																<h1>{cartItem.product?.title}</h1>
+																<div class="flex">
+																	<p>
+																		{cartItem.product.price} x
+																		{cartItem.quantity}
+																	</p>
+																	=
+																	<p class="font-bold ">
+																		$
+																		{cartItem.product.price * cartItem.quantity}
+																	</p>
 																</div>
 															</div>
 														</div>
-														<div
-															onClick={() =>
-																removeFromCart(cartItem.product.id)
-															}
-															class="bg-red-100 p-1 rounded-full cursor-pointer"
-														>
-															<svg
-																xmlns="http://www.w3.org/2000/svg"
-																fill="none"
-																viewBox="0 0 24 24"
-																stroke-width="1.5"
-																stroke="currentColor"
-																class="w-4 h-4 text-red-500"
+														<div class="flex space-x-7 items-center md:mt-0 mt-2">
+															<div class="flex space-x-3 items-center">
+																{cartItem.quantity === 1 ? (
+																	<div class="bg-gray-100 p-1 rounded-full cursor-pointer">
+																		<div>
+																			<svg
+																				xmlns="http://www.w3.org/2000/svg"
+																				fill="none"
+																				viewBox="0 0 24 24"
+																				stroke-width="1.5"
+																				stroke="currentColor"
+																				class="w-5 h-5 text-gray-600"
+																			>
+																				<path
+																					stroke-linecap="round"
+																					stroke-linejoin="round"
+																					d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+																				/>
+																			</svg>
+																		</div>
+																	</div>
+																) : (
+																	<div class="bg-orange-100 p-1 rounded-full cursor-pointer">
+																		<div
+																			onclick={() =>
+																				minusCart(cartItem.product)
+																			}
+																		>
+																			<svg
+																				xmlns="http://www.w3.org/2000/svg"
+																				fill="none"
+																				viewBox="0 0 24 24"
+																				stroke-width="1.5"
+																				stroke="currentColor"
+																				class="w-5 h-5 text-orange-600"
+																			>
+																				<path
+																					stroke-linecap="round"
+																					stroke-linejoin="round"
+																					d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+																				/>
+																			</svg>
+																		</div>
+																	</div>
+																)}
+
+																<div class="bg-green-100 p-1 rounded-full cursor-pointer">
+																	<div
+																		onclick={() => addToCart(cartItem.product)}
+																	>
+																		<svg
+																			xmlns="http://www.w3.org/2000/svg"
+																			fill="none"
+																			viewBox="0 0 24 24"
+																			stroke-width="1.5"
+																			stroke="currentColor"
+																			class="w-5 h-5 text-green-600"
+																		>
+																			<path
+																				stroke-linecap="round"
+																				stroke-linejoin="round"
+																				d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+																			/>
+																		</svg>
+																	</div>
+																</div>
+															</div>
+															<div
+																onClick={() =>
+																	removeFromCart(cartItem.product.id)
+																}
+																class="bg-red-100 p-1 rounded-full cursor-pointer"
 															>
-																<path
-																	stroke-linecap="round"
-																	stroke-linejoin="round"
-																	d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-																/>
-															</svg>
+																<svg
+																	xmlns="http://www.w3.org/2000/svg"
+																	fill="none"
+																	viewBox="0 0 24 24"
+																	stroke-width="1.5"
+																	stroke="currentColor"
+																	class="w-4 h-4 text-red-500"
+																>
+																	<path
+																		stroke-linecap="round"
+																		stroke-linejoin="round"
+																		d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+																	/>
+																</svg>
+															</div>
 														</div>
 													</div>
-												</div>
-											</Show>
-										);
-									}}
-								</For>
+												</Show>
+											);
+										}}
+									</For>
+								</div>
 								<div class="md:col-span-2 mt-9 md:mt-6">
 									<div class="grid grid-cols-1 justify-start">
 										<h1 class="font-bold uppercase">Summary</h1>
@@ -418,7 +437,7 @@ const DeliveryOption = ({ Field }: any) => {
 				Delivery Location
 			</h1>
 			<Show when={data().deliveries.length > 0} fallback={null}>
-				<section class="flex flex-wrap gap-3 items-center pb-6">
+				<section class="flex flex-wrap gap-3 flex-col  mb-6 relative">
 					<For each={data().deliveries} fallback={null}>
 						{(delivery) => {
 							return (
@@ -437,20 +456,18 @@ const DeliveryOption = ({ Field }: any) => {
 												required
 												name="delivery"
 											/>
-											<div class="w-full rounded-md p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
-												<div>
-													<div class="flex items-center gap-6 justify-between">
-														<p class="text-sm font-semibold uppercase text-pimary">
-															{delivery.address}
-														</p>
-														<FaSolidCircleCheck class="text-xl" />
-													</div>
-													<div class="flex gap-3 items-center">
-														<FaSolidPhone class="text-sm" />
-														<p class="text-sm font-medium">
-															{delivery.phoneNumber}
-														</p>
-													</div>
+											<div class="border rounded-xl p-5 text-gray-600 ring-2 ring-transparent transition-all peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
+												<div class="flex items-center gap-6 justify-between">
+													<p class="text-sm font-semibold uppercase text-pimary">
+														{delivery.address}
+													</p>
+													<FaSolidCircleCheck class="text-xl" />
+												</div>
+												<div class="flex gap-3 items-center">
+													<FaSolidPhone class="text-sm" />
+													<p class="text-sm font-medium">
+														{delivery.phoneNumber}
+													</p>
 												</div>
 											</div>
 										</label>
@@ -461,9 +478,9 @@ const DeliveryOption = ({ Field }: any) => {
 					</For>
 				</section>
 			</Show>
-			<div class="collapse bg-base-200 collapse-plus border mb-6">
+			<div class="collapse bg-base-100 collapse-plus border mb-6">
 				<input type="checkbox" />
-				<div class="collapse-title text-md font-bold">Add new location</div>
+				<div class="collapse-title text-md font-medium">Add new location</div>
 				<div class="collapse-content">
 					<DeliveryForm refetch={refetch} />
 				</div>

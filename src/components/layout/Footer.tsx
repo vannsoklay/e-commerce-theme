@@ -1,10 +1,17 @@
 import { Component, For, Match, Resource, Switch } from "solid-js";
-import { FiFacebook, FiInstagram, FiTwitter, FiYoutube } from "solid-icons/fi";
+import {
+	FiFacebook,
+	FiInstagram,
+	FiMail,
+	FiPhone,
+	FiTwitter,
+	FiYoutube,
+} from "solid-icons/fi";
+import { FooterConfig, Social } from "~/types/global";
 import { SiGmail, SiTelegram, SiTiktok } from "solid-icons/si";
 
 import { A } from "solid-start";
 import { FaSolidSquarePhone } from "solid-icons/fa";
-import { FooterConfig, Social } from "~/types/global";
 import { read } from "~/utils/theme";
 
 const Footer: Component = () => {
