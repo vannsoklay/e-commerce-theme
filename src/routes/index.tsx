@@ -48,7 +48,7 @@ export const LatestProducts = () => {
 					<Show
 						when={products()?.storeProducts.length > 0}
 						fallback={
-							<div class="col-span-4 w-full text-center pt-8">
+							<div class="md:col-span-3 lg:col-span-5 col-span-1 w-full text-center pt-8">
 								<div class="flex justify-center text-center text-2xl items-center">
 									<RiFinanceShoppingBasketLine
 										size={120}

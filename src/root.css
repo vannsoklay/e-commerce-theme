@@ -9,7 +9,6 @@
   html {
     font-family: 'Roboto', sans-serif;
   }
-
   .hide-scroll-bar {
     -ms-overflow-style: none;
     scrollbar-width: none;
