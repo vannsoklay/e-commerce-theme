@@ -4,8 +4,10 @@ export const TAGS = gql`
   query {
     tags {
       id
-      titleEn
-      titleKh
+      title{
+        en
+        kh
+      }
     }
   }
 `;

@@ -90,7 +90,7 @@ export const LatestProducts = () => {
 							return (
 								<A href={`/products?tag=${tag.id}`}>
 									<div class="bg-neutral/80 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
-										{tag.titleEn}
+										{tag.title.en}
 									</div>
 								</A>
 							);
