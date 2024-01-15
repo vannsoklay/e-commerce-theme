@@ -1,10 +1,11 @@
 import { AiFillHeart, AiFillStar } from "solid-icons/ai";
 import { Component, Show, createSignal } from "solid-js";
-
-import { useNavigate } from "@solidjs/router";
-import { useCart } from "~/contexts/useCart";
 import { ItemProduct, ProductType } from "~/types/product";
+
 import { CartItem } from "~/types/global";
+import toast from "solid-toast";
+import { useCart } from "~/contexts/useCart";
+import { useNavigate } from "@solidjs/router";
 
 export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	};
 
 	return (
-		<div class="h-full border rounded-xl hover:border-primary transition-all hover:shadow-md">
+		<div class="h-full bg-neutral backdrop-blur-lg border rounded-xl hover:border-primary transition-all hover:shadow-md">
 			<Show when={props} fallback={<p>Loading...</p>}>
 				<div
 					onClick={() => {
@@ -54,7 +55,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 								/>
 							</div>
 						</figure>
-						<div class="p-2">
+						<div class="p-3">
 							{/* <span class="text-xs opacity-70">{props?.product?.brand}</span> */}
 							{/* <div class="flex items-center">
                 <Show when={props?.product?.rating} fallback={null}>
@@ -76,7 +77,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 								{props.product.title}
 							</div>
 							<div class="card-actions flex items-center justify-between">
-								<span class="text-3xl lg:text-xl text-sm font-bold">
+								<span class=" lg:text-lg text-sm font-bold">
 									${props.product.price}
 								</span>
 								<button
@@ -93,8 +94,9 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 										props.product.variants.length > 0
 											? (addCarts(items()), setItems([]))
 											: handleAddToCart(p);
+										toast.success("Added successfully!");
 									}}
-									class="w-auto btn btn-sm font-light border-none rounded-full"
+									class="w-auto btn btn-sm btn-primary border-none rounded-full"
 								>
 									{props.product.variants.length <= 0 ? "Add to cart" : "Views"}
 								</button>

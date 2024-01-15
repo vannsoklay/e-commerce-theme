@@ -4,10 +4,11 @@ import { A } from "solid-start";
 import { CardProduct } from "~/components/Cards";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
 import Hero from "~/components/Hero";
+import { ProductType } from "~/types/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import { TAGS } from "~/libs/graphql/tag";
+import Team from "~/components/Team";
 import { publicQuery } from "~/libs/client";
-import { ProductType } from "~/types/product";
 
 export default function Home() {
 	return (
@@ -34,15 +35,15 @@ export const LatestProducts = () => {
 	const [tags] = publicQuery(TAGS);
 
 	return (
-		<div class="mx-auto max-w-screen-xl md:px-12 xl:px-0">
-			<h1 class="text-primary-1/80 font-extrabold md:text-4xl text-md ">
+		<div class="container mx-auto">
+			<h1 class="text-primary-1/80 font-extrabold md:text-4xl text-xl text-center md:py-12 py-8">
 				Our Products
 			</h1>
 			{/* <p class="text-center text-primary-1/50 md:text-md text-xs font-semibold ">
         Out new products
       </p> */}
 
-			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:pt-8 pt-8 md:px-0 px-6 pb-9 sm:pb-0">
+			<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
 				<Show when={products()} fallback={<div>loading...</div>}>
 					<Show
 						when={products()?.storeProducts.length > 0}
@@ -78,7 +79,7 @@ export const LatestProducts = () => {
 				</div>
 			)}
 
-			<h1 class="text-primary-1/80 font-extrabold md:text-4xl text-md my-8 pt-6">
+			<h1 class="text-primary-1/80 font-extrabold md:text-4xl text-xl text-center md:py-12 py-8 lg:mt-20 mt-8">
 				Shop by categories
 			</h1>
 
@@ -88,7 +89,7 @@ export const LatestProducts = () => {
 						{(tag) => {
 							return (
 								<A href={`/products?tag=${tag.id}`}>
-									<div class="flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md">
+									<div class="bg-neutral/80 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
 										{tag.titleEn}
 									</div>
 								</A>
@@ -97,6 +98,8 @@ export const LatestProducts = () => {
 					</For>
 				</Show>
 			</div>
+
+			<Team />
 		</div>
 	);
 };

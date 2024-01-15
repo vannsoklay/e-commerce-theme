@@ -2,15 +2,16 @@ import { A, useParams } from "@solidjs/router";
 import { Accessor, For, Show, createEffect, createSignal } from "solid-js";
 
 import { AiFillStar } from "solid-icons/ai";
+import { CartItem } from "~/types/global";
 import { GET_PRODUCT } from "~/libs/graphql/product";
 import Image from "~/components/Image";
+import { ItemProduct } from "~/types/product";
 import { LexicalViewer } from "~/components/LexicalViewer";
 import { MeteTag } from "~/components/meta";
 import { publicQuery } from "~/libs/client";
+import toast from "solid-toast";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
-import { ItemProduct } from "~/types/product";
-import { CartItem } from "~/types/global";
 
 const ProductDetail = () => {
 	const navigate = useNavigate();
@@ -53,21 +54,21 @@ const ProductDetail = () => {
 	return (
 		<>
 			<MeteTag name="detail" />
-			<div class="px-3 md:px-16 pb-12 sm:pb-0">
+			<div class="px-3 lg:px-16 pb-12 sm:pb-0">
 				<div class="pt-6">
 					<Show when={product()} fallback={<div>Loading ...</div>}>
 						<Show
 							when={!product().productStore}
 							fallback={<div>Not Founded</div>}
 						>
-							<section class="container mx-auto max-w-screen-xl">
-								<div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
-									<div class="col-span-1  sm:col-span-3  w-full gap-3 grid grid-cols-1 sm:grid-cols-6">
-										<div class="hidden sm:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
-											<Show
-												when={product().storeProduct.previews.length > 0}
-												fallback={null}
-											>
+							<section class="container mx-auto">
+								<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+									<div class="col-span-1  lg:col-span-3 w-full gap-3 grid lg:grid-cols-6 ">
+										<Show
+											when={product().storeProduct.previews.length > 1}
+											fallback={null}
+										>
+											<div class="hidden lg:block hide-scroll-bar overflow-y-auto max-h-[45dvh] h-screen space-y-3">
 												<For each={product().storeProduct.previews}>
 													{(res: string, index: Accessor<number>) => {
 														return (
@@ -86,33 +87,29 @@ const ProductDetail = () => {
 														);
 													}}
 												</For>
-											</Show>
-										</div>
-										<div class="sm:col-span-5 overflow-hidden hidden sm:block">
-											<Show
-												when={product().storeProduct.previews.length <= 0}
-												fallback={
-													<div class="aspect-h-4 aspect-w-3 p-3 rounded-xl lg:block border mx-auto">
-														<img
-															src={viewImage()}
-															alt=""
-															class="w-full h-[43dvh] rounded-lg object-contain object-center hover:scale-105 transition-all"
-														/>
-													</div>
-												}
-											>
-												<Image
-													image={`${
-														import.meta.env.VITE_VARIABLE_IPFS
-													}/api/ipfs?hash=${product().storeProduct.thumbnail}`}
-													name=""
-													width="w-full"
-													heigh="h-[9dvh]"
-													is_scale={true}
+											</div>
+										</Show>
+										<div
+											class="hidden lg:block col-span-5 overflow-hidden max-h-[45dvh] border bg-center"
+											classList={{
+												"col-span-full":
+													product().storeProduct.previews.length < 1,
+											}}
+											style={{
+												"background-image": `url("${viewImage()}")`,
+												"background-size": "200%",
+											}}
+										>
+											<div class="backdrop-blur-xl w-full h-full">
+												<img
+													src={viewImage()}
+													alt=""
+													class="h-full w-auto object-contain mx-auto"
 												/>
-											</Show>
+											</div>
 										</div>
-										<div class="col-span-1 block sm:hidden">
+
+										<div class="col-span-6 block lg:hidden w-full ">
 											<div class="w-full carousel rounded-box">
 												<For each={product().storeProduct.previews}>
 													{(res: string, index: Accessor<number>) => {
@@ -142,6 +139,25 @@ const ProductDetail = () => {
 													}}
 												</For>
 											</div>
+										</div>
+
+										<div class="col-span-6">
+											{/* ------------Key features ---------- */}
+											<Show
+												when={product().storeProduct.detail}
+												fallback={null}
+											>
+												<section class="mt-9">
+													<h1 class="text-xl sm:text-2xl font-black mb-3">
+														Description
+													</h1>
+													<div>
+														<LexicalViewer
+															data={product()?.storeProduct?.detail}
+														/>
+													</div>
+												</section>
+											</Show>
 										</div>
 									</div>
 									<div class="col-span-1 sm:col-span-2">
@@ -186,11 +202,11 @@ const ProductDetail = () => {
 
 											<div class="mt-3">
 												<Show when={product().storeProduct.variants.length > 0}>
-													<h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">
+													<h3 class="mb-5 text-lg font-medium text-gray-90">
 														Variants
 													</h3>
 												</Show>
-												<ul class="grid w-full gap-3 md:grid-cols-2">
+												<ul class="grid w-full gap-3 lg:grid-cols-2">
 													<For each={product().storeProduct.variants}>
 														{(res) => {
 															return (
@@ -270,6 +286,7 @@ const ProductDetail = () => {
 																product().storeProduct.variants.length > 0
 																	? (addCarts(items()), setItems([]))
 																	: handleAddToCart(p);
+																toast.success("Added successfully!");
 															}}
 															class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
 														>
@@ -303,18 +320,6 @@ const ProductDetail = () => {
 										</div>
 									</div>
 								</div>
-
-								{/* ------------Key features ---------- */}
-								<Show when={product().storeProduct.detail} fallback={null}>
-									<section class="mt-9">
-										<h1 class="text-xl sm:text-2xl font-black mb-3">
-											Description
-										</h1>
-										<div class="max-w-screen-md">
-											<LexicalViewer data={product()?.storeProduct?.detail} />
-										</div>
-									</section>
-								</Show>
 							</section>
 						</Show>
 					</Show>
