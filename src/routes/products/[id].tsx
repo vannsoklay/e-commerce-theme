@@ -269,7 +269,7 @@ const ProductDetail = () => {
 											</div>
 
 											<div class="mt-10">
-												{cartItems.filter(
+												{cartItems?.filter(
 													(item: CartItem) => item.product.id == active()
 												).length <= 0 ? (
 													!isInCart(product().storeProduct.id) ? (

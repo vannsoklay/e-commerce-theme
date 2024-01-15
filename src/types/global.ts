@@ -45,3 +45,13 @@ export type FooterConfig = {
 	socials: Social[];
 	contact: FooterContact;
 };
+
+export type Member = {
+	name: string;
+	position: string;
+	photo: string;
+};
+
+export type AboutConfig = {
+	members: Member[];
+};

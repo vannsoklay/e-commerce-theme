@@ -58,7 +58,9 @@ const Footer: Component = () => {
 									</a>
 								</div>
 								<div class="flex items-center gap-8 text-2xl">
-									<For each={footer()?.socials.filter((s: Social) => s.enable)}>
+									<For
+										each={footer()?.socials?.filter((s: Social) => s.enable)}
+									>
 										{(social) => (
 											<a
 												href={social.link}

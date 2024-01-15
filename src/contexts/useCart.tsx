@@ -54,17 +54,17 @@ export function CartProvider(props: { children: JSXElement }) {
 
 	const minusCart = (product: ItemProduct) => {
 		setCartItems((prevItems) => {
-			const existingItem = prevItems.find(
+			const existingItem = prevItems?.find(
 				(item) => item.product?.id === product?.id
 			);
 			if (existingItem) {
-				return prevItems.map((res) =>
+				return prevItems?.map((res) =>
 					res.product.id === product.id
 						? { ...res, quantity: res.quantity - 1 }
 						: res
 				);
 			}
-			const updatedItems = prevItems.filter(
+			const updatedItems = prevItems?.filter(
 				(item: CartItem) => item.product.id !== product.id
 			);
 			return updatedItems;
@@ -74,7 +74,7 @@ export function CartProvider(props: { children: JSXElement }) {
 
 	const removeFromCart = (productId: string) => {
 		setCartItems((prevItems) => {
-			const updatedItems = prevItems.filter(
+			const updatedItems = prevItems?.filter(
 				(item) => item.product.id !== productId
 			);
 			return updatedItems;

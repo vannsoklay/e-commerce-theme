@@ -1,4 +1,10 @@
+import { For, Resource } from "solid-js";
+import { AboutConfig, Member } from "~/types/global";
+import { read } from "~/utils/theme";
+
 export default function Team() {
+	const about = read("about") as Resource<AboutConfig>;
+	const members = () => about()?.members;
 	return (
 		<>
 			<div class="py-20">
@@ -14,54 +20,24 @@ export default function Team() {
 						</p>
 					</div>
 					<div class="grid  lg:gap-20 md:gap-10 gap-6 justify-start lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
-						<div class="space-y-4 text-center">
-							<img
-								class="aspect-square mask mask-squircle object-cover rounded-xl"
-								src="https://tailus.io/sources/blocks/classic/preview/images/woman1.jpg"
-								alt="woman"
-								loading="lazy"
-							/>
-							<div>
-								<h4 class="text-2xl">Hentoni Doe</h4>
-								<span class="block text-sm text-gray-500">CEO-Founder</span>
-							</div>
-						</div>
-						<div class="space-y-4 text-center">
-							<img
-								class="aspect-square mask mask-squircle object-cover rounded-xl"
-								src="https://tailus.io/sources/blocks/classic/preview/images/woman1.jpg"
-								alt="woman"
-								loading="lazy"
-							/>
-							<div>
-								<h4 class="text-2xl">Hentoni Doe</h4>
-								<span class="block text-sm text-gray-500">CEO-Founder</span>
-							</div>
-						</div>
-						<div class="space-y-4 text-center">
-							<img
-								class="aspect-square mask mask-squircle object-cover rounded-xl"
-								src="https://tailus.io/sources/blocks/classic/preview/images/woman1.jpg"
-								alt="woman"
-								loading="lazy"
-							/>
-							<div>
-								<h4 class="text-2xl">Hentoni Doe</h4>
-								<span class="block text-sm text-gray-500">CEO-Founder</span>
-							</div>
-						</div>
-						<div class="space-y-4 text-center">
-							<img
-								class="aspect-square mask mask-squircle object-cover rounded-xl"
-								src="https://tailus.io/sources/blocks/classic/preview/images/woman1.jpg"
-								alt="woman"
-								loading="lazy"
-							/>
-							<div>
-								<h4 class="text-2xl">Hentoni Doe</h4>
-								<span class="block text-sm text-gray-500">CEO-Founder</span>
-							</div>
-						</div>
+						<For each={members()}>
+							{(member: Member) => (
+								<div class="space-y-4 text-center">
+									<img
+										class="aspect-square mask mask-squircle object-cover rounded-xl"
+										src={member.photo}
+										alt="woman"
+										loading="lazy"
+									/>
+									<div>
+										<h4 class="text-2xl">{member.name}</h4>
+										<span class="block text-sm text-gray-500">
+											{member.position}
+										</span>
+									</div>
+								</div>
+							)}
+						</For>
 					</div>
 				</div>
 			</div>

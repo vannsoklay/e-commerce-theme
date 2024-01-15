@@ -1,58 +1,60 @@
 {
-  "name": "My Store",
-  "username": "@stm",
-  "header": {
-    "type": true,
-    "logo": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.camprotec.com.kh/wp-content/uploads/2023/04/Untitled-7.png",
-    "name": "My Store"
-  },
-  "promotion": {
-    "images": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.camprotec.com.kh/wp-content/uploads/2023/04/Untitled-7.png",
-    "quote": null,
-    "text": null
-  },
-  "fontFamily": {
-    "sans": [
-      "Graphik",
-      "sans-serif"
-    ],
-    "serif": [
-      "Merriweather",
-      "serif"
-    ]
-  },
-  "footer": {
-    "socials": [
-      {
-        "enable": true,
-        "name": "youtube",
-        "link": "https://youtube.com"
-      },
-      {
-        "enable": true,
-        "name": "twitter",
-        "link": "https://youtube.com"
-      },
-      {
-        "enable": false,
-        "name": "facebook",
-        "link": "https://youtube.com"
-      },
-      {
-        "enable": false,
-        "name": "tiktok",
-        "link": "https://youtube.com"
-      },
-      {
-        "enable": false,
-        "name": "telegram",
-        "link": "https://youtube.com"
-      },
-      {
-        "enable": false,
-        "name": "instagram",
-        "link": "https://youtube.com"
-      }
-    ]
-  }
+	"name": "My Store",
+	"username": "@stm",
+	"header": {
+		"type": true,
+		"logo": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.camprotec.com.kh/wp-content/uploads/2023/04/Untitled-7.png",
+		"name": "My Store"
+	},
+	"promotion": {
+		"images": null,
+		"quote": null,
+		"text": null
+	},
+	"fontFamily": {
+		"sans": ["Graphik", "sans-serif"],
+		"serif": ["Merriweather", "serif"]
+	},
+	"about": {
+		"members": []
+	},
+	"footer": {
+		"socials": [
+			{
+				"enable": false,
+				"name": "youtube",
+				"link": "https://youtube.com"
+			},
+			{
+				"enable": false,
+				"name": "twitter",
+				"link": "https://youtube.com"
+			},
+			{
+				"enable": false,
+				"name": "facebook",
+				"link": "https://youtube.com"
+			},
+			{
+				"enable": false,
+				"name": "tiktok",
+				"link": "https://youtube.com"
+			},
+			{
+				"enable": false,
+				"name": "telegram",
+				"link": "https://youtube.com"
+			},
+			{
+				"enable": false,
+				"name": "instagram",
+				"link": "https://youtube.com"
+			}
+		],
+		"contact": {
+			"address": "",
+			"phone": "",
+			"email": ""
+		}
+	}
 }
