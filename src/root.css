@@ -9,10 +9,6 @@
   html {
     font-family: 'Roboto', sans-serif;
   }
-  body{
-    @apply bg-base/5
-  }
-
   .hide-scroll-bar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -20,11 +16,5 @@
 
   .hide-scroll-bar::-webkit-scrollbar {
     display: none;
-  }
-}
-
-@layer {
-  .container{
-    @apply px-6
   }
 }

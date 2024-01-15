@@ -27,8 +27,8 @@ const Hero = () => {
 					<div class="flex justify-center items-center">
 						<img
 							src={
-								promotion().images
-									? promotion().images
+								promotion()?.images
+									? promotion()?.images
 									: "/images/promotes/promote.png"
 							}
 							class="w-full rounded-lg md:grid"
