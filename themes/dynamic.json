@@ -16,6 +16,8 @@
 		"serif": ["Merriweather", "serif"]
 	},
 	"about": {
+		"title": "About Us",
+		"description": "",
 		"members": []
 	},
 	"footer": {

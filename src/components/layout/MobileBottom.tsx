@@ -1,14 +1,15 @@
+import { A, useLocation } from "solid-start";
 import {
-	RiFinanceShoppingBagLine,
-	RiFinanceShoppingBagFill,
-	RiUserFacesAccountCircleLine,
-	RiUserFacesAccountCircleFill,
-	RiBuildingsHome4Line,
 	RiBuildingsHome4Fill,
+	RiBuildingsHome4Line,
+	RiFinanceShoppingBagFill,
+	RiFinanceShoppingBagLine,
+	RiUserFacesAccountCircleFill,
+	RiUserFacesAccountCircleLine,
 } from "solid-icons/ri";
+
 import { FiSearch } from "solid-icons/fi";
 import { Show } from "solid-js";
-import { A, useLocation } from "solid-start";
 import { useAuth } from "~/contexts/useAuth";
 import { useCart } from "~/contexts/useCart";
 
@@ -25,14 +26,14 @@ const MobileTopBar = () => {
 						when={location.pathname === "/"}
 						fallback={
 							<label class="btn-md flex justify-center btn-ghost btn-circle avatar">
-								<div class="w-7 rounded-full">
+								<div class="w-7 rounded-box">
 									<RiBuildingsHome4Line class="h-full w-full text-primary" />
 								</div>
 							</label>
 						}
 					>
 						<label class="btn-md flex justify-center btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20">
-							<div class="w-7 rounded-full">
+							<div class="w-7 rounded-box">
 								<RiBuildingsHome4Fill class="h-full w-full text-primary" />
 							</div>
 						</label>
@@ -44,14 +45,14 @@ const MobileTopBar = () => {
 						when={location.pathname === "/"}
 						fallback={
 							<label class="btn-md flex justify-center btn-ghost btn-circle avatar">
-								<div class="w-7 rounded-full">
+								<div class="w-7 rounded-box">
 									<FiSearch class="h-full w-full text-primary" />
 								</div>
 							</label>
 						}
 					>
 						<label class="btn-md flex justify-center btn-ghost btn-circle avatar ">
-							<div class="w-7 rounded-full">
+							<div class="w-7 rounded-box">
 								<FiSearch class="h-full w-full text-primary" />
 							</div>
 						</label>
@@ -66,14 +67,14 @@ const MobileTopBar = () => {
 						}
 						fallback={
 							<label class="btn-md flex justify-center btn-ghost btn-circle avatar ">
-								<div class="w-7 rounded-full">
+								<div class="w-7 rounded-box">
 									<RiFinanceShoppingBagLine class="h-full w-full text-primary" />
 								</div>
 							</label>
 						}
 					>
 						<label class="btn-md flex justify-center btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20">
-							<div class="w-7 rounded-full">
+							<div class="w-7 rounded-box">
 								<RiFinanceShoppingBagFill class="h-full w-full text-primary" />
 							</div>
 						</label>
@@ -86,7 +87,7 @@ const MobileTopBar = () => {
 							onClick={() => login("my_modal_2")}
 							class="btn-sm btn-ghost btn-circle avatar"
 						>
-							<div class="w-8 rounded-full">
+							<div class="w-8 rounded-box">
 								<RiUserFacesAccountCircleLine class="h-full w-full text-primary" />
 							</div>
 						</label>
@@ -100,7 +101,7 @@ const MobileTopBar = () => {
 							when={location.pathname.startsWith("/me")}
 							fallback={
 								<label class="btn-sm btn-ghost btn-circle avatar">
-									<div class="w-8 rounded-full">
+									<div class="w-8 rounded-box">
 										<RiUserFacesAccountCircleLine class="h-full w-full text-primary" />
 									</div>
 								</label>
@@ -111,7 +112,7 @@ const MobileTopBar = () => {
 									tabIndex={0}
 									class="btn-md flex justify-center btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20"
 								>
-									<div class="w-8 rounded-full">
+									<div class="w-8 rounded-box">
 										<RiUserFacesAccountCircleFill class="h-full w-full text-primary" />
 									</div>
 								</label>
@@ -124,10 +125,10 @@ const MobileTopBar = () => {
 											href={`me/@${user()?.first_name?.toLowerCase()}`}
 											class="h-12 rounded-md flex items-center"
 										>
-											<div class="w-8 h-8 rounded-full">
+											<div class="w-8 h-8 rounded-box">
 												<img
 													alt=""
-													class="w-8 h-8 rounded-full"
+													class="w-8 h-8 rounded-box"
 													src="https://i0.wp.com/vrscout.com/wp-content/uploads/2022/10/IronManVRQuest2.jpg?fit=1132%2C670&ssl=1"
 												/>
 											</div>

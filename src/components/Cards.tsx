@@ -23,7 +23,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	};
 
 	return (
-		<div class="h-full bg-neutral backdrop-blur-lg border rounded-xl hover:border-primary transition-all hover:shadow-md">
+		<div class="h-full backdrop-blur-lg border rounded-xl hover:border-primary transition-all hover:shadow-md">
 			<Show when={props} fallback={<p>Loading...</p>}>
 				<div
 					onClick={() => {
@@ -40,7 +40,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                  class="z-40 transition ease-in duration-300 bg-gray-50  hover:text-danger shadow hover:shadow-md text-red-300 rounded-full w-8 h-8 lg:h-6 lg:w-6 2xl:h-8 2xl:w-8 text-center p-1"
+                  class="z-40 transition ease-in duration-300 bg-gray-50  hover:text-danger shadow hover:shadow-md text-red-300 rounded-box w-8 h-8 lg:h-6 lg:w-6 2xl:h-8 2xl:w-8 text-center p-1"
                 >
                   <AiFillHeart class="w-6 h-6 lg:w-4 lg:h-4 2xl:w-6 2xl:h-6 text-secondary/30 group-hover:text-secondary/80" />
                 </button>
@@ -76,7 +76,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 							<div class="text-base font-medium text-gray-800 mb-4 lg:h-12 h-auto">
 								{props.product.title}
 							</div>
-							<div class="card-actions flex items-center justify-between">
+							<div class="card-accents flex items-center justify-between">
 								<span class=" lg:text-lg text-sm font-bold">
 									${props.product.price}
 								</span>
@@ -96,7 +96,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 											: handleAddToCart(p);
 										toast.success("Added successfully!");
 									}}
-									class="w-auto btn btn-sm btn-primary border-none rounded-full"
+									class="w-auto btn btn-primary btn-sm font-normal border-none rounded-box"
 								>
 									{props.product.variants.length <= 0 ? "Add to cart" : "Views"}
 								</button>

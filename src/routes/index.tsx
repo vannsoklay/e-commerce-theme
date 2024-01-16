@@ -36,10 +36,10 @@ export const LatestProducts = () => {
 
 	return (
 		<div class="container mx-auto">
-			<h1 class="text-primary-1/80 font-extrabold md:text-4xl text-xl text-center md:py-12 py-8">
+			<h1 class="text-primary/80 font-extrabold md:text-4xl text-xl text-center md:py-12 py-8">
 				Our Products
 			</h1>
-			{/* <p class="text-center text-primary-1/50 md:text-md text-xs font-semibold ">
+			{/* <p class="text-center text-primary/50 md:text-md text-xs font-semibold ">
         Out new products
       </p> */}
 
@@ -72,24 +72,31 @@ export const LatestProducts = () => {
 			{products()?.storeProducts.length >= 10 && (
 				<div class="flex justify-center mt-8">
 					<A href="/products">
-						<button class="px-8 py-2 rounded-full bg-action text-white transition-all hover:text-action hover:border-action hover:bg-action/10 shadow-none">
+						<button class="px-8 py-2 rounded-box bg-accent text-white transition-all hover:text-accent hover:border-accent hover:bg-accent/10 shadow-none">
 							Show All
 						</button>
 					</A>
 				</div>
 			)}
 
-			<h1 class="text-primary-1/80 font-extrabold md:text-4xl text-xl text-center md:py-12 py-8 lg:mt-20 mt-8">
+			<h1 class="text-primary/80 font-extrabold md:text-4xl text-xl text-center md:py-12 py-8 lg:mt-20 mt-8">
 				Shop by categories
 			</h1>
 
 			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-				<Show when={tags()?.tags} fallback={<div>loading...</div>}>
-					<For each={tags().tags} fallback={<div>Not founded</div>}>
+				<Show when={tags()?.storeOwnerTags} fallback={<div>loading...</div>}>
+					<For
+						each={tags().storeOwnerTags}
+						fallback={
+							<div class="md:col-span-3 grid-col-2 lg:col-span-4 flex justify-center">
+								Not founded
+							</div>
+						}
+					>
 						{(tag) => {
 							return (
 								<A href={`/products?tag=${tag.id}`}>
-									<div class="bg-neutral/80 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
+									<div class="bg-base-100 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold border rounded-xl hover:border-primary transition-all hover:shadow-md hover:text-primary">
 										{tag.title.en}
 									</div>
 								</A>

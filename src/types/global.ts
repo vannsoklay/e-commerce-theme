@@ -53,5 +53,7 @@ export type Member = {
 };
 
 export type AboutConfig = {
+	title: string;
+	description: string;
 	members: Member[];
 };
