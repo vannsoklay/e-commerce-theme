@@ -24,7 +24,7 @@ import { read } from "./utils/theme";
 export default function Root() {
 	const username = read("username");
 	return (
-		<Html lang="en" data-theme="light">
+		<Html lang="en" data-theme="mytheme">
 			<Head>
 				<Title>{username()}</Title>
 				<Meta charset="utf-8" />

@@ -309,13 +309,13 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
 				</Field>
 			</div>
 			<div class="flex justify-end w-full">
-				<Button.Primary
+				<button
 					disable={!isValid() ? true : false}
-					class="rounded-xl w-full"
+					class="rounded-box w-full btn btn-primary"
 					type="submit"
 				>
 					Save & Continue
-				</Button.Primary>
+				</button>
 			</div>
 		</Form>
 	);

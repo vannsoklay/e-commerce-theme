@@ -16,7 +16,7 @@ const Navbar = () => {
 					<Show
 						when={!loading()!}
 						fallback={
-							<div class="skeleton w-12 h-12 rounded-full shrink-0"></div>
+							<div class="skeleton w-12 h-12 rounded-box shrink-0"></div>
 						}
 					>
 						<A href="/cart">
@@ -52,7 +52,7 @@ const Navbar = () => {
 					<Show
 						when={!loading()!}
 						fallback={
-							<div class="skeleton w-12 h-12 rounded-full shrink-0"></div>
+							<div class="skeleton w-12 h-12 rounded-box shrink-0"></div>
 						}
 					>
 						<Show
@@ -70,7 +70,7 @@ const Navbar = () => {
 								//   </a>
 								// </>
 								<a href={`https://backend.riverbase.org/sso/store`}>
-									<button class="btn px-14 rounded-full bg-primary/10 hover:bg-primary/5 text-primary border-none">
+									<button class="btn px-14 rounded-box bg-primary/10 hover:bg-primary/5 text-primary border-none">
 										Login
 									</button>
 								</a>
@@ -81,7 +81,7 @@ const Navbar = () => {
 									tabIndex={0}
 									class="btn btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20 placeholder"
 								>
-									<div class="bg-primary text-neutral-content rounded-full w-10">
+									<div class="bg-primary text-neutral-content rounded-box w-10">
 										<span>{user().fullname?.charAt(0).toUpperCase()}</span>
 									</div>
 								</label>

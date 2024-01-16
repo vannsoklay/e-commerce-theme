@@ -69,7 +69,7 @@ export default function Cart() {
 													<div class="flex space-x-7 items-center md:mt-0 mt-2">
 														<div class="flex space-x-3 items-center">
 															{cartItem.quantity === 1 ? (
-																<div class="bg-gray-100 p-1 rounded-full cursor-pointer">
+																<div class="bg-gray-100 p-1 rounded-box cursor-pointer">
 																	<div>
 																		<svg
 																			xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ export default function Cart() {
 																	</div>
 																</div>
 															) : (
-																<div class="bg-orange-100 p-1 rounded-full cursor-pointer">
+																<div class="bg-orange-100 p-1 rounded-box cursor-pointer">
 																	<div
 																		onclick={() => minusCart(cartItem.product)}
 																	>
@@ -110,7 +110,7 @@ export default function Cart() {
 																</div>
 															)}
 
-															<div class="bg-green-100 p-1 rounded-full cursor-pointer">
+															<div class="bg-green-100 p-1 rounded-box cursor-pointer">
 																<div
 																	onclick={() => addToCart(cartItem.product)}
 																>
@@ -135,7 +135,7 @@ export default function Cart() {
 															onClick={() =>
 																removeFromCart(cartItem.product.id)
 															}
-															class="bg-red-100 p-1 rounded-full cursor-pointer"
+															class="bg-red-100 p-1 rounded-box cursor-pointer"
 														>
 															<svg
 																xmlns="http://www.w3.org/2000/svg"
@@ -160,10 +160,10 @@ export default function Cart() {
 								</For>
 							</div>
 							<A href="/products">
-								<Button.Primary class="w-full rounded-full my-8">
+								<button class="btn btn-primary w-full rounded-box my-8">
 									<FiShoppingCart class="text-xl" />
 									More Products
-								</Button.Primary>
+								</button>
 							</A>
 						</div>
 
@@ -202,9 +202,9 @@ export default function Cart() {
 								</div>
 								<div class="pt-6">
 									<A href="/checkouts">
-										<Button.Primary class="w-full shadow-none rounded-full">
+										<button class="btn btn-primary w-full shadow-none rounded-box">
 											Checkout
-										</Button.Primary>
+										</button>
 									</A>
 								</div>
 							</div>

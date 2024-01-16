@@ -148,10 +148,10 @@ const ProductDetail = () => {
 												fallback={null}
 											>
 												<section class="mt-9">
-													<h1 class="text-xl sm:text-2xl font-black mb-3">
+													<h1 class="text-xl sm:text-2xl font-bold mb-6">
 														Description
 													</h1>
-													<div>
+													<div class="text-base-content/90">
 														<LexicalViewer
 															data={product()?.storeProduct?.detail}
 														/>
@@ -184,7 +184,7 @@ const ProductDetail = () => {
 												99+ reviews
 											</A>
 										</div>
-										<h1 class="text-lg mb-2 font-bold tracking-tight text-gray-900 sm:text-2xl">
+										<h1 class="text-lg mb-2 font-bold tracking-tight text-base-content sm:text-2xl">
 											{product().storeProduct.title}
 										</h1>
 										<div class="mt-4 lg:row-span-3 lg:mt-0">
@@ -195,7 +195,7 @@ const ProductDetail = () => {
 											</p>
 
 											<Show when={product().storeProduct.desc} fallback={null}>
-												<p class="text-base text-gray-600 mt-3">
+												<p class="text-base text-base-content/90 mt-3">
 													{product().storeProduct.desc}
 												</p>
 											</Show>
@@ -268,7 +268,65 @@ const ProductDetail = () => {
 												</ul>
 											</div>
 
-											<div class="mt-10">
+											<div class="mt-6">
+												<Show
+													when={
+														cartItems?.filter(
+															(item: CartItem) => item.product.id == active()
+														).length <= 0
+													}
+													fallback={
+														<button
+															type="submit"
+															onClick={(e) => {
+																e.stopPropagation();
+																navigate(`/cart`);
+															}}
+															class="btn rounded-box w-full btn-primary"
+														>
+															View Cart
+														</button>
+													}
+												>
+													<Show
+														when={!isInCart(product().storeProduct.id)}
+														fallback={
+															<button
+																type="submit"
+																onClick={(e) => {
+																	e.stopPropagation();
+																	navigate(`/cart`);
+																}}
+																class="btn rounded-box w-full btn-primary"
+															>
+																View Cart
+															</button>
+														}
+													>
+														<button
+															onClick={(e) => {
+																e.preventDefault();
+																const p: ItemProduct = {
+																	id: product().storeProduct.id,
+																	name: product().storeProduct.title,
+																	price: parseInt(product().storeProduct.price),
+																	currency: product().storeProduct.currency,
+																	preview: product().storeProduct.thumbnail,
+																};
+																product().storeProduct.variants.length > 0
+																	? (addCarts(items()), setItems([]))
+																	: handleAddToCart(p);
+																toast.success("Added successfully!");
+															}}
+															class="btn rounded-box w-full btn-primary"
+														>
+															Add to cart
+														</button>
+													</Show>
+												</Show>
+											</div>
+
+											{/* <div class="mt-10">
 												{cartItems?.filter(
 													(item: CartItem) => item.product.id == active()
 												).length <= 0 ? (
@@ -288,7 +346,7 @@ const ProductDetail = () => {
 																	: handleAddToCart(p);
 																toast.success("Added successfully!");
 															}}
-															class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
+															class="btn rounded-box w-full btn-primary"
 														>
 															Add to cart
 														</button>
@@ -299,7 +357,7 @@ const ProductDetail = () => {
 																e.stopPropagation();
 																navigate(`/cart`);
 															}}
-															class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
+															class="btn rounded-box w-full btn-accent"
 														>
 															View Cart
 														</button>
@@ -311,12 +369,12 @@ const ProductDetail = () => {
 															e.stopPropagation();
 															navigate(`/cart`);
 														}}
-														class="btn rounded-full w-full bg-action/10 text-action/80 hover:text-action hover:border-action hover:bg-action/10 border-none"
+														class="btn rounded-box w-full btn-primary"
 													>
 														View Cart
 													</button>
 												)}
-											</div>
+											</div> */}
 										</div>
 									</div>
 								</div>

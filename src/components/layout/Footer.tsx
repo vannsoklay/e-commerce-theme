@@ -21,7 +21,7 @@ const Footer: Component = () => {
 
 	return (
 		<>
-			<div class="flex flex-col mx-3 bg-action/5 py-8 rounded-lg">
+			<div class="flex flex-col mx-3 bg-accent/5 py-8 rounded-lg">
 				<div class="w-full draggable">
 					<div class="container flex flex-col mx-auto">
 						<div class="flex flex-col items-center w-full">
