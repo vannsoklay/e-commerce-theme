@@ -74,7 +74,7 @@ const ProductDetail = () => {
 														return (
 															<div
 																onClick={() => setThumb(index())}
-																class="cursor-pointer overflow-hidden border border-gray-200 rounded-md"
+																class="cursor-pointer overflow-hidden border border-base-300 rounded-box"
 															>
 																<img
 																	alt="previews"
@@ -90,7 +90,7 @@ const ProductDetail = () => {
 											</div>
 										</Show>
 										<div
-											class="hidden lg:block col-span-5 overflow-hidden max-h-[45dvh] border bg-center"
+											class="hidden lg:block col-span-5 max-h-[45dvh] border border-base-300 bg-center rounded-box overflow-hidden"
 											classList={{
 												"col-span-full":
 													product().storeProduct.previews.length < 1,
@@ -100,7 +100,7 @@ const ProductDetail = () => {
 												"background-size": "200%",
 											}}
 										>
-											<div class="backdrop-blur-xl w-full h-full">
+											<div class="backdrop-blur-xl w-full h-full ">
 												<img
 													src={viewImage()}
 													alt=""

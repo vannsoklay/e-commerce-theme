@@ -6,12 +6,12 @@ export const EmptyCart = () => {
 	return (
 		<div class="container mx-auto h-[48vh] flex justify-center items-center">
 			<main class="text-center">
-				<h1 class="text-2xl font-bold text-red-500 pb-4">Empty Cart</h1>
+				<h1 class="text-4xl font-bold text-error/70 pb-6">Empty Cart</h1>
 				<A href="/products">
-					<Button.Action class="w-64 rounded-box">
+					<button class="btn btn-primary bg-opacity-50 w-64 rounded-box animate-pulse">
 						<FiShoppingCart class="text-xl" />
 						More Products
-					</Button.Action>
+					</button>
 				</A>
 			</main>
 		</div>

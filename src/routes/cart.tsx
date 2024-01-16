@@ -5,6 +5,7 @@ import Button from "~/components/Button";
 import { EmptyCart } from "~/components/Empty";
 import { FiShoppingCart } from "solid-icons/fi";
 import { useCart } from "~/contexts/useCart";
+import { TbMinus, TbPlus, TbTrash } from "solid-icons/tb";
 
 export default function Cart() {
 	const { cartItems, addToCart, minusCart, removeFromCart } = useCart();
@@ -21,18 +22,18 @@ export default function Cart() {
 		setPrice(Subtotal);
 	});
 	return (
-		<main class="container mx-auto text-gray-700 p-4">
+		<main class="container mx-auto  p-4">
 			<Show when={cartItems.length > 0} fallback={<EmptyCart />}>
 				<div>
 					<h2 class="text-2xl opacity-80 font-bold mb-8">Shopping Cart</h2>
 					<div class="grid md:grid-cols-5 md:gap-6">
 						<div class="md:col-span-3">
-							<div class="backdrop-blur-sm bg-white bg-opacity-80 space-y-4 divide-y">
+							<div class="backdrop-blur-sm  bg-opacity-80 gap-2 flex flex-col">
 								<For each={cartItems}>
 									{(cartItem) => {
 										return (
 											<Show when={cartItem} fallback={<p>Loading...</p>}>
-												<div class="md:flex md:justify-between md:items-center pt-6 bg-slate-50 px-4 rounded-md">
+												<div class="bg-secondary/5 md:flex md:justify-between md:items-center p-4 rounded-box">
 													<div class="flex items-center space-x-3">
 														<div>
 															<div class="avatar">
@@ -69,65 +70,24 @@ export default function Cart() {
 													<div class="flex space-x-7 items-center md:mt-0 mt-2">
 														<div class="flex space-x-3 items-center">
 															{cartItem.quantity === 1 ? (
-																<div class="bg-gray-100 p-1 rounded-box cursor-pointer">
-																	<div>
-																		<svg
-																			xmlns="http://www.w3.org/2000/svg"
-																			fill="none"
-																			viewBox="0 0 24 24"
-																			stroke-width="1.5"
-																			stroke="currentColor"
-																			class="w-5 h-5 text-gray-600"
-																		>
-																			<path
-																				stroke-linecap="round"
-																				stroke-linejoin="round"
-																				d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-																			/>
-																		</svg>
-																	</div>
+																<div class="btn btn-xs btn-circle btn-outline btn-disabled">
+																	<TbMinus />
 																</div>
 															) : (
-																<div class="bg-orange-100 p-1 rounded-box cursor-pointer">
-																	<div
-																		onclick={() => minusCart(cartItem.product)}
-																	>
-																		<svg
-																			xmlns="http://www.w3.org/2000/svg"
-																			fill="none"
-																			viewBox="0 0 24 24"
-																			stroke-width="1.5"
-																			stroke="currentColor"
-																			class="w-5 h-5 text-orange-600"
-																		>
-																			<path
-																				stroke-linecap="round"
-																				stroke-linejoin="round"
-																				d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-																			/>
-																		</svg>
-																	</div>
+																<div
+																	onclick={() => minusCart(cartItem.product)}
+																	class="btn btn-xs btn-circle btn-outline btn-error"
+																>
+																	<TbMinus />
 																</div>
 															)}
 
-															<div class="bg-green-100 p-1 rounded-box cursor-pointer">
+															<div class=" p-1 rounded-box cursor-pointer">
 																<div
 																	onclick={() => addToCart(cartItem.product)}
+																	class="btn btn-xs btn-circle btn-outline btn-success"
 																>
-																	<svg
-																		xmlns="http://www.w3.org/2000/svg"
-																		fill="none"
-																		viewBox="0 0 24 24"
-																		stroke-width="1.5"
-																		stroke="currentColor"
-																		class="w-5 h-5 text-green-600"
-																	>
-																		<path
-																			stroke-linecap="round"
-																			stroke-linejoin="round"
-																			d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-																		/>
-																	</svg>
+																	<TbPlus />
 																</div>
 															</div>
 														</div>
@@ -135,22 +95,9 @@ export default function Cart() {
 															onClick={() =>
 																removeFromCart(cartItem.product.id)
 															}
-															class="bg-red-100 p-1 rounded-box cursor-pointer"
+															class="btn btn-xs btn-circle btn-outline btn-error"
 														>
-															<svg
-																xmlns="http://www.w3.org/2000/svg"
-																fill="none"
-																viewBox="0 0 24 24"
-																stroke-width="1.5"
-																stroke="currentColor"
-																class="w-4 h-4 text-red-500"
-															>
-																<path
-																	stroke-linecap="round"
-																	stroke-linejoin="round"
-																	d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-																/>
-															</svg>
+															<TbTrash />
 														</div>
 													</div>
 												</div>
@@ -167,8 +114,8 @@ export default function Cart() {
 							</A>
 						</div>
 
-						<div class="md:col-span-2 bg-slate-50/10 rounded-xl">
-							<div class="border p-6 rounded-xl">
+						<div class="md:col-span-2  rounded-xl">
+							<div class=" p-6 rounded-xl">
 								<div class="grid grid-cols-1 justify-start">
 									<h1 class="font-bold text-lg uppercase">Summary</h1>
 								</div>

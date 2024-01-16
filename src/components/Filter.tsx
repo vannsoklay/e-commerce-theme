@@ -10,13 +10,13 @@ export const Filter = () => {
 	const [value, setValue] = createSignal("");
 	const [tags] = publicQuery(TAGS);
 
-  createEffect(() => {
-    console.log("tag", tags());
-  })
+	createEffect(() => {
+		console.log("tag", tags());
+	});
 	return (
 		<div class="mt-8">
 			<input
-				class="input input-primary focus:border-none w-full"
+				class="input bg-secondary/5 w-full"
 				onInput={(e) => {
 					setValue(e.target.value),
 						navigate(
@@ -28,12 +28,12 @@ export const Filter = () => {
 				type="text"
 				placeholder="Search"
 			/>
-			<div class="p-4 rounded-xl mt-5 border border-primary">
-				<h5 class="inline-flex items-center text-xl font-semibold text-gray-400 mb-2 ">
+			<div class="p-4 rounded-box mt-5 bg-secondary/5 ">
+				<h5 class="inline-flex items-center text-xl font-semibold mb-2 ">
 					Filters
 				</h5>
 				<div class="">
-					<ul class="border-gray-200  text-sm text-gray-600">
+					<ul class="border-gray-200  text-sm text-base-content/60">
 						<Show
 							when={tags()?.storeOwnerTags}
 							fallback={<div>loading...</div>}

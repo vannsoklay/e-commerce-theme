@@ -54,7 +54,7 @@ const Products = () => {
 
 	return (
 		<div class="mx-auto container space-y-8">
-			<div class="grid md:grid-cols-4 grid-cols-2 gap-2 pt-8">
+			<div class="grid md:grid-cols-4 grid-cols-2 gap-3 pt-8">
 				<Show
 					when={products()?.storeFilterSearchProducts}
 					fallback={<div>Not Founded</div>}
@@ -83,20 +83,6 @@ const Products = () => {
 					</Show>
 				</Show>
 			</div>
-
-			{/* <nav class="pagination">
-        <ul>
-          <For each={paginationProps()}>
-            {(props) => (
-              <A
-                href={`/products?page=${props.page}&size=${pageSize().size}`}
-                class="join-item btn btn-outline"
-                {...props}
-              />
-            )}
-          </For>
-        </ul>
-      </nav> */}
 		</div>
 	);
 };

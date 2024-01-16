@@ -8,10 +8,10 @@ const Hero = () => {
 	return (
 		<div class=" bg-primary/5 md:py-0 md:px-12 xl:px-0 px-3">
 			<div class="container mx-auto ">
-				<div class=" grid md:grid-cols-2 grid-cols-1 items-center min-h-[60vh]">
+				<div class="grid md:grid-cols-2 grid-cols-1 items-center min-h-[60vh]">
 					<div>
-						<h1 class="sm:text-5xl text-base text-2xl font-black">{name()}</h1>
-						<p class="lg:py-6 py-4 lg:text-xl text-sm text-neutral opacity-80">
+						<h1 class="sm:text-5xl text-2xl font-black">{name()}</h1>
+						<p class="lg:py-6 py-4 lg:text-xl text-sm opacity-80">
 							{promotion()?.quote
 								? promotion()?.quote
 								: "We Choose the best parts of consumable to make the whole toner cartridge. We test each other cartridge before delivery to make sur quality."}

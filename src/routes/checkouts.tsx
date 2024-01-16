@@ -124,7 +124,7 @@ export default function Checkout() {
 					<div>
 						<div class="grid grid-cols-2 gap-8 mt-8">
 							<main class=" md:block hidden ">
-								<div class="border p-5 rounded-xl shadow-sm">
+								<div class="bg-secondary/5 p-5 rounded-xl shadow-sm">
 									<DeliveryOption Field={Field} />
 									<div class="flex justify-start">
 										<h1 class="text-xl font-semibold pb-8">Payments</h1>
@@ -150,7 +150,7 @@ export default function Checkout() {
 												>
 													{(field, props) => (
 														<div
-															class={`rounded-xl p-3 border`}
+															class={`rounded-xl p-3 bg-secondary/5`}
 															classList={{
 																"ring ring-primary":
 																	field.value?.includes(value),
@@ -180,7 +180,7 @@ export default function Checkout() {
 								{/* <Delivery Field={Field} /> */}
 							</main>
 							<main class="">
-								<div class="border p-6 rounded-xl">
+								<div class="bg-secondary/5 p-6 rounded-xl">
 									<h1 class="text-xl font-semibold pb-2">
 										My shopping bag ({cartItems.length})
 									</h1>
@@ -314,7 +314,7 @@ export default function Checkout() {
 										}}
 									</For>
 								</div>
-								<div class="md:col-span-2 mt-9 md:mt-6 border p-4 rounded-xl">
+								<div class="md:col-span-2 mt-9 md:mt-6 bg-secondary/5 p-4 rounded-xl">
 									<div class="grid grid-cols-1 justify-start">
 										<h1 class="font-bold uppercase">Summary</h1>
 									</div>
@@ -467,7 +467,7 @@ const DeliveryOption = ({ Field }: any) => {
 												required
 												name="delivery"
 											/>
-											<div class="border rounded-xl p-5 text-gray-600 ring-2 ring-transparent transition-all peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
+											<div class="rounded-xl p-5 text-gray-600 ring-2 ring-transparent transition-all peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
 												<div class="flex items-center gap-6 justify-between">
 													<p class="text-sm font-semibold uppercase text-pimary">
 														{delivery.address}
@@ -489,7 +489,7 @@ const DeliveryOption = ({ Field }: any) => {
 					</For>
 				</section>
 			</Show>
-			<div class="collapse bg-base-100 collapse-plus border mb-6">
+			<div class="collapse bg-secondary/5 collapse-plus mb-6">
 				<input type="checkbox" />
 				<div class="collapse-title text-md font-medium">Add new location</div>
 				<div class="collapse-content">

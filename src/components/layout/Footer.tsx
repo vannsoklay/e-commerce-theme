@@ -21,7 +21,7 @@ const Footer: Component = () => {
 
 	return (
 		<>
-			<div class="flex flex-col mx-3 bg-accent/5 py-8 rounded-lg">
+			<div class="flex flex-col mx-3 bg-primary/5 py-8 rounded-lg">
 				<div class="w-full draggable">
 					<div class="container flex flex-col mx-auto">
 						<div class="flex flex-col items-center w-full">
@@ -32,28 +32,16 @@ const Footer: Component = () => {
 							</span>
 							<div class="flex flex-col items-center gap-6 mb-8">
 								<div class="flex flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
-									<a
-										href="javascript:void(0)"
-										class="text-gray-600 hover:text-gray-900"
-									>
+									<a href="javascript:void(0)" class="hover:text-primary">
 										About
 									</a>
-									<a
-										href="javascript:void(0)"
-										class="text-gray-600 hover:text-gray-900"
-									>
+									<a href="javascript:void(0)" class="hover:text-primary">
 										Term of use
 									</a>
-									<a
-										href="javascript:void(0)"
-										class="text-gray-600 hover:text-gray-900"
-									>
+									<a href="javascript:void(0)" class="hover:text-primary">
 										Copyright and Trademark Policy
 									</a>
-									<a
-										href="javascript:void(0)"
-										class="text-gray-600 hover:text-gray-900"
-									>
+									<a href="javascript:void(0)" class="hover:text-primary">
 										Acceptable Use Policy
 									</a>
 								</div>

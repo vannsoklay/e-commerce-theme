@@ -134,7 +134,7 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
 			>
 				{(field, props) => (
 					<div
-						class="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-6 cursor-pointer"
+						class="w-full relative bg-secondary/5 rounded-lg p-6 cursor-pointer"
 						id="dropzone"
 					>
 						<input
@@ -310,7 +310,7 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
 			</div>
 			<div class="flex justify-end w-full">
 				<button
-					disable={!isValid() ? true : false}
+					disabled={!isValid() ? true : false}
 					class="rounded-box w-full btn btn-primary"
 					type="submit"
 				>
