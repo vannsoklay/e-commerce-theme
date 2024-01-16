@@ -7,9 +7,9 @@ import {
 	createEffect,
 } from "solid-js";
 import { getMe } from "~/api/me";
-import { Dialog } from "~/components/Dialog";
-import { LoginForm } from "~/components/forms/LoginForm";
-import RegisterForm from "~/components/forms/RegisterForm";
+// import { Dialog } from "~/components/Dialog";
+// import { LoginForm } from "~/components/forms/LoginForm";
+// import RegisterForm from "~/components/forms/RegisterForm";
 import { ContextAuth } from "~/types/global";
 import { UserType } from "~/types/user";
 
@@ -77,7 +77,7 @@ const AuthProvider: Component<contextProps> = (props) => {
 
 	return (
 		<AuthContext.Provider value={context}>
-			<Dialog modalId={modalId}>
+			{/* <Dialog modalId={modalId}>
 				<div role="tablist" class="tabs tabs-lifted tabs-lg">
 					<input
 						type="radio"
@@ -110,7 +110,7 @@ const AuthProvider: Component<contextProps> = (props) => {
 						<RegisterForm handler={login} />
 					</div>
 				</div>
-			</Dialog>
+			</Dialog> */}
 			<div class="relative">{props.children}</div>
 		</AuthContext.Provider>
 	);

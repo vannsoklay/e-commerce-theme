@@ -31,8 +31,8 @@ export const Filter = () => {
 				</h5>
 				<div class="">
 					<ul class="border-gray-200  text-sm text-gray-600">
-						<Show when={tags()?.tags} fallback={<div>loading...</div>}>
-							<For each={tags().tags} fallback={<div>Not founded</div>}>
+						<Show when={tags()?.storeOwnerTags} fallback={<div>loading...</div>}>
+							<For each={tags().storeOwnerTags} fallback={<div>Not founded</div>}>
 								{(tag) => {
 									return (
 										<li class=" hover:text-primary transition-all py-2 mt-0 ">

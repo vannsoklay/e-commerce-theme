@@ -3,7 +3,7 @@ import { For, Show, createSignal } from "solid-js";
 
 import { CardProduct } from "~/components/Cards";
 import { Filter } from "~/components/Filter";
-import Hero from "~/components/Hero";
+// import Hero from "~/components/Hero";
 import { MeteTag } from "~/components/meta";
 import { PRODUCTS } from "~/libs/graphql/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";

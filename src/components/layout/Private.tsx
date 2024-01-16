@@ -2,6 +2,7 @@ import { Component, JSXElement, Show, createEffect } from "solid-js";
 
 import PrivateLogin from "./PrivateLogin";
 import { useAuth } from "~/contexts/useAuth";
+import { redirect } from "solid-start";
 
 interface LayoutProps {
 	children: JSXElement;
@@ -9,6 +10,12 @@ interface LayoutProps {
 
 const PrivateLayout: Component<LayoutProps> = (props) => {
 	const { user, loading } = useAuth();
+	createEffect(() => {
+		if(user()){
+			return
+		}
+		redirect('/')
+	})
 	return (
 		<Show
 			when={!loading()!}
