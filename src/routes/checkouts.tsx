@@ -94,19 +94,23 @@ export default function Checkout() {
 	return (
 		<PrivateLayout>
 			<Show when={cartItems.length > 0} fallback={<EmptyCart />}>
-				<Form onSubmit={handleCheckout} class="mx-auto text-gray-700 p-4">
+				<Form onSubmit={handleCheckout} class="p-4">
 					<Dialog
 						modalId={open}
 						// modalId={() => "my_modal_2"}
-						classes="sm:w-1/2 h-1/2 flex justify-center text-center"
+						classes="sm:w-1/2 max-h-min h-min  flex justify-center text-center rounded-xl"
 					>
-						<div class="w-full space-y-2">
-							<div class="flex justify-center">
-								You've been purchased the product!
+						<div class="w-full h-full  space-y-2">
+							<div class="flex justify-center font-bold text-2xl">
+								You've successfully purchased the products!
 							</div>
-							<img alt="" src="/images/cta.png" class="h-2/3 mx-auto" />
+							<img
+								alt=""
+								src="/images/cta.png"
+								class="h-2/3 mx-auto flex-grow"
+							/>
 							<button
-								class="btn sm:w-full w-2/3"
+								class="btn btn-primary rounded-box sm:w-full w-2/3"
 								onClick={(e) => {
 									e.preventDefault();
 									cleanCartItems();
@@ -129,7 +133,14 @@ export default function Checkout() {
 										<For
 											each={[
 												{ label: "cash", value: "CASH" },
-												// { label: "ABA Payway", value: "abapayway" },
+												{ label: "credit", value: "credit-debit-card" },
+												{ label: "ABA Pay", value: "aba-pay" },
+												{ label: "Wing Pay", value: "wing-pay" },
+												{
+													label: "Chip Mong Bank",
+													value: "chip-mong-bank",
+												},
+												{ label: "Acleda Pay", value: "xpay" },
 											]}
 										>
 											{({ value }, index) => (
@@ -154,7 +165,7 @@ export default function Checkout() {
 																	checked={field.value?.includes(value)}
 																/>
 																<img
-																	class="h-12"
+																	class="h-10"
 																	src={`/images/banks/${value}.png`}
 																	alt=""
 																/>
@@ -211,7 +222,7 @@ export default function Checkout() {
 														<div class="flex space-x-7 items-center md:mt-0 mt-2">
 															<div class="flex space-x-3 items-center">
 																{cartItem.quantity === 1 ? (
-																	<div class="bg-gray-100 p-1 rounded-full cursor-pointer">
+																	<div class="bg-gray-100 p-1 rounded-box cursor-pointer">
 																		<div>
 																			<svg
 																				xmlns="http://www.w3.org/2000/svg"
@@ -230,7 +241,7 @@ export default function Checkout() {
 																		</div>
 																	</div>
 																) : (
-																	<div class="bg-orange-100 p-1 rounded-full cursor-pointer">
+																	<div class="bg-orange-100 p-1 rounded-box cursor-pointer">
 																		<div
 																			onclick={() =>
 																				minusCart(cartItem.product)
@@ -254,7 +265,7 @@ export default function Checkout() {
 																	</div>
 																)}
 
-																<div class="bg-green-100 p-1 rounded-full cursor-pointer">
+																<div class="bg-green-100 p-1 rounded-box cursor-pointer">
 																	<div
 																		onclick={() => addToCart(cartItem.product)}
 																	>
@@ -279,7 +290,7 @@ export default function Checkout() {
 																onClick={() =>
 																	removeFromCart(cartItem.product.id)
 																}
-																class="bg-red-100 p-1 rounded-full cursor-pointer"
+																class="bg-red-100 p-1 rounded-box cursor-pointer"
 															>
 																<svg
 																	xmlns="http://www.w3.org/2000/svg"
@@ -303,7 +314,7 @@ export default function Checkout() {
 										}}
 									</For>
 								</div>
-								<div class="md:col-span-2 mt-9 md:mt-6">
+								<div class="md:col-span-2 mt-9 md:mt-6 border p-4 rounded-xl">
 									<div class="grid grid-cols-1 justify-start">
 										<h1 class="font-bold uppercase">Summary</h1>
 									</div>
@@ -342,13 +353,13 @@ export default function Checkout() {
 									{/* delivery */}
 									{/* <DeliveryOptionMobile Field={Field} /> */}
 									<div class="md:pt-6 pt-10">
-										<Button.Primary class="btn w-full rounded-full">
+										<button class="btn btn-primary w-full rounded-box">
 											{process() ? (
 												<span class="loading loading-spinner"></span>
 											) : (
 												"Pay"
 											)}
-										</Button.Primary>
+										</button>
 									</div>
 								</div>
 							</main>

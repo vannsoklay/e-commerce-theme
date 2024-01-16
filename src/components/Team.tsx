@@ -1,5 +1,6 @@
-import { For, Resource } from "solid-js";
 import { AboutConfig, Member } from "~/types/global";
+import { For, Resource } from "solid-js";
+
 import { read } from "~/utils/theme";
 
 export default function Team() {
@@ -10,10 +11,10 @@ export default function Team() {
 			<div class="py-20">
 				<div>
 					<div class="mb-16 text-center">
-						<h2 class="mb-4  text-2xl text-gray-900 font-bold md:text-4xl">
+						<h2 class="mb-4  text-2xl text-primary font-bold md:text-4xl">
 							Tailus blocks leadership
 						</h2>
-						<p class="text-gray-600 md:w-2/3 w-full mx-auto">
+						<p class="text-base-content/80 md:w-2/3 w-full mx-auto">
 							Tailus prides itself not only on award-winning technology, but
 							also on the talent of its people of some of the brightest minds
 							and most experienced executives in business.

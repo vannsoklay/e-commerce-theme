@@ -1,42 +1,40 @@
 import { Component, JSXElement, createEffect } from "solid-js";
 
 interface Button {
-    class?: string;
-    name?: string;
-    children: JSXElement;
-    handler?: (e: Event) => void;
-    disable?: boolean,
-    type?: "submit" | "reset" | "button"
+	class?: string;
+	name?: string;
+	children: JSXElement;
+	handler?: (e: Event) => void;
+	disable?: boolean;
+	type?: "submit" | "reset" | "button";
 }
 
 const Primary: Component<Button> = (props) => {
-  return (
-    <button
-      onClick={props.handler}
-      disabled={props.disable ? true : false}
-      class={`${props.class} btn border-none bg-primary-1/10 text-primary-1 hover:text-primary-1 hover:border-primary-1 hover:bg-primary-1/10`}
-    >
-      {props.children}
-    </button>
-  );
+	return (
+		<button
+			onClick={props.handler}
+			disabled={props.disable ? true : false}
+			class={`${props.class} btn border-none bg-primary/10 text-primary hover:text-primary hover:border-primary hover:bg-primary/10`}
+		>
+			{props.children}
+		</button>
+	);
 };
 
-
 const Action: Component<Button> = (props) => {
-    return (
-      <button
-        type={props.type}
-        onClick={props.handler}
-        disabled={props.disable ? true : false}
-        class={`${props.class} btn border-none bg-action/10 text-action hover:text-action hover:border-action hover:bg-action/10`}
-      >
-        {props.children}
-      </button>
-    );
-  };
+	return (
+		<button
+			type={props.type}
+			onClick={props.handler}
+			disabled={props.disable ? true : false}
+			class={`${props.class} btn border-none bg-accent/10 text-accent hover:text-accent hover:border-accent hover:bg-accent/10`}
+		>
+			{props.children}
+		</button>
+	);
+};
 
-  export default {
-    Primary,
-    Action
-  }
-  
+export default {
+	Primary,
+	Action,
+};
