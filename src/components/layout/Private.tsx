@@ -10,12 +10,6 @@ interface LayoutProps {
 
 const PrivateLayout: Component<LayoutProps> = (props) => {
 	const { user, loading } = useAuth();
-	createEffect(() => {
-		if(user()){
-			return
-		}
-		redirect('/')
-	})
 	return (
 		<Show
 			when={!loading()!}

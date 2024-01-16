@@ -1,18 +1,18 @@
-import { LoginForm } from "../forms/LoginForm";
-
+import { createEffect } from "solid-js";
+import { useNavigate, Navigate } from "solid-start";
 const PrivateNotFound = () => {
-  const name = "KHM";
+  // const nav = useNavigate();
+  // createEffect(() => {
+  //   nav("https://backend.riverbase.org/sso/store", { replace: true });
+  // });
   return (
-    <div class="container mx-auto md:px-32 h-[52vh] flex items-center justify-center">
-      <section class="space-y-4">
-        <h1 class="font-bold text-xl flex justify-center">Login</h1>
-        <LoginForm
-          handler={() => "my_modal_1"}
-          kind="private"
-          className="w-96"
-        />
-      </section>
-    </div>
+   <div class="flex justify-center items-center pt-12">
+     <a href={`https://backend.riverbase.org/sso/store`}>
+      <button class="btn px-14 rounded-full bg-primary/10 hover:bg-primary/5 text-primary border-none">
+        Login
+      </button>
+    </a>
+   </div>
   );
 };
 
