@@ -40,7 +40,7 @@ export const LatestProducts = () => {
 				Our Products
 			</h1>
 
-			<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
+			<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 px-2 border border-base-100">
 				<Show when={products()} fallback={<div>loading...</div>}>
 					<Show
 						when={products()?.storeProducts.length > 0}
@@ -80,7 +80,7 @@ export const LatestProducts = () => {
 				Shop by categories
 			</h1>
 
-			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
 				<Show when={tags()?.storeOwnerTags} fallback={<div>loading...</div>}>
 					<For
 						each={tags().storeOwnerTags}
@@ -93,7 +93,7 @@ export const LatestProducts = () => {
 						{(tag) => {
 							return (
 								<A href={`/products?tag=${tag.id}`}>
-									<div class="bg-secondary/5 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
+									<div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
 										{tag.title.en}
 									</div>
 								</A>

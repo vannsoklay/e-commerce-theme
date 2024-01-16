@@ -122,7 +122,7 @@ export default function Checkout() {
 						</div>
 					</Dialog>
 					<div>
-						<div class="grid grid-cols-2 gap-8 mt-8">
+						<div class="grid md:grid-cols-2 gap-8 mt-8">
 							<main class=" md:block hidden ">
 								<div class="bg-secondary/5 p-5 rounded-xl shadow-sm">
 									<DeliveryOption Field={Field} />
@@ -179,7 +179,7 @@ export default function Checkout() {
 								</div>
 								{/* <Delivery Field={Field} /> */}
 							</main>
-							<main class="">
+							<main class="w-full">
 								<div class="bg-secondary/5 p-6 rounded-xl">
 									<h1 class="text-xl font-semibold pb-2">
 										My shopping bag ({cartItems.length})
@@ -314,7 +314,7 @@ export default function Checkout() {
 										}}
 									</For>
 								</div>
-								<div class="md:col-span-2 mt-9 md:mt-6 bg-secondary/5 p-4 rounded-xl">
+								<div class=" md:col-span-2 mt-9 md:mt-6 bg-secondary/5 p-4 rounded-xl">
 									<div class="grid grid-cols-1 justify-start">
 										<h1 class="font-bold uppercase">Summary</h1>
 									</div>

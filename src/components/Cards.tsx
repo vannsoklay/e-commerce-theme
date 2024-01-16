@@ -23,7 +23,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	};
 
 	return (
-		<div class="h-full backdrop-blur-lg bg-secondary/5 transition-all hover:shadow-md rounded-box">
+		<div class="h-full backdrop-blur-lg bg-primary/10 transition-all hover:shadow-md rounded-box">
 			<Show when={props} fallback={<p>Loading...</p>}>
 				<div
 					onClick={() => {

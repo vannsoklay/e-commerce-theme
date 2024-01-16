@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component, For } from "solid-js";
 import { FiShoppingBag } from "solid-icons/fi";
 
 const Search = () => {
@@ -8,7 +8,7 @@ const Search = () => {
 				<input
 					type="search"
 					placeholder="Search…"
-					class="input input-bordered w-full"
+					class="input input-primary bg-primary/20 border-4 w-full"
 					autocomplete="on"
 					spellcheck={false}
 					aria-autocomplete="list"
@@ -31,73 +31,25 @@ const Search = () => {
 					<button class="btn btn-sm w-auto font-medium">iphone case</button>
 				</div>
 			</div>
-			<div class="flex flex-col gap-y-1">
+			<div class="flex flex-col gap-2">
 				<p class="text-lg font-semibold mt-6 mb-2">Trending Now</p>
-				<div class="flex gap-3 items-center">
-					<img
-						alt=""
-						src="/images/products/product-2.png"
-						class="aspect-auto w-16 bg-slate-100 rounded-lg"
-					/>
-					<div>
-						<h2 class="font-semibold text-md">Printer full colors</h2>
-						<div class="flex gap-1 items-center">
-							<FiShoppingBag />: SONY
+				<For each={[...Array(10)]}>
+					{() => (
+						<div class="flex gap-3 items-center bg-primary/10 p-2 rounded-box">
+							<img
+								alt=""
+								src="/images/products/product-2.png"
+								class="aspect-auto w-16 bg-primary/10 rounded-lg"
+							/>
+							<div>
+								<h2 class="font-semibold text-md">Printer full colors</h2>
+								<div class="flex gap-1 items-center">
+									<FiShoppingBag />: SONY
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="flex gap-3 items-center">
-					<img
-						alt=""
-						src="/images/products/product-2.png"
-						class="aspect-auto w-16 bg-slate-100 rounded-lg"
-					/>
-					<div>
-						<h2 class="font-semibold text-md">Printer full colors</h2>
-						<div class="flex gap-1 items-center">
-							<FiShoppingBag />: SONY
-						</div>
-					</div>
-				</div>
-				<div class="flex gap-3 items-center">
-					<img
-						alt=""
-						src="/images/products/product-2.png"
-						class="aspect-auto w-16 bg-slate-100 rounded-lg"
-					/>
-					<div>
-						<h2 class="font-semibold text-md">Printer full colors</h2>
-						<div class="flex gap-1 items-center">
-							<FiShoppingBag />: SONY
-						</div>
-					</div>
-				</div>
-				<div class="flex gap-3 items-center">
-					<img
-						alt=""
-						src="/images/products/product-2.png"
-						class="aspect-auto w-16 bg-slate-100 rounded-lg"
-					/>
-					<div>
-						<h2 class="font-semibold text-md">Printer full colors</h2>
-						<div class="flex gap-1 items-center">
-							<FiShoppingBag />: SONY
-						</div>
-					</div>
-				</div>
-				<div class="flex gap-3 items-center">
-					<img
-						alt=""
-						src="/images/products/product-2.png"
-						class="aspect-auto w-16 bg-slate-100 rounded-lg"
-					/>
-					<div>
-						<h2 class="font-semibold text-md">Printer full colors</h2>
-						<div class="flex gap-1 items-center">
-							<FiShoppingBag />: SONY
-						</div>
-					</div>
-				</div>
+					)}
+				</For>
 			</div>
 		</div>
 	);
