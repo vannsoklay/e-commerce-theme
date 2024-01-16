@@ -14,6 +14,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	const handleAddToCart = (product: ItemProduct) => {
 		let p: ItemProduct = {
 			id: product.id,
+			variantId: null,
 			name: product.name,
 			price: product.price,
 			currency: product.currency,
@@ -57,6 +58,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 										e.stopPropagation();
 										const p: ItemProduct = {
 											id: props.product.id,
+											variantId: null,
 											name: props.product.title,
 											price: props.product.price,
 											currency: props.product.currency,

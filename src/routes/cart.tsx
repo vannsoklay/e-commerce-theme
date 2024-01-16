@@ -75,7 +75,7 @@ export default function Cart() {
 																</div>
 															) : (
 																<div
-																	onclick={() => minusCart(cartItem.product)}
+																	onclick={() => minusCart(cartItem.product, cartItem.product.variantId ? true : false)}
 																	class="btn btn-xs btn-circle btn-outline btn-error"
 																>
 																	<TbMinus />
@@ -84,7 +84,7 @@ export default function Cart() {
 
 															<div class=" p-1 rounded-box cursor-pointer">
 																<div
-																	onclick={() => addToCart(cartItem.product)}
+																	onclick={() => addToCart(cartItem.product, cartItem.product.variantId ? true : false)}
 																	class="btn btn-xs btn-circle btn-outline btn-success"
 																>
 																	<TbPlus />
@@ -93,7 +93,7 @@ export default function Cart() {
 														</div>
 														<div
 															onClick={() =>
-																removeFromCart(cartItem.product.id)
+																removeFromCart(cartItem.product.variantId ? cartItem.product.variantId : cartItem.product.id, cartItem.product.variantId ? true : false)
 															}
 															class="btn btn-xs btn-circle btn-outline btn-error"
 														>

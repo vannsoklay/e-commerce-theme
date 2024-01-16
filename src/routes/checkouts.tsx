@@ -28,6 +28,7 @@ export default function Checkout() {
 	const [price, setPrice] = createSignal(0);
 
 	createEffect(() => {
+	
 		const subtotal: number[] = [];
 		cartItems.map((product) =>
 			subtotal.push(product.quantity * product.product.price)
@@ -51,6 +52,7 @@ export default function Checkout() {
 			setProcess(true);
 			return {
 				productId: cart.product.id,
+				variantId: cart.product.variantId,
 				qty: cart.quantity,
 				unitPrice: parseInt(cart.product.price.toString()),
 			};
@@ -244,7 +246,7 @@ export default function Checkout() {
 																	<div class="bg-orange-100 p-1 rounded-box cursor-pointer">
 																		<div
 																			onclick={() =>
-																				minusCart(cartItem.product)
+																				minusCart(cartItem.product, cartItem.product.variantId ? true : false)
 																			}
 																		>
 																			<svg
@@ -267,7 +269,7 @@ export default function Checkout() {
 
 																<div class="bg-green-100 p-1 rounded-box cursor-pointer">
 																	<div
-																		onclick={() => addToCart(cartItem.product)}
+																		onclick={() => addToCart(cartItem.product, cartItem.product.variantId ? true : false)}
 																	>
 																		<svg
 																			xmlns="http://www.w3.org/2000/svg"
@@ -288,7 +290,7 @@ export default function Checkout() {
 															</div>
 															<div
 																onClick={() =>
-																	removeFromCart(cartItem.product.id)
+																	removeFromCart(cartItem.product.variantId ? cartItem.product.variantId : cartItem.product.id, cartItem.product.variantId ? true : false)
 																}
 																class="bg-red-100 p-1 rounded-box cursor-pointer"
 															>

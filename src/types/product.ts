@@ -1,4 +1,5 @@
 export interface Variants {
+	id: string,
 	label: string;
 	option: "SIZE" | "COLOR";
 	preview: string;
@@ -7,6 +8,7 @@ export interface Variants {
 
 export type ItemProduct = {
 	thumbnail?: any;
+	variantId: string | null,
 	title?: Element;
 	id: string;
 	name: string;

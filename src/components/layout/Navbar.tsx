@@ -7,7 +7,7 @@ import { TbShoppingCart } from "solid-icons/tb";
 
 const Navbar = () => {
 	const { cartItems, logout } = useCart();
-	const { user, loading, login } = useAuth();
+	const { user, loading } = useAuth();
 
 	return (
 		<div class="navbar w-full bg-primary/10 relative sm:sticky top-0 z-50 backdrop-blur-lg">
