@@ -10,6 +10,9 @@ export const Filter = () => {
 	const [value, setValue] = createSignal("");
 	const [tags] = publicQuery(TAGS);
 
+  createEffect(() => {
+    console.log("tag", tags());
+  })
 	return (
 		<div class="mt-8">
 			<input
@@ -32,7 +35,7 @@ export const Filter = () => {
 				<div class="">
 					<ul class="border-gray-200  text-sm text-gray-600">
 						<Show when={tags()?.storeOwnerTags} fallback={<div>loading...</div>}>
-							<For each={tags().storeOwnerTags} fallback={<div>Not founded</div>}>
+							<For each={tags()?.storeOwnerTags} fallback={<div>Not founded</div>}>
 								{(tag) => {
 									return (
 										<li class=" hover:text-primary transition-all py-2 mt-0 ">
@@ -45,7 +48,7 @@ export const Filter = () => {
 													ps.search ? ps.search : ""
 												}&tag=${tag.id}`}
 											>
-												{tag.titleEn}
+												{tag.title.en}
 											</A>
 										</li>
 									);
