@@ -7,7 +7,6 @@ import {
 } from "@modular-forms/solid";
 import axios, { AxiosResponse } from "axios";
 
-import Button from "../Button";
 import { CREATE_DELIVERY } from "~/libs/graphql/delivery";
 import { DeliveryType } from "~/types/checkout";
 import { client } from "~/libs/client";
@@ -74,9 +73,10 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
 			toast.error("Please check your phone number");
 			return;
 		}
+	
 		client
 			.mutation(CREATE_DELIVERY, {
-				input: { ...values, phoneNumber: newPhone().phoneNumber },
+				input: { ...values, phoneNumber: newPhone().phoneNumber, photos: [photo()] },
 			})
 			.toPromise()
 			.then((res) => {
