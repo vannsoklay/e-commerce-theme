@@ -25,7 +25,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	};
 
 	return (
-		<div class="h-full backdrop-blur-lg bg-primary/10 transition-all hover:shadow-md rounded-box">
+		<div class="h-full backdrop-blur-lg bg-base-200/50 transition-all hover:shadow-md rounded-box">
 			<Show when={props} fallback={<p>Loading...</p>}>
 				<div
 					onClick={() => {
@@ -47,7 +47,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 						</figure>
 						<div class="p-3">
 							<div class="text-base font-medium  mb-4 lg:h-12 h-auto">
-								{props.product.title}
+								{props.product.title.length <= 40 ? props.product.title : props.product.title.slice(0, 40) + "..."}
 							</div>
 							<div class="card-accents flex items-center justify-between">
 								<span class="lg:text-lg text-sm font-bold">

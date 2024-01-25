@@ -10,7 +10,7 @@ const Navbar = () => {
 	const { user, loading } = useAuth();
 
 	return (
-		<div class="navbar w-full bg-primary/10 relative sm:sticky top-0 z-50 backdrop-blur-lg">
+		<div class="navbar h-20 w-full bg-base/100 relative sm:sticky top-0 z-50 backdrop-blur-lg">
 			<div class="md:flex hidden justify-between w-full container mx-auto ">
 				<Logo />
 				<div class="flex items-center space-x-3">
@@ -25,11 +25,11 @@ const Navbar = () => {
 								<div
 									tabindex="0"
 									role="button"
-									class="btn btn-ghost btn-circle bg-primary/20 hover:bg-primary/30"
+									class="btn btn-ghost btn-circle bg-primary/10 hover:bg-primary/30"
 								>
 									<div class="indicator">
-										<TbShoppingCart size={20} />
-										<span class="badge badge-sm indicator-item text-red-600">
+										<TbShoppingCart size={20} class="text-primary"/>
+										<span class="badge badge-sm indicator-item bg-primary text-base-100">
 											{cartItems.length}
 										</span>
 									</div>
