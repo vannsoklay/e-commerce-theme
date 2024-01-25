@@ -20,7 +20,7 @@ export const GET_PRODUCT = gql`
       variants {
         id
         price
-        preview
+        previews
         option
         label
       }
@@ -49,7 +49,7 @@ export const GET_ALL_PRODUCTS = gql`
       detail
       variants {
         price
-        preview
+        previews
         option
         label
       }
@@ -78,7 +78,7 @@ export const PRODUCTS = gql`
       detail
       variants {
         price
-        preview
+        previews
         option
         label
       }
