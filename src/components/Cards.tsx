@@ -50,8 +50,8 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 								{props.product.title}
 							</div>
 							<div class="card-accents flex items-center justify-between">
-								<span class=" lg:text-lg text-sm font-bold">
-									{formatToUSD(props.product.price)}
+								<span class="lg:text-lg text-sm font-bold">
+									{formatToUSD(parseInt(props.product.price.toString()))}
 								</span>
 								<button
 									onClick={(e) => {

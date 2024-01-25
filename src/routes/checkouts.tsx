@@ -210,8 +210,12 @@ export default function Checkout() {
                                 <h1>{cartItem.product?.title}</h1>
                                 <div class="flex">
                                   <p>
-                                    {formatToUSD(cartItem.product.price)} x
-                                    {cartItem.quantity}
+                                    {formatToUSD(
+                                      parseInt(
+                                        cartItem.product.price.toString()
+                                      )
+                                    )}
+                                    x {cartItem.quantity}
                                   </p>
                                   =
                                   <p class="font-bold ">

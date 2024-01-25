@@ -194,7 +194,7 @@ const ProductDetail = () => {
                     <div class="mt-4 lg:row-span-3 lg:mt-0">
                       <h2 class="sr-only">Product information</h2>
                       <p class="text-xl sm:text-3xl tracking-tight text-primary font-semibold">
-                        {formatToUSD(product().storeProduct.price)}
+                        {formatToUSD(parseInt(product().storeProduct.price.toString()))}
                       </p>
 
                       <Show when={product().storeProduct.desc} fallback={null}>
@@ -271,7 +271,8 @@ const ProductDetail = () => {
                                           ? "៛"
                                           : "$"}
                                         {res.price} */}
-                                        {formatToUSD(res.price)}
+                                        {formatToUSD(parseInt(res.price.toString()))}
+                                        {/* {formatToUSD(res.price)} */}
                                       </div>
                                     </div>
                                   </label>
@@ -361,7 +362,7 @@ const ProductDetail = () => {
                                   : (handleAddToCart(p),
                                     toast.success("Added successfully!"));
                               }}
-                              class="btn rounded-box w-full btn-primary"
+                              class="btn rounded-box w-full btn-primary text-base"
                             >
                               Add to cart
                             </button>
