@@ -12,6 +12,7 @@ import { publicQuery } from "~/libs/client";
 import toast from "solid-toast";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
+import { formatToUSD } from "~/utils/usd";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -193,8 +194,7 @@ const ProductDetail = () => {
                     <div class="mt-4 lg:row-span-3 lg:mt-0">
                       <h2 class="sr-only">Product information</h2>
                       <p class="text-xl sm:text-3xl tracking-tight text-primary font-semibold">
-                        {product().storeProduct.currency === "KHR" ? "៛" : "$"}
-                        {product().storeProduct.price}
+                        {formatToUSD(product().storeProduct.price)}
                       </p>
 
                       <Show when={product().storeProduct.desc} fallback={null}>
@@ -266,11 +266,12 @@ const ProductDetail = () => {
                                         {res.label}
                                       </div>
                                       <div class="text-md font-bold">
-                                        {product().storeProduct.currency ===
+                                        {/* {product().storeProduct.currency ===
                                         "KHR"
                                           ? "៛"
                                           : "$"}
-                                        {res.price}
+                                        {res.price} */}
+                                        {formatToUSD(res.price)}
                                       </div>
                                     </div>
                                   </label>

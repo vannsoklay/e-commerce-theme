@@ -6,6 +6,7 @@ import { EmptyCart } from "~/components/Empty";
 import { FiShoppingCart } from "solid-icons/fi";
 import { useCart } from "~/contexts/useCart";
 import { TbMinus, TbPlus, TbTrash } from "solid-icons/tb";
+import { formatToUSD } from "~/utils/usd";
 
 export default function Cart() {
 	const { cartItems, addToCart, minusCart, removeFromCart } = useCart();
@@ -125,7 +126,8 @@ export default function Cart() {
 										Subtotal
 									</div>
 									<div class="col-span-1 font-bold flex justify-end">
-										USD {price().toLocaleString()}
+										{/* USD {price().toLocaleString()} */}
+										{formatToUSD(price())}
 									</div>
 								</div>
 								<div class="grid grid-cols-2 md:mt-2">
@@ -144,7 +146,8 @@ export default function Cart() {
 								<div class="grid grid-cols-2 justify-start">
 									<div class="col-span-1 flex justify-start text-md">Total</div>
 									<h1 class="font-bold uppercase flex justify-end">
-										USD {price().toLocaleString()}
+										{/* USD {price().toLocaleString()} */}
+										{formatToUSD(price())}
 									</h1>
 								</div>
 								<div class="pt-6">

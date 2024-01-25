@@ -6,6 +6,7 @@ import { CartItem } from "~/types/global";
 import toast from "solid-toast";
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "@solidjs/router";
+import { formatToUSD } from "~/utils/usd";
 
 export const CardProduct: Component<{ product: ProductType }> = (props) => {
 	const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 			currency: product.currency,
 			preview: product.preview,
 		};
-		addToCart(p);
+		addToCart(p, false);
 	};
 
 	return (
@@ -50,7 +51,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
 							</div>
 							<div class="card-accents flex items-center justify-between">
 								<span class=" lg:text-lg text-sm font-bold">
-									${props.product.price}
+									{formatToUSD(props.product.price)}
 								</span>
 								<button
 									onClick={(e) => {
