@@ -77,7 +77,7 @@ export const LatestProducts = () => {
       )}
 
       <div class="font-extrabold md:text-3xl text-center md:py-12 py-8 lg:mt-20 mt-8">
-	  {/* <div class="text-2xl text-primary/80">LOOKING FOR THE BEST PRODUCT</div> */}
+        {/* <div class="text-2xl text-primary/80">LOOKING FOR THE BEST PRODUCT</div> */}
         <div class="text-primary">CHOOSE CATEGORY</div>
       </div>
 

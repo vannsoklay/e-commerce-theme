@@ -1,70 +1,70 @@
 import { A, useNavigate, useSearchParams } from "solid-start";
 import { For, Show, createEffect, createSignal } from "solid-js";
-
 import { TAGS } from "~/libs/graphql/tag";
 import { publicQuery } from "~/libs/client";
 
 export const Filter = () => {
-	const [ps] = useSearchParams();
-	const navigate = useNavigate();
-	const [value, setValue] = createSignal("");
-	const [tags] = publicQuery(TAGS);
+  const [ps] = useSearchParams();
+  const navigate = useNavigate();
+  const [value, setValue] = createSignal("");
+  const [tags] = publicQuery(TAGS);
 
-	createEffect(() => {
-		console.log("tag", tags());
-	});
-	return (
-		<div class="mt-8">
-			<input
-				class="input bg-secondary/5 w-full"
-				onInput={(e) => {
-					setValue(e.target.value),
-						navigate(
-							`/products?search=${value() ? value() : ""}&tag=${
-								ps.tag ? ps.tag : ""
-							}`
-						);
-				}}
-				type="text"
-				placeholder="Search"
-			/>
-			<div class="p-4 rounded-box mt-5 bg-secondary/5 ">
-				<h5 class="inline-flex items-center text-xl font-semibold mb-2 ">
-					Filters
-				</h5>
-				<div class="">
-					<ul class="border-gray-200  text-sm text-base-content/60">
-						<Show
-							when={tags()?.storeOwnerTags}
-							fallback={<div>loading...</div>}
-						>
-							<For
-								each={tags().storeOwnerTags}
-								fallback={<div>Not founded</div>}
-							>
-								{(tag) => {
-									return (
-										<li class=" hover:text-primary transition-all py-2 mt-0 ">
-											<A
-												end={true}
-												classList={{
-													"text-primary font-medium": tag.id == ps.tag,
-												}}
-												href={`/products?search=${
-													ps.search ? ps.search : ""
-												}&tag=${tag.id}`}
-											>
-												{tag.title.en}
-											</A>
-										</li>
-									);
-								}}
-							</For>
-						</Show>
-					</ul>
-				</div>
-			</div>
-			{/* <h5 class="inline-flex items-center text-base font-medium text-gray-400">
+  // createEffect(() => {
+  //   console.log("tag", tags());
+  // });
+  return (
+    <div class="mt-8">
+      <input
+        class="input bg-gray-50 w-full"
+        onInput={(e) => {
+          setValue(e.target.value),
+            navigate(
+              `/products?search=${value() ? value() : ""}&tag=${
+                ps.tag ? ps.tag : ""
+              }`
+            );
+        }}
+        type="text"
+        placeholder="Search"
+      />
+      <div class="py-2 rounded-box mt-5 bg-gray-50 ">
+        <h5 class="inline-flex items-center text-xl font-semibold mb-2 pl-4 ">
+          Filters
+        </h5>
+        <div>
+          <ul class="w-full relative bg-red text-sm text-base-content/60">
+            <Show
+              when={tags()?.storeOwnerTags}
+              fallback={<div>loading...</div>}
+            >
+              <For
+                each={tags().storeOwnerTags}
+                fallback={<div>Not founded</div>}
+              >
+                {(tag) => {
+                  return (
+                    <li class="transition-all mt-0 w-full block px-2">
+                      <A
+                        classList={{
+                          "font-medium bg-primary text-white rounded rounded-xl transform active:scale-75 transition-transform":
+                            tag.id === ps.tag,
+                        }}
+                        class="w-full block py-2 px-3"
+                        href={`/products?search=${
+                          ps.search ? ps.search : ""
+                        }&tag=${tag.id}`}
+                      >
+                        {tag.title.en}
+                      </A>
+                    </li>
+                  );
+                }}
+              </For>
+            </Show>
+          </ul>
+        </div>
+      </div>
+      {/* <h5 class="inline-flex items-center text-base font-medium text-gray-400">
         Categories
       </h5>
       <form class="my-4 border-gray-200">
@@ -144,6 +144,6 @@ export const Filter = () => {
           </div>
         </div>
       </form> */}
-		</div>
-	);
+    </div>
+  );
 };

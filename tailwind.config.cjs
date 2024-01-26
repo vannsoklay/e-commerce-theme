@@ -9,16 +9,7 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: "#e02424",
-          "primary-content": "#ffff",
-          secondary: "#6ec1e4",
-          accent: "#61ce70",
-          neutral: "#fff",
-          "base-100": "#fff",
-          info: "#fff",
-          success: "#16a34a",
-          warning: "#d97706",
-          error: "oklch(73.95% 0.19 27.33)",
+          ...theme.colors,
         },
       },
       // "light",
