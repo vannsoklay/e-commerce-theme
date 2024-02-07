@@ -1,4 +1,3 @@
-import { AiFillHeart, AiFillStar } from "solid-icons/ai";
 import { Component, Show, createSignal } from "solid-js";
 import { ItemProduct, ProductType } from "~/types/product";
 
@@ -37,7 +36,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
             <figure>
               <div class="flex items-center justify-center bg-contain bg-center bg-repeat p-2">
                 <img
-                  class="group-hover:scale-105 duration-150 w-full h-48 bg-repeat-round rounded-2xl mx-auto object-contain"
+                  class="group-hover:scale-105 duration-150 w-full h-48 p-5 bg-repeat-round rounded-2xl mx-auto object-contain bg-white"
                   src={`${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
                     props?.product?.thumbnail
                   }`}
@@ -46,6 +45,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
               </div>
             </figure>
             <div class="p-3">
+              <div class="text-[12px] text-primary">{props.product.brand}</div>
               <div class="text-base font-medium  mb-4 lg:h-12 h-auto">
                 {props.product.title.length <= 40
                   ? props.product.title
@@ -72,7 +72,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
                       : handleAddToCart(p);
                     toast.success("Added successfully!");
                   }}
-                  class="w-auto glass btn btn-sm btn-primary bg-primary font-normal"
+                  class="w-auto glass btn btn-sm bg-secondary font-normal"
                 >
                   {props.product.variants.length <= 0 ? "Add to cart" : "Views"}
                 </button>

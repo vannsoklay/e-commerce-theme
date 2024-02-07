@@ -1,5 +1,5 @@
 import { useSearchParams } from "solid-start";
-import { For, Show, createSignal } from "solid-js";
+import { For, Show, createEffect, createMemo, createSignal } from "solid-js";
 
 import { CardProduct } from "~/components/Cards";
 import { Filter } from "~/components/Filter";
@@ -9,6 +9,7 @@ import { PRODUCTS } from "~/libs/graphql/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import { createPagination } from "@solid-primitives/pagination";
 import { publicQuery } from "~/libs/client";
+import { ProductType } from "~/types/product";
 
 export default function Product() {
   return (
@@ -17,14 +18,11 @@ export default function Product() {
       {/* <div class="md:block hidden">
         <Hero />
       </div> */}
-      <div class="container mx-auto pt-0 md:pt-4 grid grid-cols-5 gap-3">
-        {/* display responsive mobile */}
-        <div class="md:col-span-1 md:block hidden">
-          <Filter />
-        </div>
-        <div class="md:col-span-4 col-span-5 md:px-0 px-4">
+
+      <div class="container mx-auto">
+        <Filter>
           <Products />
-        </div>
+        </Filter>
       </div>
     </section>
   );
@@ -54,7 +52,7 @@ const Products = () => {
 
   return (
     <div class="mx-auto container space-y-8">
-      <div class="grid md:grid-cols-4 grid-cols-2 gap-3 pt-8">
+      <div class="grid md:grid-cols-4 grid-cols-2 gap-3 pt-3">
         <Show
           when={products()?.storeFilterSearchProducts}
           fallback={<div>Not Founded</div>}
@@ -64,10 +62,7 @@ const Products = () => {
             fallback={
               <div class="col-span-3 w-full text-center pt-8">
                 <div class="flex justify-center text-center text-2xl items-center">
-                  <RiFinanceShoppingBasketLine
-                    size={120}
-                    class="text-gray-300"
-                  />
+                  <img alt="no product" src="/images/shop.png" class="w-72" />
                 </div>
                 <div class="leading-none font-semibold text-gray-400">
                   No Products
@@ -75,7 +70,11 @@ const Products = () => {
               </div>
             }
           >
-            <For each={products()?.storeFilterSearchProducts}>
+            <For
+              each={products()?.storeFilterSearchProducts?.sort(
+                (a: ProductType, b: ProductType) => (a.brand > b.brand ? 1 : -1)
+              )}
+            >
               {(latestProduct) => {
                 return <CardProduct product={latestProduct} />;
               }}

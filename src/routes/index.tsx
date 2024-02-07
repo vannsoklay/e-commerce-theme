@@ -26,7 +26,7 @@ export default function Home() {
 export const LatestProducts = () => {
   const [products] = publicQuery(GET_ALL_PRODUCTS, {
     filter: {
-      limit: 8,
+      limit: 10,
       skip: 0,
       sort: -1,
     },

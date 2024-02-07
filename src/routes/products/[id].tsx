@@ -51,8 +51,7 @@ const ProductDetail = () => {
 
   createEffect(() => {
     isInCart(product().storeProduct.id);
-	console.log("items", items());
-	
+    console.log("items", items());
   });
 
   return (
@@ -194,7 +193,9 @@ const ProductDetail = () => {
                     <div class="mt-4 lg:row-span-3 lg:mt-0">
                       <h2 class="sr-only">Product information</h2>
                       <p class="text-xl sm:text-3xl tracking-tight text-primary font-semibold">
-                        {formatToUSD(parseInt(product().storeProduct.price.toString()))}
+                        {formatToUSD(
+                          parseInt(product().storeProduct.price.toString())
+                        )}
                       </p>
 
                       <Show when={product().storeProduct.desc} fallback={null}>
@@ -240,12 +241,17 @@ const ProductDetail = () => {
                                         product: p,
                                         quantity: 1,
                                       };
-									 
-									  const carts = items().filter((item) => item.product.variantId != res.id)
+
+                                      const carts = items().filter(
+                                        (item) =>
+                                          item.product.variantId != res.id
+                                      );
                                       items().map(
-                                        (item) => item.product.variantId == res.id
-                                      ).length < 0 ? 
-                                        setItems([...items(), cart]) : setItems([...carts, cart]);
+                                        (item) =>
+                                          item.product.variantId == res.id
+                                      ).length < 0
+                                        ? setItems([...items(), cart])
+                                        : setItems([...carts, cart]);
 
                                       setActive(() => res.id);
                                     }}
@@ -271,7 +277,9 @@ const ProductDetail = () => {
                                           ? "៛"
                                           : "$"}
                                         {res.price} */}
-                                        {formatToUSD(parseInt(res.price.toString()))}
+                                        {formatToUSD(
+                                          parseInt(res.price.toString())
+                                        )}
                                         {/* {formatToUSD(res.price)} */}
                                       </div>
                                     </div>
