@@ -87,3 +87,45 @@ export const PRODUCTS = gql`
     }
   }
 `;
+
+export const GLOBAL_PRODUCT_FILTERING = gql`
+  query storeGlobalFilterProducts(
+    $tagId: [String!]
+    $keyword: String
+    $status: String
+    $range: RangeProduct
+    $filter: OrderBy
+  ) {
+    storeGlobalFilterProducts(
+      id: $tagId
+      keyword: $keyword
+      status: $status
+      range: $range
+      filter: $filter
+    ) {
+      id
+      thumbnail
+      title
+      brand
+      price
+      previews
+      slug
+      sell
+      rating
+      tags {
+        id
+        title {
+          en
+          kh
+        }
+      }
+      variants {
+        id
+        label
+        price
+        option
+        previews
+      }
+    }
+  }
+`;

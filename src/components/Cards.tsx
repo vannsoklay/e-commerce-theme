@@ -10,7 +10,7 @@ import { formatToUSD } from "~/utils/usd";
 export const CardProduct: Component<{ product: ProductType }> = (props) => {
   const navigate = useNavigate();
   const [items, setItems] = createSignal<CartItem[]>([]);
-  const { addToCart, cartItems, addCarts } = useCart();
+  const { addToCart, addCarts } = useCart();
   const handleAddToCart = (product: ItemProduct) => {
     let p: ItemProduct = {
       id: product.id,
@@ -45,6 +45,7 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
               </div>
             </figure>
             <div class="p-3">
+              <p>{props.product.sell}</p>
               <div class="text-[12px] text-primary">{props.product.brand}</div>
               <div class="text-base font-medium  mb-4 lg:h-12 h-auto">
                 {props.product.title.length <= 40

@@ -58,7 +58,11 @@ export const LatestProducts = () => {
               </div>
             }
           >
-            <For each={products()?.storeProducts}>
+            <For
+              each={products()?.storeProducts?.sort(
+                (a: ProductType, b: ProductType) => (a.brand > b.brand ? 1 : -1)
+              )}
+            >
               {(latestProduct: ProductType) => {
                 return <CardProduct product={latestProduct} />;
               }}
@@ -93,7 +97,7 @@ export const LatestProducts = () => {
           >
             {(tag) => {
               return (
-                <A href={`/products?tag=${tag.id}`}>
+                <A href={`/products?search=&tag=${tag.id}`}>
                   <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
                     {tag.title.en}
                   </div>
