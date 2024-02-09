@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams, useLocation } from "solid-start";
-import { Component, For, Show, createEffect, createSignal } from "solid-js";
+import { Component, For, Show, createSignal } from "solid-js";
 import { TAGS } from "~/libs/graphql/tag";
 import { publicQuery } from "~/libs/client";
 import { BRANDS } from "~/libs/graphql/brands";
@@ -132,54 +132,43 @@ export const Filter: Component<Filters> = ({
                 </div>
               </div>
             </div>
-            {/* 
+
             <div class="space-y-1">
               <h6 class="text-base font-medium text-black">Brands</h6>
               <Show when={category()?.categories} fallback={null}>
-                <div class="flex items-center">
-                  <div class="form-control">
-                    <label class="label cursor-pointer space-x-2">
-                      <input
-                        name="brand"
-                        type="radio"
-                        checked={location.pathname === "/products"}
-                        class="radio radio-primary radio-sm"
-                        onChange={(e) => {
-                          e.preventDefault();
-                          navigate(`/products`);
-                        }}
-                      />
-                      <span class="label-text">All</span>
-                    </label>
-                  </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-sm w-auto btn-primary">All</button>
+                  <For each={category()?.categories}>
+                    {(brand) => {
+                      return (
+                        // <div class="flex items-center">
+                        //   <label class="label cursor-pointer space-x-2">
+                        //     <input
+                        //       name="brand"
+                        //       type="radio"
+                        //       // checked={tag.id === ps.tag}
+                        //       class="radio radio-primary radio-sm"
+                        //       // onChange={(e) => {
+                        //       //   e.preventDefault();
+                        //       //   navigate(
+                        //       //     `?search=${ps.search ? ps.search : ""}&tag=${
+                        //       //       tag.id
+                        //       //     }`
+                        //       //   );
+                        //       // }}
+                        //     />
+                        //     <span class="label-text">{brand?.title?.en}</span>
+                        //   </label>
+                        // </div>
+                        <button class="btn btn-sm w-auto btn-outline btn-primary">
+                          {brand?.title?.en}
+                        </button>
+                      );
+                    }}
+                  </For>
                 </div>
-                <For each={category()?.categories}>
-                  {(brand) => {
-                    return (
-                      <div class="flex items-center">
-                        <label class="label cursor-pointer space-x-2">
-                          <input
-                            name="brand"
-                            type="radio"
-                            // checked={tag.id === ps.tag}
-                            class="radio radio-primary radio-sm"
-                            // onChange={(e) => {
-                            //   e.preventDefault();
-                            //   navigate(
-                            //     `?search=${ps.search ? ps.search : ""}&tag=${
-                            //       tag.id
-                            //     }`
-                            //   );
-                            // }}
-                          />
-                          <span class="label-text">{brand?.title?.en}</span>
-                        </label>
-                      </div>
-                    );
-                  }}
-                </For>
               </Show>
-            </div> */}
+            </div>
             <div class="space-y-1">
               <h6 class="text-base font-medium text-black">Categories</h6>
 
@@ -293,6 +282,7 @@ export const Filter: Component<Filters> = ({
                 }
               }}
             >
+              <option value="All">All</option>
               <option value="Most Popular">Most Popular</option>
               <option value="Newest">Newest</option>
               <option value="Low to High">Low to High</option>

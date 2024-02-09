@@ -45,7 +45,6 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
               </div>
             </figure>
             <div class="p-3">
-              <p>{props.product.sell}</p>
               <div class="text-[12px] text-primary">{props.product.brand}</div>
               <div class="text-base font-medium  mb-4 lg:h-12 h-auto">
                 {props.product.title.length <= 40

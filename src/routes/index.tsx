@@ -86,7 +86,7 @@ export const LatestProducts = () => {
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
-        <Show when={tags()?.storeOwnerTags} fallback={<div>loading...</div>}>
+        <Show when={tags()?.storeOwnerTags} fallback={null}>
           <For
             each={tags().storeOwnerTags}
             fallback={
