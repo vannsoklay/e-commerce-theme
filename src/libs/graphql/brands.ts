@@ -1,6 +1,6 @@
 import { gql } from "@urql/core";
 
-export const BRANDS = gql`
+export const CATEGORIES = gql`
   query {
     categories {
       createdAt
@@ -11,6 +11,19 @@ export const BRANDS = gql`
         kh
       }
       updatedAt
+    }
+  }
+`;
+
+export const BRANDS = gql`
+  query {
+    storeOwnerBrands {
+      id
+      logo
+      title {
+        en
+      }
+      createdAt
     }
   }
 `;

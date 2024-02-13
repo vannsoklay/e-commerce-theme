@@ -1,58 +1,154 @@
-import { Component, For } from "solid-js";
-import { FiShoppingBag } from "solid-icons/fi";
+import { For, Show, createEffect, createSignal } from "solid-js";
+import { GLOBAL_PRODUCT_FILTERING } from "~/libs/graphql/product";
+import { publicQuery } from "~/libs/client";
+import { ProductType } from "~/types/product";
+import { useNavigate, useSearchParams } from "solid-start";
+import { formatToUSD } from "~/utils/usd";
+import { TAGS } from "~/libs/graphql/tag";
+
+interface Range {
+  end: number;
+  start: number;
+}
+
+interface Sort {
+  sort: number;
+}
+interface ProductFilter {
+  id?: string[] | null;
+  keyword?: string | null;
+  status?: string | null;
+  filter?: Sort | null;
+  range?: Range | null;
+}
 
 const Search = () => {
-	return (
-		<div class="container mx-auto p-3">
-			<form data-svelte-search="">
-				<input
-					type="search"
-					placeholder="Search…"
-					class="input input-primary bg-primary/20 border-4 w-full"
-					autocomplete="on"
-					spellcheck={false}
-					aria-autocomplete="list"
-					aria-controls="typeahead-0.nrh5wc1w7r-listbox"
-					aria-labelledby="typeahead-0.nrh5wc1w7r-label"
-				/>
-			</form>
-			<div>
-				<p class="text-lg font-semibold mt-3">Popular Search</p>
-				<div class="mt-3 flex flex-wrap gap-2">
-					<button class="btn btn-sm w-auto font-medium">sneaker king</button>
-					<button class="btn btn-sm w-auto font-medium">nike</button>
-					<button class="btn btn-sm w-auto font-medium">
-						nike shoes for men
-					</button>
-					<button class="btn btn-sm w-auto font-medium">iphone 15promax</button>
-					<button class="btn btn-sm w-auto font-medium">puma king</button>
-					<button class="btn btn-sm w-auto font-medium">clothes</button>
-					<button class="btn btn-sm w-auto font-medium">eletronic</button>
-					<button class="btn btn-sm w-auto font-medium">iphone case</button>
-				</div>
-			</div>
-			<div class="flex flex-col gap-2">
-				<p class="text-lg font-semibold mt-6 mb-2">Trending Now</p>
-				<For each={[...Array(10)]}>
-					{() => (
-						<div class="flex gap-3 items-center bg-primary/10 p-2 rounded-box">
-							<img
-								alt=""
-								src="/images/products/product-2.png"
-								class="aspect-auto w-16 bg-primary/10 rounded-lg"
-							/>
-							<div>
-								<h2 class="font-semibold text-md">Printer full colors</h2>
-								<div class="flex gap-1 items-center">
-									<FiShoppingBag />: SONY
-								</div>
-							</div>
-						</div>
-					)}
-				</For>
-			</div>
-		</div>
-	);
+  const navigate = useNavigate();
+  const [ps] = useSearchParams();
+  const [value, setValue] = createSignal("");
+
+  const [filtering, setFiltering] = createSignal<ProductFilter>({
+    id: null,
+    keyword: null,
+    status: null,
+    filter: null,
+    range: null,
+  });
+
+  const [tags] = publicQuery(TAGS);
+
+  const [storeGlobalFilterProducts] = publicQuery(
+    GLOBAL_PRODUCT_FILTERING,
+    () => ({
+      tagId: ps.tag ? [ps.tag] : ps.search ? [] : null,
+      keyword: ps.search ? ps.search : filtering().keyword,
+      status: filtering().status === "price" ? "price" : null,
+      range: filtering().range,
+      filter: {
+        skip: 0,
+        limit: 10,
+        sort: filtering().filter?.sort,
+      },
+    })
+  );
+
+  const mostPopularSort = () =>
+    storeGlobalFilterProducts()?.storeGlobalFilterProducts?.sort(
+      (a: ProductType, b: ProductType) => (a.sell > b.sell ? -1 : 1)
+    );
+
+  const limitTag = () => tags()?.storeOwnerTags?.slice(0, 10);
+
+  return (
+    <div class="container mx-auto p-3">
+      <form class="flex items-center gap-1">
+        <input
+          type="search"
+          name="search"
+          placeholder="Find your products here ..."
+          class="input input-primary border-1 w-full rounded-2xl"
+          autocomplete="on"
+          spellcheck={false}
+          aria-autocomplete="list"
+          aria-controls="typeahead-0.nrh5wc1w7r-listbox"
+          aria-labelledby="typeahead-0.nrh5wc1w7r-label"
+          required
+        />
+        <button class="btn btn-primary rounded-2xl">Search</button>
+      </form>
+
+      <Show when={tags()?.storeOwnerTags} fallback={null}>
+        <p class="text-lg font-semibold mt-3">Popular Search</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <For each={limitTag()} fallback={null}>
+            {(tag) => {
+              return (
+                <button
+                  class="btn btn-sm btn-outline btn-primary w-auto font-medium rounded-xl"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(
+                      `/products?search=${ps.search ? ps.search : ""}&tag=${
+                        tag.id
+                      }`
+                    );
+                  }}
+                >
+                  {tag.title.en}
+                </button>
+              );
+            }}
+          </For>
+        </div>
+      </Show>
+      <Show when={mostPopularSort()?.length > 0}>
+        <p class="text-lg font-semibold mt-6 mb-2">Trending Now</p>
+        <div class="grid grid-cols-2 gap-2">
+          <For each={mostPopularSort()}>
+            {(product: ProductType) => (
+              <div class="h-full backdrop-blur-lg bg-gray-50 transition-all hover:shadow-md rounded-box">
+                <div
+                  onClick={() => {
+                    navigate(`/products/${product?.slug}`);
+                  }}
+                  data-aos="zoom-out-down"
+                >
+                  <div class=" cursor-pointer relative w-full  rounded-lg">
+                    <figure>
+                      <div class="flex items-center justify-center bg-contain bg-center bg-repeat p-2">
+                        <img
+                          class=" w-full h-32 p-5 bg-repeat-round rounded-2xl mx-auto object-contain bg-white"
+                          src={`${
+                            import.meta.env.VITE_VARIABLE_IPFS
+                          }/api/ipfs?hash=${product?.thumbnail}`}
+                          alt="product image"
+                        />
+                      </div>
+                    </figure>
+                    <div class="p-3">
+                      <div class="text-[12px] text-primary">
+                        {product.brand}
+                      </div>
+                      <div class="text-base font-medium  mb-4 lg:h-12 h-auto">
+                        {product.title.length <= 40
+                          ? product.title
+                          : product.title.slice(0, 40) + "..."}
+                      </div>
+                      <div class="card-accents flex items-center justify-between">
+                        <span class="text-primary lg:text-xl text-sm font-bold">
+                          {formatToUSD(parseInt(product.price.toString()))}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </For>
+        </div>
+      </Show>
+    </div>
+  );
 };
 
 export default Search;

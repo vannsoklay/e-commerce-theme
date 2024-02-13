@@ -4,7 +4,6 @@ import { For, Show, createEffect, createSignal } from "solid-js";
 import { SubmitHandler, createForm, required } from "@modular-forms/solid";
 import { client, clientQuery } from "~/libs/client";
 
-import Button from "~/components/Button";
 import { CHECKOUT_PRODUCT } from "~/libs/graphql/checkout";
 import { CheckoutType } from "~/types/checkout";
 import { DeliveryForm } from "~/components/forms/DeliveryForm";

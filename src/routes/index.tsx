@@ -1,5 +1,4 @@
 import { For, Show } from "solid-js";
-
 import { A } from "solid-start";
 import { CardProduct } from "~/components/Cards";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
@@ -13,7 +12,7 @@ import { publicQuery } from "~/libs/client";
 export default function Home() {
   return (
     <div>
-      <section id="hero">
+      <section class="bg-gradient-to-r from-primary/10">
         <Hero />
       </section>
       <section id="products" class="pt-8">
@@ -40,7 +39,7 @@ export const LatestProducts = () => {
         CHECK THE CORE PRODUCT
       </h1>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 px-2 border border-base-100">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 px-2 border border-base-100">
         <Show when={products()} fallback={<div>loading...</div>}>
           <Show
             when={products()?.storeProducts.length > 0}
@@ -107,7 +106,6 @@ export const LatestProducts = () => {
           </For>
         </Show>
       </div>
-
       <Team />
     </div>
   );
