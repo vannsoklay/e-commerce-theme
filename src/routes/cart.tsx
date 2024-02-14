@@ -1,5 +1,4 @@
 import { For, Show, createEffect, createSignal } from "solid-js";
-
 import { A } from "solid-start";
 import { EmptyCart } from "~/components/Empty";
 import { FiShoppingCart } from "solid-icons/fi";
@@ -32,33 +31,25 @@ export default function Cart() {
                 <For each={cartItems}>
                   {(cartItem) => {
                     return (
-                      <Show when={cartItem} fallback={<p>Loading...</p>}>
-                        <div class="bg-primary/5 md:flex md:justify-between md:items-center p-4 rounded-box">
+                      <Show when={cartItem} fallback={null}>
+                        <div class="border border-primary/30 bg-base-100 md:flex md:justify-between items-center p-4 rounded-box">
                           <div class="flex items-center space-x-3">
-                            <div>
-                              <div class="avatar">
-                                <div class="w-24 rounded">
-                                  <img
-                                    src={`${
-                                      import.meta.env.VITE_VARIABLE_IPFS
-                                    }/api/ipfs?hash=${
-                                      cartItem?.product?.preview
-                                    }`}
-                                    alt=""
-                                    class="rounded-md"
-                                  />
-                                </div>
-                              </div>
-                            </div>
+                            <img
+                              src={`${
+                                import.meta.env.VITE_VARIABLE_IPFS
+                              }/api/ipfs?hash=${cartItem?.product?.preview}`}
+                              alt="product image"
+                              class="rounded-md w-16 h-24 sm:w-16 lg:w-24 object-contain bg-base-100"
+                            />
                             <div>
                               <h1>{cartItem.product?.name}</h1>
-                              <div class="flex">
+                              <div class="hidden sm:hidden lg:flex items-center">
                                 <p>
                                   {cartItem.product.price.toLocaleString()} x
                                   {cartItem.quantity}
                                 </p>
                                 =
-                                <p class="font-bold mr-4">
+                                <p class="font-bold text-primary pl-3">
                                   $
                                   {(
                                     cartItem.product.price * cartItem.quantity
@@ -67,52 +58,71 @@ export default function Cart() {
                               </div>
                             </div>
                           </div>
-                          <div class="flex space-x-7 items-center md:mt-0 mt-2">
-                            <div class="flex space-x-3 items-center">
-                              {cartItem.quantity === 1 ? (
-                                <div class="btn btn-xs btn-circle btn-outline btn-disabled">
-                                  <TbMinus />
-                                </div>
-                              ) : (
-                                <div
-                                  onclick={() =>
-                                    minusCart(
-                                      cartItem.product,
-                                      cartItem.product.variantId ? true : false
-                                    )
-                                  }
-                                  class="btn btn-xs btn-circle btn-outline btn-error"
-                                >
-                                  <TbMinus />
-                                </div>
-                              )}
+                          <div class="flex items-center justify-between">
+                            <div class="flex sm:flex lg:hidden items-center">
+                              <p>
+                                {cartItem.product.price.toLocaleString()} x
+                                {cartItem.quantity}
+                              </p>
+                              =
+                              <p class="font-bold text-primary pl-3">
+                                $
+                                {(
+                                  cartItem.product.price * cartItem.quantity
+                                ).toLocaleString()}
+                              </p>
+                            </div>
+                            <div class="flex space-x-7 items-center justify-end md:mt-0 mt-2">
+                              <div class="flex space-x-3 items-center">
+                                {cartItem.quantity === 1 ? (
+                                  <div class="btn btn-xs btn-circle btn-outline btn-disabled">
+                                    <TbMinus />
+                                  </div>
+                                ) : (
+                                  <div
+                                    onclick={() =>
+                                      minusCart(
+                                        cartItem.product,
+                                        cartItem.product.variantId
+                                          ? true
+                                          : false
+                                      )
+                                    }
+                                    class="btn btn-xs btn-circle btn-outline btn-error"
+                                  >
+                                    <TbMinus />
+                                  </div>
+                                )}
 
-                              <div class="p-1 rounded-box cursor-pointer">
-                                <div
-                                  onclick={() =>
-                                    addToCart(
-                                      cartItem.product,
-                                      cartItem.product.variantId ? true : false
-                                    )
-                                  }
-                                  class="btn btn-xs btn-circle btn-outline btn-success"
-                                >
-                                  <TbPlus />
+                                <div class="p-1 rounded-box cursor-pointer">
+                                  <div
+                                    onclick={() =>
+                                      addToCart(
+                                        cartItem.product,
+                                        cartItem.product.variantId
+                                          ? true
+                                          : false
+                                      )
+                                    }
+                                    class="btn btn-xs btn-circle btn-outline btn-success"
+                                  >
+                                    <TbPlus />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div
-                              onClick={() =>
-                                removeFromCart(
-                                  cartItem.product.variantId
-                                    ? cartItem.product.variantId
-                                    : cartItem.product.id,
-                                  cartItem.product.variantId ? true : false
-                                )
-                              }
-                              class="btn btn-xs btn-circle btn-outline btn-error"
-                            >
-                              <TbTrash />
+                              <div
+                                onClick={() =>
+                                  removeFromCart(
+                                    cartItem.product.variantId
+                                      ? cartItem.product.variantId
+                                      : cartItem.product.id,
+                                    cartItem.product.variantId ? true : false
+                                  )
+                                }
+                                class="btn btn-xs btn-circle btn-outline btn-error"
+                              >
+                                <TbTrash />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -122,7 +132,7 @@ export default function Cart() {
                 </For>
               </div>
               <A href="/products">
-                <button class="btn btn-primary w-full rounded-box my-8">
+                <button class="btn btn-primary btn-outline w-full rounded-box my-8">
                   <FiShoppingCart class="text-xl" />
                   More Products
                 </button>
@@ -130,7 +140,7 @@ export default function Cart() {
             </div>
 
             <div class="md:col-span-2 rounded-xl">
-              <div class=" p-6 rounded-xl">
+              <div class="py-6 rounded-xl">
                 <div class="grid grid-cols-1 justify-start">
                   <h1 class="font-bold text-lg uppercase">Summary</h1>
                 </div>
@@ -159,7 +169,7 @@ export default function Cart() {
                 <div class="divider my-2"></div>
                 <div class="grid grid-cols-2 justify-start">
                   <div class="col-span-1 flex justify-start text-md">Total</div>
-                  <h1 class="font-bold uppercase flex justify-end">
+                  <h1 class="font-bold uppercase text-primary text-xl flex justify-end">
                     {/* USD {price().toLocaleString()} */}
                     {formatToUSD(price())}
                   </h1>

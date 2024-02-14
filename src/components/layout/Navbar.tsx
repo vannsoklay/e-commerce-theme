@@ -43,7 +43,7 @@ const Navbar = () => {
                 </a>
               }
             >
-              <div class="dropdown dropdown-end">
+              <div class="dropdown dropdown-end ">
                 <label
                   tabIndex={0}
                   class="btn btn-ghost btn-circle avatar bg-primary/20 hover:bg-primary/20 placeholder"
@@ -52,7 +52,7 @@ const Navbar = () => {
                 </label>
                 <ul
                   tabIndex={0}
-                  class="p-2 shadow menu dropdown-content z-[1] bg-primary/5 rounded-box w-52 mt-2"
+                  class="p-2 shadow menu dropdown-content z-50 bg-base-100 rounded-box w-52 mt-2"
                 >
                   <li>
                     <A href={`me/@${user().fullname?.toLowerCase()}`}>

@@ -1,10 +1,10 @@
-import { For, Show, createEffect, createSignal } from "solid-js";
+import { For, Show, createSignal } from "solid-js";
 import { GLOBAL_PRODUCT_FILTERING } from "~/libs/graphql/product";
 import { publicQuery } from "~/libs/client";
 import { ProductType } from "~/types/product";
 import { useNavigate, useSearchParams } from "solid-start";
 import { formatToUSD } from "~/utils/usd";
-import { TAGS } from "~/libs/graphql/tag";
+import { CATEGORIES } from "~/libs/graphql/category";
 
 interface Range {
   end: number;
@@ -35,7 +35,7 @@ const Search = () => {
     range: null,
   });
 
-  const [tags] = publicQuery(TAGS);
+  const [storeOwnerCategories] = publicQuery(CATEGORIES);
 
   const [storeGlobalFilterProducts] = publicQuery(
     GLOBAL_PRODUCT_FILTERING,
@@ -57,11 +57,12 @@ const Search = () => {
       (a: ProductType, b: ProductType) => (a.sell > b.sell ? -1 : 1)
     );
 
-  const limitTag = () => tags()?.storeOwnerTags?.slice(0, 10);
+  const limitCats = () =>
+    storeOwnerCategories()?.storeOwnerCategories?.slice(0, 10);
 
   return (
     <div class="container mx-auto p-3">
-      <form class="flex items-center gap-1">
+      <div class="flex gap-2 items-center">
         <input
           type="search"
           name="search"
@@ -72,29 +73,35 @@ const Search = () => {
           aria-autocomplete="list"
           aria-controls="typeahead-0.nrh5wc1w7r-listbox"
           aria-labelledby="typeahead-0.nrh5wc1w7r-label"
+          onChange={(e) => {
+            e.preventDefault();
+            setValue(e.target.value),
+              navigate(`/products?search=${value() ? value() : ""}&tag=`);
+          }}
           required
         />
-        <button class="btn btn-primary rounded-2xl">Search</button>
-      </form>
-
-      <Show when={tags()?.storeOwnerTags} fallback={null}>
+        <button class="btn btn-primary rounded-2xl" type="submit">
+          Search
+        </button>
+      </div>
+      <Show when={storeOwnerCategories()?.storeOwnerCategories} fallback={null}>
         <p class="text-lg font-semibold mt-3">Popular Search</p>
         <div class="mt-3 flex flex-wrap gap-2">
-          <For each={limitTag()} fallback={null}>
-            {(tag) => {
+          <For each={limitCats()} fallback={null}>
+            {(cat) => {
               return (
                 <button
                   class="btn btn-sm btn-outline btn-primary w-auto font-medium rounded-xl"
                   onClick={(e) => {
                     e.preventDefault();
                     navigate(
-                      `/products?search=${ps.search ? ps.search : ""}&tag=${
-                        tag.id
-                      }`
+                      `/products?search=${
+                        ps.search ? ps.search : ""
+                      }&category=${cat.id}`
                     );
                   }}
                 >
-                  {tag.title.en}
+                  {cat.title.en}
                 </button>
               );
             }}

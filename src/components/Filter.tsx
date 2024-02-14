@@ -1,10 +1,9 @@
-import { useNavigate, useSearchParams, useLocation } from "solid-start";
+import { useNavigate, useSearchParams } from "solid-start";
 import { Component, For, Show, createSignal } from "solid-js";
-import { TAGS } from "~/libs/graphql/tag";
 import { publicQuery } from "~/libs/client";
 import { BRANDS } from "~/libs/graphql/brands";
 import { RiSystemFilter2Fill } from "solid-icons/ri";
-
+import { CATEGORIES, SUB_CATEGORY_BY_ID } from "~/libs/graphql/category";
 interface Sort {
   sort: number;
 }
@@ -38,9 +37,11 @@ export const Filter: Component<Filters> = ({
   const [value, setValue] = createSignal("");
 
   // queries
-  const [tags] = publicQuery(TAGS);
-  const location = useLocation();
   const [storeOwnerBrands] = publicQuery(BRANDS);
+  const [storeOwnerCategories] = publicQuery(CATEGORIES);
+  const [storeOwnerSubcategories] = publicQuery(SUB_CATEGORY_BY_ID, () => ({
+    parentId: ps.category || "",
+  }));
 
   return (
     <section class="grid col-span-5 sm:grid-cols-5 lg:col-span-1">
@@ -131,26 +132,59 @@ export const Filter: Component<Filters> = ({
               </div>
             </div>
 
-            <div class="space-y-1">
-              <h6 class="text-base font-medium text-black">Brands</h6>
-              <Show when={storeOwnerBrands()?.storeOwnerBrands} fallback={null}>
-                <div class="flex flex-wrap gap-2">
-                  <button class="btn btn-sm w-auto btn-primary">All</button>
-                  <For each={storeOwnerBrands()?.storeOwnerBrands}>
-                    {(brand) => {
-                      return (
-                        <button class="btn btn-sm w-auto btn-outline btn-primary">
-                          {brand?.title?.en}
-                        </button>
-                      );
-                    }}
-                  </For>
-                </div>
-              </Show>
-            </div>
-            <div class="space-y-1">
-              <h6 class="text-base font-medium text-black">Tags</h6>
+            {/* categories */}
+            <Show
+              when={storeOwnerCategories()?.storeOwnerCategories.length > 0}
+              fallback={null}
+            >
+              <div class="space-y-1">
+                <h6 class="text-base font-medium text-black">Categories</h6>
 
+                <div class="flex items-center">
+                  <label class="label cursor-pointer space-x-2">
+                    <input
+                      name="category"
+                      type="radio"
+                      checked={ps.category === "" || !ps.category}
+                      class="radio radio-primary radio-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        navigate(
+                          `?search=${ps.search ? ps.search : ""}&category=`
+                        );
+                      }}
+                    />
+                    <span class="label-text">All</span>
+                  </label>
+                </div>
+                <For each={storeOwnerCategories()?.storeOwnerCategories}>
+                  {(cat) => (
+                    <div class="flex items-center">
+                      <label class="label cursor-pointer space-x-2">
+                        <input
+                          name="category"
+                          type="radio"
+                          checked={cat.id === ps.category}
+                          class="radio radio-primary radio-sm"
+                          onChange={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              `?search=${ps.search ? ps.search : ""}&category=${
+                                cat.id
+                              }`
+                            );
+                          }}
+                        />
+                        <span class="label-text">{cat.title.en}</span>
+                      </label>
+                    </div>
+                  )}
+                </For>
+              </div>
+            </Show>
+
+            {/* <div class="space-y-1">
+              <h6 class="text-base font-medium text-black">Tags</h6>
               <Show when={tags()?.storeOwnerTags} fallback={null}>
                 <div class="flex items-center">
                   <div class="form-control">
@@ -192,6 +226,25 @@ export const Filter: Component<Filters> = ({
                             <span class="label-text">{tag.title.en}</span>
                           </label>
                         </div>
+                      );
+                    }}
+                  </For>
+                </div>
+              </Show>
+            </div> */}
+
+            {/* brands */}
+            <div class="space-y-1">
+              <h6 class="text-base font-medium text-black">Brands</h6>
+              <Show when={storeOwnerBrands()?.storeOwnerBrands} fallback={null}>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-sm w-auto btn-primary">All</button>
+                  <For each={storeOwnerBrands()?.storeOwnerBrands}>
+                    {(brand) => {
+                      return (
+                        <button class="btn btn-sm w-auto btn-outline btn-primary">
+                          {brand?.title?.en}
+                        </button>
                       );
                     }}
                   </For>
@@ -267,7 +320,7 @@ export const Filter: Component<Filters> = ({
 
         <div class="drawer">
           <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-          <div class="drawer-content">
+          <div class="drawer-content flex sm:flex lg:hidden justify-end">
             <label for="my-drawer" class="btn btn-primary btn-sm drawer-button">
               <RiSystemFilter2Fill size={18} />
               Filter
@@ -370,6 +423,66 @@ export const Filter: Component<Filters> = ({
                       </div>
                     </div>
 
+                    {/*  categories */}
+                    <Show
+                      when={
+                        storeOwnerCategories()?.storeOwnerCategories.length > 0
+                      }
+                      fallback={null}
+                    >
+                      <div class="space-y-1">
+                        <h6 class="text-base font-medium text-black">
+                          Categories
+                        </h6>
+
+                        <div class="flex items-center">
+                          <label class="label cursor-pointer space-x-2">
+                            <input
+                              name="category"
+                              type="radio"
+                              checked={ps.category === "" || !ps.category}
+                              class="radio radio-primary radio-sm"
+                              onChange={(e) => {
+                                e.preventDefault();
+                                navigate(
+                                  `?search=${
+                                    ps.search ? ps.search : ""
+                                  }&category=`
+                                );
+                              }}
+                            />
+                            <span class="label-text">All</span>
+                          </label>
+                        </div>
+                        <For
+                          each={storeOwnerCategories()?.storeOwnerCategories}
+                        >
+                          {(cat) => (
+                            <div class="flex items-center">
+                              <label class="label cursor-pointer space-x-2">
+                                <input
+                                  name="category"
+                                  type="radio"
+                                  checked={cat.id === ps.category}
+                                  class="radio radio-primary radio-sm"
+                                  onChange={(e) => {
+                                    e.preventDefault();
+                                    navigate(
+                                      `?search=${
+                                        ps.search ? ps.search : ""
+                                      }&category=${cat.id}`
+                                    );
+                                  }}
+                                />
+                                <span class="label-text">{cat.title.en}</span>
+                              </label>
+                            </div>
+                          )}
+                        </For>
+                      </div>
+                    </Show>
+
+                    {/*  brands */}
                     <div class="space-y-1">
                       <h6 class="text-base font-medium text-black">Brands</h6>
                       <Show
@@ -392,64 +505,61 @@ export const Filter: Component<Filters> = ({
                         </div>
                       </Show>
                     </div>
-                    <div class="space-y-1">
-                      <h6 class="text-base font-medium text-black">Tags</h6>
-
-                      <Show when={tags()?.storeOwnerTags} fallback={null}>
-                        <div class="flex items-center">
-                          <div class="form-control">
-                            <label class="label cursor-pointer space-x-2">
-                              <input
-                                name="category"
-                                type="radio"
-                                checked={location.pathname === "/products"}
-                                class="radio radio-primary radio-sm"
-                                onChange={(e) => {
-                                  e.preventDefault();
-                                  navigate(`/products`);
-                                }}
-                              />
-                              <span class="label-text">All</span>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="form-control">
-                          <For each={tags().storeOwnerTags} fallback={null}>
-                            {(tag) => {
-                              return (
-                                <div class="flex items-center">
-                                  <label class="label cursor-pointer space-x-2">
-                                    <input
-                                      name="category"
-                                      type="radio"
-                                      checked={tag.id === ps.tag}
-                                      class="radio radio-primary radio-sm"
-                                      onChange={(e) => {
-                                        e.preventDefault();
-                                        navigate(
-                                          `?search=${
-                                            ps.search ? ps.search : ""
-                                          }&tag=${tag.id}`
-                                        );
-                                      }}
-                                    />
-                                    <span class="label-text">
-                                      {tag.title.en}
-                                    </span>
-                                  </label>
-                                </div>
-                              );
-                            }}
-                          </For>
-                        </div>
-                      </Show>
-                    </div>
                   </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
+
+        <Show
+          when={storeOwnerSubcategories()?.storeOwnerSubcategories.length > 0}
+          fallback={null}
+        >
+          <section class="mt-3 flex gap-2 overflow-auto hide-scroll-bar">
+            <button
+              class="btn btn-sm btn-primary rounded-full"
+              classList={{
+                "btn-outline": ps.sub_category ? true : false,
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(
+                  `?search=${ps.search ? ps.search : ""}&category=${
+                    ps.category
+                  }`
+                );
+              }}
+            >
+              All
+            </button>
+            <For
+              each={storeOwnerSubcategories()?.storeOwnerSubcategories}
+              fallback={null}
+            >
+              {(sub) => (
+                <button
+                  class="btn btn-sm rounded-full"
+                  classList={{
+                    "btn-primary": sub.id === ps.sub_category,
+                    "btn-outline btn-primary": sub.id !== ps.sub_category,
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(
+                      `?search=${ps.search ? ps.search : ""}&category=${
+                        ps.category
+                      }&sub_category=${sub.id}`
+                    );
+                  }}
+                >
+                  {sub?.title.en}
+                </button>
+              )}
+            </For>
+          </section>
+        </Show>
+
         <section>{children}</section>
       </div>
     </section>

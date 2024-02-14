@@ -3,7 +3,6 @@ import { FaSolidCircleCheck, FaSolidPhone } from "solid-icons/fa";
 import { For, Show, createEffect, createSignal } from "solid-js";
 import { SubmitHandler, createForm, required } from "@modular-forms/solid";
 import { client, clientQuery } from "~/libs/client";
-
 import { CHECKOUT_PRODUCT } from "~/libs/graphql/checkout";
 import { CheckoutType } from "~/types/checkout";
 import { DeliveryForm } from "~/components/forms/DeliveryForm";
@@ -11,10 +10,13 @@ import { Dialog } from "~/components/Dialog";
 import { EmptyCart } from "~/components/Empty";
 import { ORDER_PRODUCT } from "~/libs/graphql/order";
 import PrivateLayout from "~/components/layout/Private";
-import toast from "solid-toast";
+import toast, { Toaster } from "solid-toast";
+
 import { useCart } from "~/contexts/useCart";
 import { useNavigate } from "solid-start";
 import { formatToUSD } from "~/utils/usd";
+import { TbMinus, TbPlus, TbTrash } from "solid-icons/tb";
+import { BsCheckCircleFill, BsCheckCircle } from "solid-icons/bs";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -40,11 +42,11 @@ export default function Checkout() {
 
   const handleCheckout: SubmitHandler<CheckoutType> = (values) => {
     if (!values.payment) {
-      toast.error("Please select payment cash to delivery");
+      toast.error("Payment is required!");
       return;
     }
     if (!values.delivery_option) {
-      toast.error("Please select delivery option location to delivery");
+      toast.error("Your location is required!");
       return;
     }
     const carts = cartItems.map((cart) => {
@@ -94,11 +96,11 @@ export default function Checkout() {
 
   return (
     <PrivateLayout>
+      <Toaster position="top-right" />
       <Show when={cartItems.length > 0} fallback={<EmptyCart />}>
         <Form onSubmit={handleCheckout} class="p-4">
           <Dialog
             modalId={open}
-            // modalId={() => "my_modal_2"}
             classes="sm:w-1/2 max-h-min h-min  flex justify-center text-center rounded-xl"
           >
             <div class="w-full h-full  space-y-2">
@@ -124,8 +126,10 @@ export default function Checkout() {
           </Dialog>
           <div>
             <div class="grid md:grid-cols-2 gap-8 mt-8">
+              {/* delivery */}
+              <DeliveryOptionMobile Field={Field} />
               <main class=" md:block hidden ">
-                <div class="bg-secondary/5 p-5 rounded-xl shadow-sm">
+                <div class="p-5 rounded-xl shadow-sm">
                   <DeliveryOption Field={Field} />
                   <div class="flex justify-start">
                     <h1 class="text-xl font-semibold pb-8">Payments</h1>
@@ -147,21 +151,22 @@ export default function Checkout() {
                       {({ value }, index) => (
                         <Field
                           name="payment"
-                          validate={[required("Please select your payment.")]}
+                          // validate={[required("Please select your payment.")]}
                         >
                           {(field, props) => (
                             <div
-                              class={`rounded-xl p-3 bg-secondary/5`}
+                              class={`rounded-xl p-3 `}
                               classList={{
                                 "ring ring-primary":
                                   field.value?.includes(value),
                               }}
                             >
-                              <label class="w-full flex gap-6 items-center cursor-pointer   ">
+                              <label class="w-full flex gap-6 items-center cursor-pointer ">
                                 <input
                                   {...props}
                                   class="radio radio-primary"
                                   type="radio"
+                                  disabled={value === "CASH" ? false : true}
                                   value={value}
                                   checked={field.value?.includes(value)}
                                 />
@@ -181,75 +186,61 @@ export default function Checkout() {
                 {/* <Delivery Field={Field} /> */}
               </main>
               <main class="w-full">
-                <div class="bg-secondary/5 p-6 rounded-xl">
+                <div class="py-6 rounded-xl space-y-3">
                   <h1 class="text-xl font-semibold pb-2">
                     My shopping bag ({cartItems.length})
                   </h1>
                   <For each={cartItems}>
                     {(cartItem) => {
                       return (
-                        <Show when={cartItem} fallback={<p>Loading...</p>}>
-                          <div class="md:flex md:justify-between md:items-center pt-6">
+                        <Show when={cartItem} fallback={null}>
+                          <div class="border border-primary/30 bg-base-100 md:flex md:justify-between items-center p-4 rounded-box">
                             <div class="flex items-center space-x-3">
+                              <img
+                                src={`${
+                                  import.meta.env.VITE_VARIABLE_IPFS
+                                }/api/ipfs?hash=${cartItem?.product?.preview}`}
+                                alt="product image"
+                                class="rounded-md w-16 h-24 sm:w-16 lg:w-24 object-contain bg-base-100"
+                              />
                               <div>
-                                <div class="avatar">
-                                  <div class="w-24 rounded">
-                                    <img
-                                      src={`${
-                                        import.meta.env.VITE_VARIABLE_IPFS
-                                      }/api/ipfs?hash=${
-                                        cartItem?.product?.preview
-                                      }`}
-                                      alt=""
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div>
-                                <h1>{cartItem.product?.title}</h1>
-                                <div class="flex">
+                                <h1>{cartItem.product?.name}</h1>
+                                <div class="hidden sm:hidden lg:flex items-center">
                                   <p>
-                                    {formatToUSD(
-                                      parseInt(
-                                        cartItem.product.price.toString()
-                                      )
-                                    )}
-                                    x {cartItem.quantity}
+                                    {cartItem.product.price.toLocaleString()} x
+                                    {cartItem.quantity}
                                   </p>
                                   =
-                                  <p class="font-bold ">
-                                    {formatToUSD(
+                                  <p class="font-bold text-primary pl-3">
+                                    $
+                                    {(
                                       cartItem.product.price * cartItem.quantity
-                                    )}
-                                    {/* $
-                                    {cartItem.product.price * cartItem.quantity} */}
+                                    ).toLocaleString()}
                                   </p>
                                 </div>
                               </div>
                             </div>
-                            <div class="flex space-x-7 items-center md:mt-0 mt-2">
-                              <div class="flex space-x-3 items-center">
-                                {cartItem.quantity === 1 ? (
-                                  <div class="bg-gray-100 p-1 rounded-box cursor-pointer">
-                                    <div>
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-5 h-5 text-gray-600"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
-                                      </svg>
+                            <div class="flex items-center justify-between">
+                              <div class="flex sm:flex lg:hidden items-center">
+                                <p>
+                                  {cartItem.product.price.toLocaleString()} x
+                                  {cartItem.quantity}
+                                </p>
+                                =
+                                <p class="font-bold text-primary pl-3">
+                                  $
+                                  {(
+                                    cartItem.product.price * cartItem.quantity
+                                  ).toLocaleString()}
+                                </p>
+                              </div>
+                              <div class="flex space-x-7 items-center justify-end md:mt-0 mt-2">
+                                <div class="flex space-x-3 items-center">
+                                  {cartItem.quantity === 1 ? (
+                                    <div class="btn btn-xs btn-circle btn-outline btn-disabled">
+                                      <TbMinus />
                                     </div>
-                                  </div>
-                                ) : (
-                                  <div class="bg-orange-100 p-1 rounded-box cursor-pointer">
+                                  ) : (
                                     <div
                                       onclick={() =>
                                         minusCart(
@@ -259,78 +250,41 @@ export default function Checkout() {
                                             : false
                                         )
                                       }
+                                      class="btn btn-xs btn-circle btn-outline btn-error"
                                     >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-5 h-5 text-orange-600"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
-                                      </svg>
+                                      <TbMinus />
+                                    </div>
+                                  )}
+
+                                  <div class="p-1 rounded-box cursor-pointer">
+                                    <div
+                                      onclick={() =>
+                                        addToCart(
+                                          cartItem.product,
+                                          cartItem.product.variantId
+                                            ? true
+                                            : false
+                                        )
+                                      }
+                                      class="btn btn-xs btn-circle btn-outline btn-success"
+                                    >
+                                      <TbPlus />
                                     </div>
                                   </div>
-                                )}
-
-                                <div class="bg-green-100 p-1 rounded-box cursor-pointer">
-                                  <div
-                                    onclick={() =>
-                                      addToCart(
-                                        cartItem.product,
-                                        cartItem.product.variantId
-                                          ? true
-                                          : false
-                                      )
-                                    }
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke-width="1.5"
-                                      stroke="currentColor"
-                                      class="w-5 h-5 text-green-600"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                      />
-                                    </svg>
-                                  </div>
                                 </div>
-                              </div>
-                              <div
-                                onClick={() =>
-                                  removeFromCart(
-                                    cartItem.product.variantId
-                                      ? cartItem.product.variantId
-                                      : cartItem.product.id,
-                                    cartItem.product.variantId ? true : false
-                                  )
-                                }
-                                class="bg-red-100 p-1 rounded-box cursor-pointer"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="1.5"
-                                  stroke="currentColor"
-                                  class="w-4 h-4 text-red-500"
+                                <div
+                                  onClick={() =>
+                                    removeFromCart(
+                                      cartItem.product.variantId
+                                        ? cartItem.product.variantId
+                                        : cartItem.product.id,
+                                      cartItem.product.variantId ? true : false
+                                    )
+                                  }
+                                  class="btn btn-xs btn-circle btn-outline btn-error"
                                 >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                  />
-                                </svg>
+                                  <TbTrash />
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -339,7 +293,7 @@ export default function Checkout() {
                     }}
                   </For>
                 </div>
-                <div class=" md:col-span-2 mt-9 md:mt-6 bg-secondary/5 p-4 rounded-xl">
+                <div class="md:col-span-2 mt-9 md:mt-6 py-4 rounded-xl">
                   <div class="grid grid-cols-1 justify-start">
                     <h1 class="font-bold uppercase">Summary</h1>
                   </div>
@@ -371,14 +325,16 @@ export default function Checkout() {
                     <div class="col-span-1 flex justify-start text-md">
                       Total
                     </div>
-                    <h1 class="font-bold uppercase flex justify-end">
+                    <h1 class="font-bold uppercase flex justify-end text-primary text-xl">
                       {formatToUSD(price())}
                     </h1>
                   </div>
-                  {/* delivery */}
-                  {/* <DeliveryOptionMobile Field={Field} /> */}
+
                   <div class="md:pt-6 pt-10">
-                    <button class="btn btn-primary w-full rounded-box">
+                    <button
+                      type="submit"
+                      class="btn btn-primary w-full rounded-box"
+                    >
                       {process() ? (
                         <span class="loading loading-spinner"></span>
                       ) : (
@@ -468,10 +424,20 @@ const DeliveryOption = ({ Field }: any) => {
   const [data, { refetch }] = clientQuery(DELIVERIES, {});
 
   return (
-    <Show when={!data.loading} fallback={<div>loading...</div>}>
-      <h1 class="collapse-title text-xl font-semibold px-0 py-0">
-        Delivery Location
-      </h1>
+    <Show when={!data.loading} fallback={null}>
+      <div class="leading-0">
+        <h1 class="collapse-title text-xl font-semibold p-0 m-0">
+          Delivery Location
+        </h1>
+        <span class="relative -top-6">Select your location here.</span>
+      </div>
+      <div class="collapse  collapse-plus mb-6 border border-primary/30">
+        <input type="checkbox" />
+        <div class="collapse-title text-md font-medium">Add new location</div>
+        <div class="collapse-content">
+          <DeliveryForm refetch={refetch} />
+        </div>
+      </div>
       <Show when={data().deliveries.length > 0} fallback={null}>
         <section class="flex flex-wrap gap-3 flex-col  mb-6 relative">
           <For each={data().deliveries} fallback={null}>
@@ -479,7 +445,7 @@ const DeliveryOption = ({ Field }: any) => {
               return (
                 <Field
                   name="delivery_option"
-                  validate={[required("Please select your delivery option.")]}
+                  // validate={[required("Please select your delivery option.")]}
                 >
                   {(field: any, props: any) => (
                     <label class="cursor-pointer ">
@@ -497,7 +463,11 @@ const DeliveryOption = ({ Field }: any) => {
                           <p class="text-sm font-semibold uppercase text-pimary">
                             {delivery.address}
                           </p>
-                          <FaSolidCircleCheck class="text-xl" />
+                          {field.value?.includes(delivery.id) ? (
+                            <BsCheckCircleFill class="text-xl" />
+                          ) : (
+                            <BsCheckCircle class="text-xl" />
+                          )}
                         </div>
                         <div class="flex gap-3 items-center">
                           <FaSolidPhone class="text-sm" />
@@ -514,13 +484,6 @@ const DeliveryOption = ({ Field }: any) => {
           </For>
         </section>
       </Show>
-      <div class="collapse bg-secondary/5 collapse-plus mb-6">
-        <input type="checkbox" />
-        <div class="collapse-title text-md font-medium">Add new location</div>
-        <div class="collapse-content">
-          <DeliveryForm refetch={refetch} />
-        </div>
-      </div>
     </Show>
   );
 };
@@ -531,32 +494,38 @@ const DeliveryOptionMobile = ({ Field }: any) => {
   return (
     <main class="mt-6 md:hidden">
       <div class="grid grid-cols-1 justify-start">
-        <Show when={!data.loading} fallback={<div>loading...</div>}>
-          <div class="flex justify-start">
-            <div
-              class={`collapse ${
-                data().deliveries.length <= 0 && "collapse-open"
-              } p-0`}
-            >
-              <input type="checkbox" class="peer" />
-              <h1 class="collapse-title text-xl font-semibold pb-4 px-0 py-0">
-                Delivery Options
-              </h1>
-              <div class="collapse-content">
-                <DeliveryForm refetch={refetch} />
-              </div>
+        <Show when={!data.loading} fallback={null}>
+          <div class="leading-0">
+            <h1 class="collapse-title text-xl font-semibold p-0 m-0">
+              Delivery Location
+            </h1>
+            <span class="relative -top-6">Select your location here.</span>
+          </div>
+          <div class="collapse  collapse-plus mb-6 border border-primary/30">
+            <input type="checkbox" />
+            <div class="collapse-title text-md font-medium">
+              Add new location
+            </div>
+            <div class="collapse-content">
+              <DeliveryForm refetch={refetch} />
             </div>
           </div>
+
           <div class="pb-8 px-4">
             <div class="flex justify-start">
               <div class="gird grid-cols-1 space-y-6">
-                <For each={data().deliveries} fallback={<div>loading...</div>}>
+                <For each={data().deliveries} fallback={null}>
                   {(delivery) => (
                     <Field name="delivery_option">
                       {(field: any, props: any) => (
                         <label class="w-full flex col-span-8 gap-6 items-center">
                           <input
                             {...props}
+                            classList={{
+                              "radio-primary": field.value?.includes(
+                                delivery.id
+                              ),
+                            }}
                             class="radio"
                             type="radio"
                             value={delivery.id}
@@ -580,6 +549,7 @@ const DeliveryOptionMobile = ({ Field }: any) => {
           <div class="grid grid-cols-8 gap-4 space-y-4">
             <For
               each={[
+                { label: "cash", value: "CASH" },
                 { label: "credit", value: "credit-debit-card" },
                 { label: "ABA Pay", value: "aba-pay" },
                 { label: "Wing Pay", value: "wing-pay" },
@@ -597,7 +567,11 @@ const DeliveryOptionMobile = ({ Field }: any) => {
                       <input
                         {...props}
                         class="radio"
+                        classList={{
+                          "radio-primary": field.value?.includes(value),
+                        }}
                         type="radio"
+                        disabled={value === "CASH" ? false : true}
                         value={value}
                         checked={field.value?.includes(value)}
                         required

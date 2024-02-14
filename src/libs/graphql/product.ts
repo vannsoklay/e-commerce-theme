@@ -112,13 +112,6 @@ export const GLOBAL_PRODUCT_FILTERING = gql`
       slug
       sell
       rating
-      tags {
-        id
-        title {
-          en
-          kh
-        }
-      }
       variants {
         id
         label

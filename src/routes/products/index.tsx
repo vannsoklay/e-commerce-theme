@@ -52,7 +52,13 @@ export default function Product() {
   const [storeGlobalFilterProducts] = publicQuery(
     GLOBAL_PRODUCT_FILTERING,
     () => ({
-      tagId: ps.tag ? [ps.tag] : ps.search ? [] : null,
+      tagId: ps.category
+        ? ps.sub_category
+          ? [ps.sub_category]
+          : [ps.category]
+        : ps.search
+        ? []
+        : null,
       keyword: ps.search ? ps.search : filtering().keyword,
       status: filtering().status === "price" ? "price" : null,
       range: filtering().range,

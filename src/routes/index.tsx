@@ -1,5 +1,5 @@
 import { For, Show } from "solid-js";
-import { A } from "solid-start";
+import { A, useNavigate, useSearchParams } from "solid-start";
 import { CardProduct } from "~/components/Cards";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
 import Hero from "~/components/Hero";
@@ -8,6 +8,7 @@ import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import { TAGS } from "~/libs/graphql/tag";
 import Team from "~/components/Team";
 import { publicQuery } from "~/libs/client";
+import { CATEGORIES } from "~/libs/graphql/category";
 
 export default function Home() {
   return (
@@ -23,6 +24,11 @@ export default function Home() {
 }
 
 export const LatestProducts = () => {
+  const navigate = useNavigate();
+  const [ps] = useSearchParams();
+
+  const [storeOwnerCategories] = publicQuery(CATEGORIES);
+
   const [products] = publicQuery(GET_ALL_PRODUCTS, {
     filter: {
       limit: 10,
@@ -79,33 +85,27 @@ export const LatestProducts = () => {
         </div>
       )}
 
-      <div class="font-extrabold md:text-3xl text-center md:py-12 py-8 lg:mt-20 mt-8">
-        {/* <div class="text-2xl text-primary/80">LOOKING FOR THE BEST PRODUCT</div> */}
-        <div class="text-primary">CHOOSE CATEGORY</div>
-      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2"></div>
+      <Show
+        when={storeOwnerCategories()?.storeOwnerCategories.length > 0}
+        fallback={null}
+      >
+        <div class="font-extrabold md:text-3xl text-center md:py-12 py-8 lg:mt-20 mt-8">
+          <div class="text-primary">CHOOSE CATEGORY</div>
+        </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
-        <Show when={tags()?.storeOwnerTags} fallback={null}>
-          <For
-            each={tags().storeOwnerTags}
-            fallback={
-              <div class="md:col-span-3 grid-col-2 lg:col-span-4 flex justify-center">
-                Not founded
-              </div>
-            }
-          >
-            {(tag) => {
-              return (
-                <A href={`/products?search=&tag=${tag.id}`}>
-                  <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
-                    {tag.title.en}
-                  </div>
-                </A>
-              );
-            }}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
+          <For each={storeOwnerCategories()?.storeOwnerCategories}>
+            {(cat) => (
+              <A href={`/products?search=&category=${cat.id}`}>
+                <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
+                  {cat.title.en}
+                </div>
+              </A>
+            )}
           </For>
-        </Show>
-      </div>
+        </div>
+      </Show>
       <Team />
     </div>
   );
