@@ -27,7 +27,13 @@ export const LatestProducts = () => {
   const navigate = useNavigate();
   const [ps] = useSearchParams();
 
-  const [storeOwnerCategories] = publicQuery(CATEGORIES);
+  const [storeOwnerCategories] = publicQuery(CATEGORIES, {
+    filter: {
+      limit: 8,
+      skip: 0,
+      sort: -1,
+    },
+  });
 
   const [products] = publicQuery(GET_ALL_PRODUCTS, {
     filter: {
@@ -36,8 +42,6 @@ export const LatestProducts = () => {
       sort: -1,
     },
   });
-
-  const [tags] = publicQuery(TAGS);
 
   return (
     <div class="container mx-auto">
@@ -75,6 +79,7 @@ export const LatestProducts = () => {
           </Show>
         </Show>
       </div>
+
       {products()?.storeProducts.length >= 10 && (
         <div class="flex justify-center mt-8">
           <A href="/products">
@@ -85,22 +90,33 @@ export const LatestProducts = () => {
         </div>
       )}
 
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2"></div>
+
       <Show
         when={storeOwnerCategories()?.storeOwnerCategories.length > 0}
         fallback={null}
       >
-        <div class="font-extrabold md:text-3xl text-center md:py-12 py-8 lg:mt-20 mt-8">
-          <div class="text-primary">CHOOSE CATEGORY</div>
+        <div class="font-extrabold md:text-3xl text-center md:py-12 py-8 lg:mt-20 mt-2">
+          <div class="text-primary text-lg">CHOOSE CATEGORY</div>
         </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
           <For each={storeOwnerCategories()?.storeOwnerCategories}>
             {(cat) => (
               <A href={`/products?search=&category=${cat.id}`}>
-                <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-3 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
-                  {cat.title.en}
-                </div>
+                {!cat.logo ? (
+                  <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-8 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
+                    {cat.title.en}
+                  </div>
+                ) : (
+                  <div class="bg-primary/10 backdrop-blur-lg flex justify-between items-center px-8 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
+                    <div>{cat.title.en}</div>
+                    <div class="avatar placeholder">
+                      <div class="text-neutral-content rounded w-12">
+                        <img src={cat.logo} />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </A>
             )}
           </For>

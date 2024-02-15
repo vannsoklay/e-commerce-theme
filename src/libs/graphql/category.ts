@@ -1,8 +1,8 @@
 import { gql } from "@urql/core";
 
 export const CATEGORIES = gql`
-  query {
-    storeOwnerCategories {
+  query ($filter: OrderBy) {
+    storeOwnerCategories(filter: $filter) {
       children {
         id
         logo
