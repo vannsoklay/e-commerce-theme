@@ -9,10 +9,10 @@ export default function Team() {
 
   return (
     <>
-      <div class="py-20">
+      <div class="py-0 md:py-20 lg:py-20">
         <Show when={members().length < 0} fallback={null}>
           <div class="mb-16 text-center">
-            <h2 class="mb-4  text-2xl text-primary font-bold md:text-4xl">
+            <h2 class="mb-4 text-2xl text-primary font-bold md:text-4xl">
               {about()?.title ?? "About Us"}
             </h2>
             <p class="text-base-content/80 md:w-2/3 w-full mx-auto">

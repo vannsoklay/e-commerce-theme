@@ -58,6 +58,7 @@ export const Filter: Component<Filters> = ({
         >
           Filter
         </h5>
+
         <div class="flex flex-col justify-between flex-1">
           <div class="space-y-6">
             <div class="space-y-2">
@@ -131,9 +132,115 @@ export const Filter: Component<Filters> = ({
                 </div>
               </div>
             </div>
-
+            <div class="join join-vertical w-full">
+              <h6 class="text-base font-medium text-black mb-4">Categories</h6>
+              <div class="collapse join-item border border-base-300">
+                <input
+                  type="radio"
+                  name="my-accordion-4"
+                  onChange={(e) => {
+                    e.preventDefault();
+                    navigate(`/products`);
+                  }}
+                />
+                <div class="collapse-title text-md">All</div>
+              </div>
+              <For each={storeOwnerCategories()?.storeOwnerCategories}>
+                {(cat) => (
+                  <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input
+                      type="radio"
+                      name="my-accordion-4"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        navigate(
+                          `?search=${ps.search ? ps.search : ""}&category=${
+                            cat.id
+                          }`
+                        );
+                      }}
+                      checked={ps.category === cat.id ? true : false}
+                    />
+                    <div class="collapse-title text-md">
+                      {cat.title.en.length <= 24
+                        ? cat.title.en
+                        : cat.title.en.slice(0, 21) + "..."}
+                    </div>
+                    <div class="collapse-content">
+                      <Show
+                        when={!storeOwnerCategories.loading}
+                        fallback={<div>loading...</div>}
+                      >
+                        <Show
+                          when={
+                            storeOwnerSubcategories().storeOwnerSubcategories
+                              .length > 0
+                          }
+                          fallback={<div class="text-sm">Empty</div>}
+                        >
+                          <ul tabindex="1" class="dropdown-content menu w-full">
+                            <For
+                              each={
+                                storeOwnerSubcategories()
+                                  .storeOwnerSubcategories
+                              }
+                              fallback={<div>loading...</div>}
+                            >
+                              {(sub) => (
+                                <div
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate(
+                                      `?search=${
+                                        ps.search ? ps.search : ""
+                                      }&category=${cat.id}&sub_category=${
+                                        sub.id
+                                      }`
+                                    );
+                                  }}
+                                  class={
+                                    sub.id === ps.sub_category
+                                      ? "bg-base-300 rounded-md"
+                                      : ""
+                                  }
+                                >
+                                  {/* <label class="label cursor-pointer space-x-2">
+                                  <input
+                                    name="category"
+                                    type="radio"
+                                    checked={
+                                      sub.id === ps.sub_category ? true : false
+                                    }
+                                    class="radio radio-primary radio-sm"
+                                    onChange={(e) => {
+                                      e.preventDefault();
+                                      navigate(
+                                        `?search=${
+                                          ps.search ? ps.search : ""
+                                        }&category=${cat.id}&sub_category=${
+                                          sub.id
+                                        }`
+                                      );
+                                    }}
+                                  />
+                                  <span class="label-text">{sub.title.en}</span>
+                                </label> */}
+                                  <li>
+                                    <a>{sub.title.en}</a>
+                                  </li>
+                                </div>
+                              )}
+                            </For>
+                          </ul>
+                        </Show>
+                      </Show>
+                    </div>
+                  </div>
+                )}
+              </For>
+            </div>
             {/* categories */}
-            <Show
+            {/* <Show
               when={storeOwnerCategories()?.storeOwnerCategories.length > 0}
               fallback={null}
             >
@@ -181,7 +288,7 @@ export const Filter: Component<Filters> = ({
                   )}
                 </For>
               </div>
-            </Show>
+            </Show> */}
 
             {/* <div class="space-y-1">
               <h6 class="text-base font-medium text-black">Tags</h6>
@@ -234,7 +341,7 @@ export const Filter: Component<Filters> = ({
             </div> */}
 
             {/* brands */}
-            <div class="space-y-1">
+            {/* <div class="space-y-1">
               <h6 class="text-base font-medium text-black">Brands</h6>
               <Show when={storeOwnerBrands()?.storeOwnerBrands} fallback={null}>
                 <div class="flex flex-wrap gap-2">
@@ -250,7 +357,7 @@ export const Filter: Component<Filters> = ({
                   </For>
                 </div>
               </Show>
-            </div>
+            </div> */}
           </div>
         </div>
       </form>
@@ -346,6 +453,7 @@ export const Filter: Component<Filters> = ({
                 >
                   Filter
                 </h5>
+
                 <div class="flex flex-col justify-between flex-1">
                   <div class="space-y-6">
                     <div class="space-y-2">
@@ -424,7 +532,137 @@ export const Filter: Component<Filters> = ({
                     </div>
 
                     {/*  categories */}
-                    <Show
+                    <div class="join join-vertical w-full">
+                      <div class="collapse collapse-arrow join-item border border-base-300">
+                        <input
+                          type="radio"
+                          name="my-accordion-4"
+                          onChange={(e) => {
+                            e.preventDefault();
+                            navigate(`/products`);
+                          }}
+                        />
+                        <div class="collapse-title text-md font-medium">
+                          All
+                        </div>
+                      </div>
+                      <For each={storeOwnerCategories()?.storeOwnerCategories}>
+                        {(cat) => (
+                          <div class="collapse collapse-arrow join-item border border-base-300">
+                            <input
+                              type="radio"
+                              name="my-accordion-4"
+                              onChange={(e) => {
+                                e.preventDefault();
+                                navigate(
+                                  `?search=${ps.search && ps.search}&category=${
+                                    cat.id
+                                  }`
+                                );
+                              }}
+                            />
+                            <div class="collapse-title text-md">
+                              {cat.title.en.length <= 24
+                                ? cat.title.en
+                                : cat.title.en.slice(0, 21) + "..."}
+                            </div>
+                            <div class="collapse-content">
+                              <Show
+                                when={!storeOwnerCategories.loading}
+                                fallback={<div>loading...</div>}
+                              >
+                                <Show
+                                  when={
+                                    storeOwnerSubcategories()
+                                      .storeOwnerSubcategories.length > 0
+                                  }
+                                  fallback={<div class="text-sm">Empty</div>}
+                                >
+                                  <For
+                                    each={
+                                      storeOwnerSubcategories()
+                                        .storeOwnerSubcategories
+                                    }
+                                    fallback={<div>loading...</div>}
+                                  >
+                                    {(sub) => (
+                                      // <div
+                                      //   class="btn btn-sm rounded-full"
+                                      //   classList={{
+                                      //     "btn-primary": sub.id === ps.sub_category,
+                                      //     "btn-outline btn-primary":
+                                      //       sub.id !== ps.sub_category,
+                                      //   }}
+                                      //   onClick={(e) => {
+                                      //     e.preventDefault();
+                                      //     navigate(
+                                      //       `?search=${ps.search ? ps.search : ""}&category=${
+                                      //         ps.category
+                                      //       }&sub_category=${sub.id}`
+                                      //     );
+                                      //   }}
+                                      // >
+                                      //   {sub?.title.en}
+                                      // </div>
+                                      <div class="dropdown dropdown-end">
+                                        {/* <div
+                                          tabindex="0"
+                                          role="button"
+                                          class="btn m-1"
+                                        >
+                                          Click
+                                        </div> */}
+                                        <ul
+                                          tabindex="1"
+                                          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                                        >
+                                          <li>
+                                            <a>Item 1</a>
+                                          </li>
+                                          <li>
+                                            <a>Item 2</a>
+                                          </li>
+                                        </ul>
+                                      </div>
+
+                                      // <div class="flex items-center">
+                                      //   <label class="label cursor-pointer space-x-2">
+                                      //     <input
+                                      //       name="category"
+                                      //       type="radio"
+                                      //       checked={
+                                      //         sub.id === ps.sub_category
+                                      //           ? true
+                                      //           : false
+                                      //       }
+                                      //       class="radio radio-primary radio-sm"
+                                      //       onChange={(e) => {
+                                      //         e.preventDefault();
+                                      //         navigate(
+                                      //           `?search=${
+                                      //             ps.search ? ps.search : ""
+                                      //           }&category=${
+                                      //             cat.id
+                                      //           }&sub_category=${sub.id}`
+                                      //         );
+                                      //       }}
+                                      //     />
+                                      //     <span class="label-text">
+                                      //       {sub.title.en}
+                                      //     </span>
+                                      //   </label>
+                                      // </div>
+                                    )}
+                                  </For>
+                                </Show>
+                              </Show>
+                            </div>
+                          </div>
+                        )}
+                      </For>
+                    </div>
+
+                    {/* <Show
                       when={
                         storeOwnerCategories()?.storeOwnerCategories.length > 0
                       }
@@ -480,10 +718,10 @@ export const Filter: Component<Filters> = ({
                           )}
                         </For>
                       </div>
-                    </Show>
+                    </Show> */}
 
                     {/*  brands */}
-                    <div class="space-y-1">
+                    {/* <div class="space-y-1">
                       <h6 class="text-base font-medium text-black">Brands</h6>
                       <Show
                         when={storeOwnerBrands()?.storeOwnerBrands}
@@ -504,7 +742,7 @@ export const Filter: Component<Filters> = ({
                           </For>
                         </div>
                       </Show>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </form>
@@ -512,7 +750,7 @@ export const Filter: Component<Filters> = ({
           </div>
         </div>
 
-        <Show
+        {/* <Show
           when={storeOwnerSubcategories()?.storeOwnerSubcategories.length > 0}
           fallback={null}
         >
@@ -558,7 +796,7 @@ export const Filter: Component<Filters> = ({
               )}
             </For>
           </section>
-        </Show>
+        </Show> */}
 
         <section>{children}</section>
       </div>

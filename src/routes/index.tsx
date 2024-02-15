@@ -5,10 +5,10 @@ import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
 import Hero from "~/components/Hero";
 import { ProductType } from "~/types/product";
 import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
-import { TAGS } from "~/libs/graphql/tag";
 import Team from "~/components/Team";
 import { publicQuery } from "~/libs/client";
 import { CATEGORIES } from "~/libs/graphql/category";
+import Footer from "~/components/layout/Footer";
 
 export default function Home() {
   return (
@@ -96,27 +96,16 @@ export const LatestProducts = () => {
         when={storeOwnerCategories()?.storeOwnerCategories.length > 0}
         fallback={null}
       >
-        <div class="font-extrabold md:text-3xl text-center md:py-12 py-8 lg:mt-20 mt-2">
+        <div class="font-extrabold md:text-3xl text-center md:py-12 pb-4 mt-2 lg:mt-20">
           <div class="text-primary text-lg">CHOOSE CATEGORY</div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 px-4">
           <For each={storeOwnerCategories()?.storeOwnerCategories}>
             {(cat) => (
               <A href={`/products?search=&category=${cat.id}`}>
-                {!cat.logo ? (
-                  <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-8 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
-                    {cat.title.en}
-                  </div>
-                ) : (
-                  <div class="bg-primary/10 backdrop-blur-lg flex justify-between items-center px-8 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
-                    <div>{cat.title.en}</div>
-                    <div class="avatar placeholder">
-                      <div class="text-neutral-content rounded w-12">
-                        <img src={cat.logo} />
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <div class="bg-primary/10 backdrop-blur-lg flex justify-center items-center px-8 py-6 font-bold rounded-box hover:border-primary transition-all hover:shadow-md hover:text-primary">
+                  {cat.title.en}
+                </div>
               </A>
             )}
           </For>

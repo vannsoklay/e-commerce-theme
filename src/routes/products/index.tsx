@@ -5,7 +5,6 @@ import {
   Match,
   Show,
   Switch,
-  createEffect,
   createSignal,
 } from "solid-js";
 import { CardProduct } from "~/components/Cards";

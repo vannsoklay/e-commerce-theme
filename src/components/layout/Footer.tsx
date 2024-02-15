@@ -11,7 +11,6 @@ import { FooterConfig, Social } from "~/types/global";
 import { SiGmail, SiTelegram, SiTiktok } from "solid-icons/si";
 
 import { A } from "solid-start";
-import { FaSolidSquarePhone } from "solid-icons/fa";
 import { read } from "~/utils/theme";
 
 const Footer: Component = () => {
