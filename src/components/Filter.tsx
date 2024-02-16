@@ -443,7 +443,7 @@ export const Filter: Component<Filters> = ({
               <form
                 action="#"
                 method="get"
-                class="w-full h-screen max-w-xs p-4 overflow-y-auto col-span-1 hide-scroll-bar"
+                class="w-full h-screen max-w-xs py-4 overflow-y-auto col-span-1 hide-scroll-bar"
                 tabindex="-1"
                 aria-labelledby="drawer-label"
               >
@@ -532,7 +532,7 @@ export const Filter: Component<Filters> = ({
                     </div>
 
                     {/*  categories */}
-                    <div class="join join-vertical w-full">
+                    <div class="join join-vertical w-full pb-28 sm:pb-28 lg:pb-0">
                       <div class="collapse collapse-arrow join-item border border-base-300">
                         <input
                           type="radio"

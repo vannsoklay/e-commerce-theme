@@ -8,7 +8,6 @@ import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import Team from "~/components/Team";
 import { publicQuery } from "~/libs/client";
 import { CATEGORIES } from "~/libs/graphql/category";
-import Footer from "~/components/layout/Footer";
 
 export default function Home() {
   return (

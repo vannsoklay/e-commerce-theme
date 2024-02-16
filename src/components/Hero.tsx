@@ -46,7 +46,7 @@ const Hero = () => {
           The most popular products is available in
           <span class="font-semibold text-primary"> {name()}</span>
         </A>
-        <h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl">
+        <h1 class="mx-auto max-w-4xl font-display text-2xl sm:text-2xl lg:text-7xl font-bold tracking-normal text-slate-900">
           Deep Savings on Your Favorite Items!
           <span class="relative whitespace-nowrap text-primary">
             <svg

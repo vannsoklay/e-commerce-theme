@@ -13,7 +13,7 @@ export const Logo = () => {
         class="btn btn-ghost hover:bg-transparent md:text-xl text-md text-primary"
       >
         <Show when={header()?.type} fallback={name()}>
-          <img src={header()?.logo} alt="" class="w-full h-8 sm:h-8 lg:h-9" />
+          <img src={header()?.logo} alt="" class="h-8 sm:h-8 lg:h-9" />
         </Show>
       </A>
     </div>

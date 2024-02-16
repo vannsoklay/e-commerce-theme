@@ -111,7 +111,7 @@ const Search = () => {
       <Show when={mostPopularSort()?.length > 0}>
         <p class="text-lg font-semibold mt-6 mb-2">Trending Now</p>
         <div class="grid grid-cols-2 gap-2">
-          <For each={mostPopularSort()}>
+          <For each={mostPopularSort()?.slice(0, 10)}>
             {(product: ProductType) => (
               <div class="h-full backdrop-blur-lg bg-gray-50 transition-all hover:shadow-md rounded-box">
                 <div
