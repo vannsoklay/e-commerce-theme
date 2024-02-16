@@ -1,12 +1,5 @@
 import { useSearchParams } from "solid-start";
-import {
-  Component,
-  For,
-  Match,
-  Show,
-  Switch,
-  createSignal,
-} from "solid-js";
+import { Component, For, Match, Show, Switch, createSignal } from "solid-js";
 import { CardProduct } from "~/components/Cards";
 import { Filter } from "~/components/Filter";
 // import Hero from "~/components/Hero";
@@ -126,7 +119,7 @@ const Products: Component<{ products: ProductType[] }> = (props) => {
   return (
     <div class="mx-auto container space-y-8">
       <Show
-        when={props.products && props.products.length > 0}
+        when={props?.products && props?.products?.length > 0}
         fallback={
           <div class="w-full flex justify-center items-center text-center mx-auto min-h-[50dvh]">
             <div class="leading-none font-semibold text-gray-400">
@@ -137,7 +130,7 @@ const Products: Component<{ products: ProductType[] }> = (props) => {
         }
       >
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
-          <For each={props.products}>
+          <For each={props?.products}>
             {(latestProduct) => {
               return <CardProduct product={latestProduct} />;
             }}

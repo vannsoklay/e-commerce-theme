@@ -169,7 +169,7 @@ export const Filter: Component<Filters> = ({
                     <div class="collapse-content">
                       <Show
                         when={!storeOwnerCategories.loading}
-                        fallback={<div>loading...</div>}
+                        fallback={null}
                       >
                         <Show
                           when={
@@ -184,7 +184,7 @@ export const Filter: Component<Filters> = ({
                                 storeOwnerSubcategories()
                                   .storeOwnerSubcategories
                               }
-                              fallback={<div>loading...</div>}
+                              fallback={null}
                             >
                               {(sub) => (
                                 <div
@@ -200,31 +200,10 @@ export const Filter: Component<Filters> = ({
                                   }}
                                   class={
                                     sub.id === ps.sub_category
-                                      ? "bg-base-300 rounded-md"
+                                      ? "bg-primary text-base-100 rounded-md"
                                       : ""
                                   }
                                 >
-                                  {/* <label class="label cursor-pointer space-x-2">
-                                  <input
-                                    name="category"
-                                    type="radio"
-                                    checked={
-                                      sub.id === ps.sub_category ? true : false
-                                    }
-                                    class="radio radio-primary radio-sm"
-                                    onChange={(e) => {
-                                      e.preventDefault();
-                                      navigate(
-                                        `?search=${
-                                          ps.search ? ps.search : ""
-                                        }&category=${cat.id}&sub_category=${
-                                          sub.id
-                                        }`
-                                      );
-                                    }}
-                                  />
-                                  <span class="label-text">{sub.title.en}</span>
-                                </label> */}
                                   <li>
                                     <a>{sub.title.en}</a>
                                   </li>
@@ -239,125 +218,6 @@ export const Filter: Component<Filters> = ({
                 )}
               </For>
             </div>
-            {/* categories */}
-            {/* <Show
-              when={storeOwnerCategories()?.storeOwnerCategories.length > 0}
-              fallback={null}
-            >
-              <div class="space-y-1">
-                <h6 class="text-base font-medium text-black">Categories</h6>
-
-                <div class="flex items-center">
-                  <label class="label cursor-pointer space-x-2">
-                    <input
-                      name="category"
-                      type="radio"
-                      checked={ps.category === "" || !ps.category}
-                      class="radio radio-primary radio-sm"
-                      onChange={(e) => {
-                        e.preventDefault();
-                        navigate(
-                          `?search=${ps.search ? ps.search : ""}&category=`
-                        );
-                      }}
-                    />
-                    <span class="label-text">All</span>
-                  </label>
-                </div>
-                <For each={storeOwnerCategories()?.storeOwnerCategories}>
-                  {(cat) => (
-                    <div class="flex items-center">
-                      <label class="label cursor-pointer space-x-2">
-                        <input
-                          name="category"
-                          type="radio"
-                          checked={cat.id === ps.category}
-                          class="radio radio-primary radio-sm"
-                          onChange={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              `?search=${ps.search ? ps.search : ""}&category=${
-                                cat.id
-                              }`
-                            );
-                          }}
-                        />
-                        <span class="label-text">{cat.title.en}</span>
-                      </label>
-                    </div>
-                  )}
-                </For>
-              </div>
-            </Show> */}
-
-            {/* <div class="space-y-1">
-              <h6 class="text-base font-medium text-black">Tags</h6>
-              <Show when={tags()?.storeOwnerTags} fallback={null}>
-                <div class="flex items-center">
-                  <div class="form-control">
-                    <label class="label cursor-pointer space-x-2">
-                      <input
-                        name="category"
-                        type="radio"
-                        checked={location.pathname === "/products"}
-                        class="radio radio-primary radio-sm"
-                        onChange={(e) => {
-                          e.preventDefault();
-                          navigate(`/products`);
-                        }}
-                      />
-                      <span class="label-text">All</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="form-control">
-                  <For each={tags().storeOwnerTags} fallback={null}>
-                    {(tag) => {
-                      return (
-                        <div class="flex items-center">
-                          <label class="label cursor-pointer space-x-2">
-                            <input
-                              name="category"
-                              type="radio"
-                              checked={tag.id === ps.tag}
-                              class="radio radio-primary radio-sm"
-                              onChange={(e) => {
-                                e.preventDefault();
-                                navigate(
-                                  `?search=${ps.search ? ps.search : ""}&tag=${
-                                    tag.id
-                                  }`
-                                );
-                              }}
-                            />
-                            <span class="label-text">{tag.title.en}</span>
-                          </label>
-                        </div>
-                      );
-                    }}
-                  </For>
-                </div>
-              </Show>
-            </div> */}
-
-            {/* brands */}
-            {/* <div class="space-y-1">
-              <h6 class="text-base font-medium text-black">Brands</h6>
-              <Show when={storeOwnerBrands()?.storeOwnerBrands} fallback={null}>
-                <div class="flex flex-wrap gap-2">
-                  <button class="btn btn-sm w-auto btn-primary">All</button>
-                  <For each={storeOwnerBrands()?.storeOwnerBrands}>
-                    {(brand) => {
-                      return (
-                        <button class="btn btn-sm w-auto btn-outline btn-primary">
-                          {brand?.title?.en}
-                        </button>
-                      );
-                    }}
-                  </For>
-                </div>
-              </Show>
-            </div> */}
           </div>
         </div>
       </form>
@@ -569,7 +429,7 @@ export const Filter: Component<Filters> = ({
                             <div class="collapse-content">
                               <Show
                                 when={!storeOwnerCategories.loading}
-                                fallback={<div>loading...</div>}
+                                fallback={null}
                               >
                                 <Show
                                   when={
@@ -578,82 +438,42 @@ export const Filter: Component<Filters> = ({
                                   }
                                   fallback={<div class="text-sm">Empty</div>}
                                 >
-                                  <For
-                                    each={
-                                      storeOwnerSubcategories()
-                                        .storeOwnerSubcategories
-                                    }
-                                    fallback={<div>loading...</div>}
+                                  <ul
+                                    tabindex="1"
+                                    class="dropdown-content menu w-full"
                                   >
-                                    {(sub) => (
-                                      // <div
-                                      //   class="btn btn-sm rounded-full"
-                                      //   classList={{
-                                      //     "btn-primary": sub.id === ps.sub_category,
-                                      //     "btn-outline btn-primary":
-                                      //       sub.id !== ps.sub_category,
-                                      //   }}
-                                      //   onClick={(e) => {
-                                      //     e.preventDefault();
-                                      //     navigate(
-                                      //       `?search=${ps.search ? ps.search : ""}&category=${
-                                      //         ps.category
-                                      //       }&sub_category=${sub.id}`
-                                      //     );
-                                      //   }}
-                                      // >
-                                      //   {sub?.title.en}
-                                      // </div>
-                                      <div class="dropdown dropdown-end">
-                                        {/* <div
-                                          tabindex="0"
-                                          role="button"
-                                          class="btn m-1"
-                                        >
-                                          Click
-                                        </div> */}
-                                        <ul
-                                          tabindex="1"
-                                          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                                    <For
+                                      each={
+                                        storeOwnerSubcategories()
+                                          .storeOwnerSubcategories
+                                      }
+                                      fallback={null}
+                                    >
+                                      {(sub) => (
+                                        <div
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            navigate(
+                                              `?search=${
+                                                ps.search ? ps.search : ""
+                                              }&category=${
+                                                cat.id
+                                              }&sub_category=${sub.id}`
+                                            );
+                                          }}
+                                          class={
+                                            sub.id === ps.sub_category
+                                              ? "bg-primary text-base-100 rounded-md"
+                                              : ""
+                                          }
                                         >
                                           <li>
-                                            <a>Item 1</a>
+                                            <a>{sub.title.en}</a>
                                           </li>
-                                          <li>
-                                            <a>Item 2</a>
-                                          </li>
-                                        </ul>
-                                      </div>
-
-                                      // <div class="flex items-center">
-                                      //   <label class="label cursor-pointer space-x-2">
-                                      //     <input
-                                      //       name="category"
-                                      //       type="radio"
-                                      //       checked={
-                                      //         sub.id === ps.sub_category
-                                      //           ? true
-                                      //           : false
-                                      //       }
-                                      //       class="radio radio-primary radio-sm"
-                                      //       onChange={(e) => {
-                                      //         e.preventDefault();
-                                      //         navigate(
-                                      //           `?search=${
-                                      //             ps.search ? ps.search : ""
-                                      //           }&category=${
-                                      //             cat.id
-                                      //           }&sub_category=${sub.id}`
-                                      //         );
-                                      //       }}
-                                      //     />
-                                      //     <span class="label-text">
-                                      //       {sub.title.en}
-                                      //     </span>
-                                      //   </label>
-                                      // </div>
-                                    )}
-                                  </For>
+                                        </div>
+                                      )}
+                                    </For>
+                                  </ul>
                                 </Show>
                               </Show>
                             </div>
