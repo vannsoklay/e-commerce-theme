@@ -101,16 +101,16 @@ export default function Checkout() {
         <Form onSubmit={handleCheckout} class="p-4">
           <Dialog
             modalId={open}
-            classes="sm:w-1/2 max-h-min h-min  flex justify-center text-center rounded-xl"
+            classes="sm:w-1/2 h-1/2 sm:h-12 lg:h-1/2 flex justify-center text-center rounded-xl"
           >
-            <div class="w-full h-full  space-y-2">
+            <div class="w-full h-full space-y-2">
               <div class="flex justify-center font-bold text-2xl">
                 You've successfully purchased the products!
               </div>
               <img
                 alt=""
                 src="/images/cta.png"
-                class="h-2/3 mx-auto flex-grow"
+                class="h-64 sm:h-64 lg:h-2/3 mx-auto flex-grow"
               />
               <button
                 class="btn btn-primary rounded-box sm:w-full w-2/3"
