@@ -30,5 +30,5 @@ yarn.lock
 package-lock.json
 
 #file config
-/themes
+themes
 
