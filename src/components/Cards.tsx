@@ -32,11 +32,11 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
           }}
           data-aos="zoom-out-down"
         >
-          <div class=" cursor-pointer relative w-full  rounded-lg">
+          <div class=" cursor-pointer relative w-full rounded-lg">
             <figure>
-              <div class="flex items-center justify-center bg-contain bg-center bg-repeat p-2">
+              <div class="flex items-center justify-center bg-contain bg-center bg-repeat p-1 sm:p-1 lg:p-2">
                 <img
-                  class="group-hover:scale-105 duration-150 w-full h-32 sm:h-32 lg:h-48 p-5 bg-repeat-round rounded-2xl mx-auto object-contain bg-white"
+                  class="group-hover:scale-105 duration-150 w-full h-32 sm:h-32 lg:h-48 bg-repeat-round rounded-2xl mx-auto object-contain bg-white"
                   src={`${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
                     props?.product?.thumbnail
                   }`}

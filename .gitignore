@@ -29,3 +29,6 @@ Thumbs.db
 yarn.lock
 package-lock.json
 
+#file config
+/themes
+

@@ -8,39 +8,39 @@ export default function Team() {
   const members = () => about()?.members ?? [];
 
   return (
-    <>
-      <div class="py-0 md:py-20 lg:py-20">
-        <Show when={members().length < 0} fallback={null}>
-          <div class="mb-16 text-center">
-            <h2 class="mb-4 text-2xl text-primary font-bold md:text-4xl">
-              {about()?.title ?? "About Us"}
-            </h2>
-            <p class="text-base-content/80 md:w-2/3 w-full mx-auto">
-              {about()?.description ?? ""}
-            </p>
-          </div>
-          <div class="grid  lg:gap-20 md:gap-10 gap-6 justify-start lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
-            <For each={members()}>
-              {(member: Member) => (
-                <div class="space-y-4 text-center">
+    <div class="py-6 sm:py-6 lg:py-20 px-6">
+      <Show when={members().length > 0} fallback={null}>
+        <div class="mb-16 text-center">
+          <h2 class="mb-4 text-lg sm:text-lg lg:text-4xl text-primary font-bold">
+            {about()?.title ?? "ABOUT US"}
+          </h2>
+          <p class="text-base-content/80 md:w-2/3 w-full mx-auto">
+            {about()?.description ?? ""}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap -m-4 justify-center">
+          <For each={members()}>
+            {(member: Member) => (
+              <div class="p-4 w-1/2 lg:w-1/4 sm:w-1/2 ">
+                <div class="h-full flex flex-col justify-center items-center text-center">
                   <img
-                    class="aspect-square mask mask-squircle object-cover rounded-xl"
+                    alt={member.name}
+                    class="aspect-square mask mask-squircle flex-shrink-0 rounded-lg w-full h-32 sm:h-12 lg:h-56 object-cover object-center mb-4"
                     src={member.photo}
-                    alt="woman"
-                    loading="lazy"
                   />
-                  <div>
-                    <h4 class="text-2xl">{member.name}</h4>
-                    <span class="block text-sm text-gray-500">
-                      {member.position}
-                    </span>
+                  <div class="w-full">
+                    <h2 class="title-font font-medium text-lg text-gray-900">
+                      {member.name}
+                    </h2>
+                    <h3 class="text-gray-500 mb-3">{member.position}</h3>
                   </div>
                 </div>
-              )}
-            </For>
-          </div>
-        </Show>
-      </div>
-    </>
+              </div>
+            )}
+          </For>
+        </div>
+      </Show>
+    </div>
   );
 }

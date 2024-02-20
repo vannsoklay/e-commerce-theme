@@ -1,5 +1,5 @@
 import { For, Show } from "solid-js";
-import { A, useNavigate, useSearchParams } from "solid-start";
+import { A } from "solid-start";
 import { CardProduct } from "~/components/Cards";
 import { GET_ALL_PRODUCTS } from "~/libs/graphql/product";
 import Hero from "~/components/Hero";
@@ -8,6 +8,7 @@ import { RiFinanceShoppingBasketLine } from "solid-icons/ri";
 import Team from "~/components/Team";
 import { publicQuery } from "~/libs/client";
 import { CATEGORIES } from "~/libs/graphql/category";
+import { HiOutlineArrowLongRight } from "solid-icons/hi";
 
 export default function Home() {
   return (
@@ -23,9 +24,6 @@ export default function Home() {
 }
 
 export const LatestProducts = () => {
-  const navigate = useNavigate();
-  const [ps] = useSearchParams();
-
   const [storeOwnerCategories] = publicQuery(CATEGORIES, {
     filter: {
       limit: 8,
@@ -44,12 +42,12 @@ export const LatestProducts = () => {
 
   return (
     <div class="container mx-auto">
-      <h1 class="text-primary font-extrabold md:text-4xl text-lg text-center md:py-12 py-8">
+      <h1 class="text-primary font-extrabold text-lg sm:text-lg lg:text-4xl text-center md:py-12 py-8">
         CHECK THE CORE PRODUCT
       </h1>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 px-2 border border-base-100">
-        <Show when={products()} fallback={<div>loading...</div>}>
+        <Show when={products()} fallback={null}>
           <Show
             when={products()?.storeProducts.length > 0}
             fallback={
@@ -78,6 +76,17 @@ export const LatestProducts = () => {
           </Show>
         </Show>
       </div>
+      <Show when={products()?.storeProducts.length > 9} fallback={null}>
+        <A href="/products" class="w-full flex justify-center">
+          <button class="bg-primary rounded-2xl text-white font-medium px-12 py-3 sm:mt-10 mt-8 hover:bg-primary/80 flex items-center gap-3 group">
+            <span>All Products</span>{" "}
+            <HiOutlineArrowLongRight
+              size={24}
+              class="group-hover:translate-x-2 duration-150"
+            />
+          </button>
+        </A>
+      </Show>
 
       {products()?.storeProducts.length >= 10 && (
         <div class="flex justify-center mt-8">
@@ -96,7 +105,9 @@ export const LatestProducts = () => {
         fallback={null}
       >
         <div class="font-extrabold md:text-3xl text-center md:py-12 pb-4 mt-2 lg:mt-20">
-          <div class="text-primary text-lg">CHOOSE CATEGORY</div>
+          <div class="text-primary text-lg sm:text-lg lg:text-4xl">
+            CHOOSE CATEGORY
+          </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 px-4">
           <For each={storeOwnerCategories()?.storeOwnerCategories}>

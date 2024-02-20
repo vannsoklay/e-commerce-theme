@@ -61,7 +61,7 @@ export const Filter: Component<Filters> = ({
 
         <div class="flex flex-col justify-between flex-1">
           <div class="space-y-6">
-            <div class="space-y-2">
+            {/* <div class="space-y-2">
               <h6 class="text-base font-medium ">Prices</h6>
               <input
                 type="range"
@@ -131,7 +131,7 @@ export const Filter: Component<Filters> = ({
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div class="join join-vertical w-full">
               <h6 class="text-base font-medium text-black mb-4">Categories</h6>
               <div class="collapse join-item border border-base-300">
@@ -316,7 +316,7 @@ export const Filter: Component<Filters> = ({
 
                 <div class="flex flex-col justify-between flex-1">
                   <div class="space-y-6">
-                    <div class="space-y-2">
+                    {/* <div class="space-y-2">
                       <h6 class="text-base font-medium ">Prices</h6>
                       <input
                         type="range"
@@ -389,7 +389,7 @@ export const Filter: Component<Filters> = ({
                           />
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/*  categories */}
                     <div class="join join-vertical w-full pb-28 sm:pb-28 lg:pb-0">
