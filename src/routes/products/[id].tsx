@@ -4,7 +4,6 @@ import { Accessor, For, Show, createEffect, createSignal } from "solid-js";
 import { AiFillStar } from "solid-icons/ai";
 import { CartItem } from "~/types/global";
 import { GET_PRODUCT } from "~/libs/graphql/product";
-import Image from "~/components/Image";
 import { ItemProduct } from "~/types/product";
 import { LexicalViewer } from "~/components/LexicalViewer";
 import { MeteTag } from "~/components/meta";
@@ -21,6 +20,7 @@ const ProductDetail = () => {
   const [thumb, setThumb] = createSignal<number>(0);
   const [items, setItems] = createSignal<CartItem[]>([]);
   const [active, setActive] = createSignal<string>();
+  const [hash, setHash] = createSignal<string>();
 
   const viewImage = () => {
     return `${import.meta.env.VITE_VARIABLE_IPFS}/api/ipfs?hash=${
@@ -92,7 +92,7 @@ const ProductDetail = () => {
                       </div>
                     </Show>
                     <div
-                      class="hidden lg:block col-span-5 max-h-[45dvh] border border-base-300 bg-center rounded-box overflow-hidden"
+                      class="hidden lg:block col-span-5 h-[45dvh] border border-base-300"
                       classList={{
                         "col-span-full":
                           product().storeProduct.previews.length < 1,
@@ -105,15 +105,18 @@ const ProductDetail = () => {
                       <div class="backdrop-blur-xl w-full h-full bg-white">
                         <img
                           src={viewImage()}
-                          alt=""
+                          alt="product image"
                           class="h-full w-auto object-contain mx-auto"
                         />
                       </div>
                     </div>
 
                     <div class="col-span-6 block lg:hidden w-full ">
-                      <div class="w-full carousel rounded-box">
-                        <For each={product().storeProduct.previews}>
+                      <div class="carousel w-full rounded-lg">
+                        <For
+                          each={product().storeProduct.previews}
+                          fallback={null}
+                        >
                           {(res: string, index: Accessor<number>) => {
                             return (
                               <>
@@ -121,22 +124,45 @@ const ProductDetail = () => {
                                   {index() + 1}/
                                   {product().storeProduct.previews.length}
                                 </div>
-                                <div
-                                  class="carousel-item w-full"
-                                  onScroll={() => {
-                                    console.log("you changed");
-                                  }}
-                                  id={index().toString()}
-                                >
+                                <div id={res} class="carousel-item w-full">
                                   <img
                                     src={`${
                                       import.meta.env.VITE_VARIABLE_IPFS
                                     }/api/ipfs?hash=${res}`}
-                                    class="w-full"
-                                    alt="Tailwind CSS Carousel component"
+                                    class="w-full h-[24dvh] object-contain"
+                                    alt="product image"
                                   />
                                 </div>
                               </>
+                            );
+                          }}
+                        </For>
+                      </div>
+                      <div class="w-full flex py-2 gap-1 overflow-auto hide-scroll-bar">
+                        <For
+                          each={product().storeProduct.previews}
+                          fallback={null}
+                        >
+                          {(res: string) => {
+                            return (
+                              <a
+                                href={`#${res}`}
+                                class="btn max-w-16 w-full"
+                                classList={{
+                                  "btn-primary btn-outline": hash() === res,
+                                }}
+                                onClick={() => {
+                                  setHash(res);
+                                }}
+                              >
+                                <img
+                                  src={`${
+                                    import.meta.env.VITE_VARIABLE_IPFS
+                                  }/api/ipfs?hash=${res}`}
+                                  class="w-full h-9 object-cover"
+                                  alt="product image"
+                                />
+                              </a>
                             );
                           }}
                         </For>
