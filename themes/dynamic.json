@@ -10,7 +10,7 @@
     "desc": "It's time to indulge! Dive into a sea of savings on all your favorite items. Snag incredible deals you won't believe (...your eyes ). Don't miss out, this sale's hotter than sunshine! ☀️"
   },
   "header": {
-    "enable": "https://ipfs.backend.riverbase.org/api/ipfs?hash=QmQZDYWSqLxnqAmpP3hY9cALi6nZaR6Lky46PagW5vCWuR",
+    "enable": true,
     "logo": "https://ipfs.backend.riverbase.org/api/ipfs?hash=QmQZDYWSqLxnqAmpP3hY9cALi6nZaR6Lky46PagW5vCWuR",
     "name": "Soklay"
   },

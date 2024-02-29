@@ -12,7 +12,7 @@ export const Logo = () => {
         href="/"
         class="btn btn-ghost hover:bg-transparent md:text-xl text-md text-primary"
       >
-        <Show when={header()?.type} fallback={globals()?.name}>
+        <Show when={header()?.enable} fallback={globals()?.name}>
           <img
             src={header()?.logo}
             alt={globals()?.name}
