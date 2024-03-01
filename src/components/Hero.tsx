@@ -31,7 +31,7 @@ const Hero = () => {
             </Show>
           </A>
         </Show>
-        <div class="mx-auto flex flex-col font-display font-bold tracking-normal text-slate-900 [font-size:_clamp(1.25em,4vw,4em)]">
+        <div class="mx-auto font-display font-bold tracking-normal text-slate-900 [font-size:_clamp(1.25em,4vw,4em)]">
           {banner()?.title}
           <span class="relative whitespace-nowrap text-primary ">
             <svg
