@@ -25,14 +25,15 @@ const Hero = () => {
               }
             >
               <span class="font-semibold text-primary">
+                {" "}
                 {globals()?.officialName}
               </span>
             </Show>
           </A>
         </Show>
-        <h1 class="mx-auto max-w-4xl font-display text-2xl sm:text-2xl lg:text-7xl font-bold tracking-normal text-slate-900">
+        <div class="mx-auto flex flex-col font-display font-bold tracking-normal text-slate-900 [font-size:_clamp(1.25em,4vw,4em)]">
           {banner()?.title}
-          <span class="relative whitespace-nowrap text-primary">
+          <span class="relative whitespace-nowrap text-primary ">
             <svg
               aria-hidden="true"
               viewBox="0 0 418 42"
@@ -45,10 +46,10 @@ const Hero = () => {
               when={globals()?.officialName}
               fallback={<span class="relative"> {globals()?.name}</span>}
             >
-              <span class="relative"> {globals()?.officialName}</span>
+              <span class="relative break-all"> {globals()?.officialName}</span>
             </Show>
           </span>
-        </h1>
+        </div>
         <p class="mx-auto mt-12 max-w-xl text-lg text-slate-700 leading-7">
           {banner()?.desc
             ? banner()?.desc

@@ -4,6 +4,12 @@ import theme from "./themes/static.json";
 module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
 
+  extends: {
+    fontSize: {
+      clamp: "clamp(0.1rem, 5vw, 3rem)",
+    },
+  },
+
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
