@@ -173,7 +173,7 @@ export const Filter: Component<Filters> = ({
                       >
                         <Show
                           when={
-                            storeOwnerSubcategories().storeOwnerSubcategories
+                            storeOwnerSubcategories()?.storeOwnerSubcategories
                               .length > 0
                           }
                           fallback={<div class="text-sm">Empty</div>}
@@ -182,7 +182,7 @@ export const Filter: Component<Filters> = ({
                             <For
                               each={
                                 storeOwnerSubcategories()
-                                  .storeOwnerSubcategories
+                                  ?.storeOwnerSubcategories
                               }
                               fallback={null}
                             >
@@ -434,7 +434,7 @@ export const Filter: Component<Filters> = ({
                                 <Show
                                   when={
                                     storeOwnerSubcategories()
-                                      .storeOwnerSubcategories.length > 0
+                                      ?.storeOwnerSubcategories?.length > 0
                                   }
                                   fallback={<div class="text-sm">Empty</div>}
                                 >
@@ -445,7 +445,7 @@ export const Filter: Component<Filters> = ({
                                     <For
                                       each={
                                         storeOwnerSubcategories()
-                                          .storeOwnerSubcategories
+                                          ?.storeOwnerSubcategories
                                       }
                                       fallback={null}
                                     >
