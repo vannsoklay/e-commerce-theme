@@ -14,7 +14,7 @@ const Footer: Component = () => {
 
   return (
     <>
-      <div class="flex flex-col mx-3 bg-primary/5 py-8 rounded-lg">
+      <div class="flex flex-col  bg-primary/5 py-8 rounded-lg">
         <div class="w-full draggable">
           <div class="container flex flex-col mx-auto">
             <div class="flex flex-col items-center w-full">
@@ -24,17 +24,17 @@ const Footer: Component = () => {
                 </A>
               </span>
               <Show when={footer()?.contact} fallback={null}>
-                <div class="mb-8 space-y-3 ">
+                <div class="mb-8 space-y-3 px-9 sm:px-9 lg:px-0">
                   <div class="flex items-center justify-center gap-3 font-bold text-primary text-2xl">
-                    <FaSolidPhone size={18} />
+                    {/* <FaSolidPhone size={18} /> */}
                     <span>{footer()?.contact?.phone}</span>
                   </div>
                   <div class="flex items-center justify-center gap-3">
-                    <TbMailFilled size={24} />
+                    {/* <TbMailFilled size={24} /> */}
                     <span>{footer()?.contact?.email}</span>
                   </div>
-                  <div class="flex items-center justify-center gap-3">
-                    <FaSolidMapLocationDot size={24} />
+                  <div class="flex items-center justify-center text-center gap-3 break-all">
+                    {/* <FaSolidMapLocationDot size={24} /> */}
                     <span>{footer()?.contact?.address}</span>
                   </div>
                 </div>

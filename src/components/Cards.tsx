@@ -46,10 +46,8 @@ export const CardProduct: Component<{ product: ProductType }> = (props) => {
             </figure>
             <div class="p-3">
               <div class="text-[12px] text-primary">{props.product.brand}</div>
-              <div class="text-base font-medium  mb-4 lg:h-12 h-auto">
-                {props.product.title.length <= 40
-                  ? props.product.title
-                  : props.product.title.slice(0, 40) + "..."}
+              <div class="text-base font-medium line-clamp-1 mb-4 lg:h-12 h-auto break-all">
+                {props.product.title}
               </div>
               <div class="card-accents flex items-center justify-between">
                 <span class="text-primary lg:text-xl text-sm font-bold">

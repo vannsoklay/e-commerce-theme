@@ -187,12 +187,12 @@ const ProductDetail = () => {
                             <AiFillStar class="text-gray-200 text-xl" />
                           )}
                         </Show>
-                        <A
+                        {/* <A
                           href="#"
                           class="ml-3 text-sm font-medium text-base-content"
                         >
                           99+ reviews
-                        </A>
+                        </A> */}
                       </div>
                       <h1 class="text-lg mb-2 font-bold tracking-tight text-base-content sm:text-2xl">
                         {product().storeProduct.title}
@@ -449,12 +449,12 @@ const ProductDetail = () => {
                           <AiFillStar class="text-gray-200 text-xl" />
                         )}
                       </Show>
-                      <A
+                      {/* <A
                         href="#"
                         class="ml-3 text-sm font-medium text-base-content"
                       >
                         99+ reviews
-                      </A>
+                      </A> */}
                     </div>
                     <h1 class="text-lg mb-2 font-bold tracking-tight text-base-content sm:text-2xl">
                       {product().storeProduct.title}
