@@ -5,7 +5,6 @@ export const CATEGORIES = gql`
     storeOwnerCategories(filter: $filter) {
       children {
         id
-        logo
         title {
           en
         }
@@ -25,7 +24,6 @@ export const SUB_CATEGORY_BY_ID = gql`
   query ($parentId: String!) {
     storeOwnerSubcategories(parentId: $parentId) {
       id
-      logo
       title {
         en
       }
