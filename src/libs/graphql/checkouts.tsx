@@ -438,10 +438,10 @@ const DeliveryOption = ({ Field }: any) => {
           <DeliveryForm refetch={refetch} />
         </div>
       </div>
-      <Show when={data().storeAddress.length > 0} fallback={null}>
+      <Show when={data().storestoreAddress.length > 0} fallback={null}>
         <section class="flex flex-wrap gap-3 flex-col  mb-6 relative">
-          <For each={data().storeAddress} fallback={null}>
-            {(address) => {
+          <For each={data().storestoreAddress} fallback={null}>
+            {(storeAddress) => {
               return (
                 <Field
                   name="delivery_option"
@@ -452,8 +452,8 @@ const DeliveryOption = ({ Field }: any) => {
                       <input
                         {...props}
                         type="radio"
-                        value={address.id}
-                        checked={field.value?.includes(address.id)}
+                        value={storeAddress.id}
+                        checked={field.value?.includes(storeAddress.id)}
                         class="radio peer sr-only"
                         required
                         name="delivery"
@@ -461,9 +461,9 @@ const DeliveryOption = ({ Field }: any) => {
                       <div class="rounded-xl p-5 text-gray-600 ring-2 ring-transparent transition-all peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
                         <div class="flex items-center gap-6 justify-between">
                           <p class="text-sm font-semibold uppercase text-pimary">
-                            {address.addressName}
+                            {storeAddress.storeAddress}
                           </p>
-                          {field.value?.includes(address.id) ? (
+                          {field.value?.includes(storeAddress.id) ? (
                             <BsCheckCircleFill class="text-xl" />
                           ) : (
                             <BsCheckCircle class="text-xl" />
@@ -472,7 +472,7 @@ const DeliveryOption = ({ Field }: any) => {
                         <div class="flex gap-3 items-center">
                           <FaSolidPhone class="text-sm" />
                           <p class="text-sm font-medium">
-                            {address.phoneNumber}
+                            {storeAddress.phoneNumber}
                           </p>
                         </div>
                       </div>
@@ -514,8 +514,8 @@ const DeliveryOptionMobile = ({ Field }: any) => {
           <div class="pb-8 px-4">
             <div class="flex justify-start">
               <div class="gird grid-cols-1 space-y-6">
-                <For each={data().storeAddress} fallback={null}>
-                  {(address) => (
+                <For each={data().storestoreAddress} fallback={null}>
+                  {(storeAddress) => (
                     <Field name="delivery_option">
                       {(field: any, props: any) => (
                         <label class="w-full flex col-span-8 gap-6 items-center">
@@ -523,16 +523,16 @@ const DeliveryOptionMobile = ({ Field }: any) => {
                             {...props}
                             classList={{
                               "radio-primary": field.value?.includes(
-                                address.id
+                                storeAddress.id
                               ),
                             }}
                             class="radio"
                             type="radio"
-                            value={address.id}
-                            checked={field.value?.includes(address.id)}
+                            value={storeAddress.id}
+                            checked={field.value?.includes(storeAddress.id)}
                             required
                           />
-                          <div>{address.addressName}</div>
+                          <div>{storeAddress.storeAddress}</div>
                         </label>
                       )}
                     </Field>

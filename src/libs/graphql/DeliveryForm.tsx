@@ -78,6 +78,8 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
       .mutation(CREATE_ADDRESS, {
         input: {
           ...values,
+          lat: 11.5564,
+          lng: 104.9282,
           phoneNumber: newPhone().phoneNumber,
           photos: photo() ? [photo()] : null,
         },

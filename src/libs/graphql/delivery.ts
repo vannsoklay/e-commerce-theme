@@ -12,12 +12,13 @@ export const ADDRESS = gql`
       id
       firstName
       lastName
-      email
-      address
       phoneNumber
       createdAt
       updatedAt
       photos
+      addressName
+      lat
+      lng
     }
   }
 `;
