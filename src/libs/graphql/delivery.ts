@@ -1,41 +1,41 @@
 import { gql } from "@urql/core";
 
-export const CREATE_DELIVERY = gql`
-	mutation ($input: InputDelivery!) {
-		storeCreateDelivery(input: $input)
-	}
+export const CREATE_ADDRESS = gql`
+  mutation ($input: InputAddress!) {
+    storeCreateAddress(input: $input)
+  }
 `;
 
-export const DELIVERIES = gql`
-	query {
-		deliveries {
-			id
-			firstName
-			lastName
-			email
-			address
-			phoneNumber
-			createdAt
-			updatedAt
-			photos
-		}
-	}
+export const ADDRESS = gql`
+  query {
+    storeAddress {
+      id
+      firstName
+      lastName
+      email
+      address
+      phoneNumber
+      createdAt
+      updatedAt
+      photos
+    }
+  }
 `;
 
-export const DELIVERIES_EXPRESS = gql`
-	query {
-		storeDeliveriesExpress {
-			city
-			name
-			logo
-			id
-			price
-			shipping
-			kilometer
-			email
-			currency
-			express
-			phoneNumber
-		}
-	}
-`;
+// export const DELIVERIES_EXPRESS = gql`
+// 	query {
+// 		storeDeliveriesExpress {
+// 			city
+// 			name
+// 			logo
+// 			id
+// 			price
+// 			shipping
+// 			kilometer
+// 			email
+// 			currency
+// 			express
+// 			phoneNumber
+// 		}
+// 	}
+// `;

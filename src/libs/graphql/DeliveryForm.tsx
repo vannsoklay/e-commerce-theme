@@ -88,7 +88,7 @@ export const DeliveryForm: Component<{ refetch: Function }> = (props) => {
           return toast.error(res.error.message);
         }
         props.refetch();
-        toast.success(res.data.storeCreateDelivery.message);
+        toast.success(res.data.storeCreateAddress.message);
       });
   };
 

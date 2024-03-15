@@ -1,7 +1,7 @@
-import { DELIVERIES, DELIVERIES_EXPRESS } from "~/libs/graphql/delivery";
-import { FaSolidCircleCheck, FaSolidPhone } from "solid-icons/fa";
+import { ADDRESS } from "~/libs/graphql/delivery";
+import { FaSolidPhone } from "solid-icons/fa";
 import { For, Show, createEffect, createSignal } from "solid-js";
-import { SubmitHandler, createForm, required } from "@modular-forms/solid";
+import { SubmitHandler, createForm } from "@modular-forms/solid";
 import { client, clientQuery } from "~/libs/client";
 import { CHECKOUT_PRODUCT } from "~/libs/graphql/checkout";
 import { CheckoutType } from "~/types/checkout";
@@ -352,76 +352,76 @@ export default function Checkout() {
   );
 }
 
-const Delivery = ({ Field }: any) => {
-  const [data] = clientQuery(DELIVERIES_EXPRESS, {});
+// const Delivery = ({ Field }: any) => {
+//   const [data] = clientQuery(data().deliveries_EXPRESS, {});
 
-  return (
-    <Show when={!data.loading} fallback={<div>loading...</div>}>
-      <h1 class="collapse-title text-xl font-semibold px-0 py-8">
-        Delivery Options
-      </h1>
-      <div class="pb-8 ">
-        <Show when={data().storeDeliveriesExpress.length > 0} fallback={null}>
-          <section class="grid grid-cols-2 gap-3 items-center px-2 pb-6">
-            <For each={data().storeDeliveriesExpress} fallback={null}>
-              {(delivery) => {
-                return (
-                  <Field
-                    name="delivery_express"
-                    validate={[required("Please select your delivery.")]}
-                  >
-                    {(field: any, props: any) => (
-                      <label class="cursor-pointer ">
-                        <input
-                          {...props}
-                          type="radio"
-                          value={delivery.id}
-                          checked={field.value?.includes(delivery.id)}
-                          class="radio peer sr-only"
-                          required
-                          name="delivery_express"
-                        />
-                        <div class="w-full grid grid-cols-4 gap-3 rounded-md p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
-                          <div class="avatar col-span-1">
-                            <div class="w-12 rounded-xl">
-                              <img
-                                src={`${
-                                  import.meta.env.VITE_VARIABLE_IPFS
-                                }/api/ipfs?hash=${delivery?.logo}`}
-                                alt={delivery.name}
-                              />
-                            </div>
-                          </div>
-                          <div class="col-span-3">
-                            <div class="flex items-center gap-6 justify-between">
-                              <p class="text-sm font-semibold uppercase text-pimary">
-                                {delivery.name}
-                              </p>
-                              <FaSolidCircleCheck class="text-xl" />
-                            </div>
-                            <div class="flex gap-3 items-center">
-                              <FaSolidPhone class="text-sm" />
-                              <p class="text-sm font-medium">
-                                {delivery.phoneNumber}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </label>
-                    )}
-                  </Field>
-                );
-              }}
-            </For>
-          </section>
-        </Show>
-      </div>
-    </Show>
-  );
-};
+//   return (
+//     <Show when={!data.loading} fallback={<div>loading...</div>}>
+//       <h1 class="collapse-title text-xl font-semibold px-0 py-8">
+//         Delivery Options
+//       </h1>
+//       <div class="pb-8 ">
+//         <Show when={data().storedata().deliveriesExpress.length > 0} fallback={null}>
+//           <section class="grid grid-cols-2 gap-3 items-center px-2 pb-6">
+//             <For each={data().storedata().deliveriesExpress} fallback={null}>
+//               {(delivery) => {
+//                 return (
+//                   <Field
+//                     name="delivery_express"
+//                     validate={[required("Please select your delivery.")]}
+//                   >
+//                     {(field: any, props: any) => (
+//                       <label class="cursor-pointer ">
+//                         <input
+//                           {...props}
+//                           type="radio"
+//                           value={delivery.id}
+//                           checked={field.value?.includes(delivery.id)}
+//                           class="radio peer sr-only"
+//                           required
+//                           name="delivery_express"
+//                         />
+//                         <div class="w-full grid grid-cols-4 gap-3 rounded-md p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
+//                           <div class="avatar col-span-1">
+//                             <div class="w-12 rounded-xl">
+//                               <img
+//                                 src={`${
+//                                   import.meta.env.VITE_VARIABLE_IPFS
+//                                 }/api/ipfs?hash=${delivery?.logo}`}
+//                                 alt={delivery.name}
+//                               />
+//                             </div>
+//                           </div>
+//                           <div class="col-span-3">
+//                             <div class="flex items-center gap-6 justify-between">
+//                               <p class="text-sm font-semibold uppercase text-pimary">
+//                                 {delivery.name}
+//                               </p>
+//                               <FaSolidCircleCheck class="text-xl" />
+//                             </div>
+//                             <div class="flex gap-3 items-center">
+//                               <FaSolidPhone class="text-sm" />
+//                               <p class="text-sm font-medium">
+//                                 {delivery.phoneNumber}
+//                               </p>
+//                             </div>
+//                           </div>
+//                         </div>
+//                       </label>
+//                     )}
+//                   </Field>
+//                 );
+//               }}
+//             </For>
+//           </section>
+//         </Show>
+//       </div>
+//     </Show>
+//   );
+// };
 
 const DeliveryOption = ({ Field }: any) => {
-  const [data, { refetch }] = clientQuery(DELIVERIES, {});
+  const [data, { refetch }] = clientQuery(ADDRESS, {});
 
   return (
     <Show when={!data.loading} fallback={null}>
@@ -438,10 +438,10 @@ const DeliveryOption = ({ Field }: any) => {
           <DeliveryForm refetch={refetch} />
         </div>
       </div>
-      <Show when={data().deliveries.length > 0} fallback={null}>
+      <Show when={data().storeAddress.length > 0} fallback={null}>
         <section class="flex flex-wrap gap-3 flex-col  mb-6 relative">
-          <For each={data().deliveries} fallback={null}>
-            {(delivery) => {
+          <For each={data().storeAddress} fallback={null}>
+            {(address) => {
               return (
                 <Field
                   name="delivery_option"
@@ -452,8 +452,8 @@ const DeliveryOption = ({ Field }: any) => {
                       <input
                         {...props}
                         type="radio"
-                        value={delivery.id}
-                        checked={field.value?.includes(delivery.id)}
+                        value={address.id}
+                        checked={field.value?.includes(address.id)}
                         class="radio peer sr-only"
                         required
                         name="delivery"
@@ -461,9 +461,9 @@ const DeliveryOption = ({ Field }: any) => {
                       <div class="rounded-xl p-5 text-gray-600 ring-2 ring-transparent transition-all peer-checked:text-primary peer-checked:ring-primary peer-checked:ring-offset-2">
                         <div class="flex items-center gap-6 justify-between">
                           <p class="text-sm font-semibold uppercase text-pimary">
-                            {delivery.address}
+                            {address.address}
                           </p>
-                          {field.value?.includes(delivery.id) ? (
+                          {field.value?.includes(address.id) ? (
                             <BsCheckCircleFill class="text-xl" />
                           ) : (
                             <BsCheckCircle class="text-xl" />
@@ -472,7 +472,7 @@ const DeliveryOption = ({ Field }: any) => {
                         <div class="flex gap-3 items-center">
                           <FaSolidPhone class="text-sm" />
                           <p class="text-sm font-medium">
-                            {delivery.phoneNumber}
+                            {address.phoneNumber}
                           </p>
                         </div>
                       </div>
@@ -489,7 +489,7 @@ const DeliveryOption = ({ Field }: any) => {
 };
 
 const DeliveryOptionMobile = ({ Field }: any) => {
-  const [data, { refetch }] = clientQuery(DELIVERIES, {});
+  const [data, { refetch }] = clientQuery(ADDRESS, {});
 
   return (
     <main class="mt-6 md:hidden">
@@ -514,8 +514,8 @@ const DeliveryOptionMobile = ({ Field }: any) => {
           <div class="pb-8 px-4">
             <div class="flex justify-start">
               <div class="gird grid-cols-1 space-y-6">
-                <For each={data().deliveries} fallback={null}>
-                  {(delivery) => (
+                <For each={data().storeAddress} fallback={null}>
+                  {(address) => (
                     <Field name="delivery_option">
                       {(field: any, props: any) => (
                         <label class="w-full flex col-span-8 gap-6 items-center">
@@ -523,16 +523,16 @@ const DeliveryOptionMobile = ({ Field }: any) => {
                             {...props}
                             classList={{
                               "radio-primary": field.value?.includes(
-                                delivery.id
+                                address.id
                               ),
                             }}
                             class="radio"
                             type="radio"
-                            value={delivery.id}
-                            checked={field.value?.includes(delivery.id)}
+                            value={address.id}
+                            checked={field.value?.includes(address.id)}
                             required
                           />
-                          <div>{delivery.address}</div>
+                          <div>{address.address}</div>
                         </label>
                       )}
                     </Field>
